@@ -4,6 +4,6 @@ Deeper-ai is a beginner friendly neural network libary developed in Python and C
 ## How do you use Deepr-ai?
 You can get started and look at examples and by navigating to the "start_up" folder.
 ## What makes Deepr-ai diffrent from other machine learning libraries?
-With Deepr-ai's super easy and simple setup it requires almost no previous knowledge in Python, math and machine learning to set up a model. However there are more advanced setting for more experanced users.
+With Deepr-ai's super easy and simple setup it requires almost no previous knowledge in Python, math, and machine learning to set up a model. However there are more advanced setting for more experanced users.
 ## Is Deepr-ai finished?
 Currently Deepr-ai is under devopment, regular updates are planned granted im in highschool so updates might be delayed. However Deepr-ai still has useful features and practical uses in its unfinished form. 
