@@ -18,9 +18,3 @@ cpdef list compute_layer_valid(list layer_shape, list kernel_shape, list layer, 
             output_row.append(output_index)
         output.append(output_row)
     return output
-
-cdef int cadd(int a, int b):
-    return a + b
-
-def add(a, b):
-    return cadd(a, b)
