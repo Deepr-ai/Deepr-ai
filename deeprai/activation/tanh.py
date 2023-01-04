@@ -1,4 +1,6 @@
-import deeprai.engine.conv2d
+from deeprai.engine.cython import activation as act
+
 class Tanh:
-    def __init__(self):
-        pass
+    def tanh(self, neuron):
+        self.output = act.tanh(neuron)
+

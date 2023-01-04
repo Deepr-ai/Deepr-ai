@@ -14,3 +14,13 @@ model.model_optimizers(optimizer='adem', loss='ccs')
 model.train_model(x,y, verify_data=(x, y), batch_size=20)
 model.save('m1.dpr')
 model.summery()
+
+"""
+Turbo
+"""
+from deeprai.tools import Turbo as dpr
+
+model = dpr.build(model="conv", autofit = True)
+model.set_data('file.csv')
+model.run(output_file='path/to/file')
+

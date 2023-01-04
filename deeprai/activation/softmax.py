@@ -1,4 +1,5 @@
+from deeprai.engine.cython import activation as act
 class Softmax:
-    def __init__(self, neuron):
-        self.neuron = neuron
+    def softmax(self, neurons):
+        self.output = act.softmax(neurons)
 

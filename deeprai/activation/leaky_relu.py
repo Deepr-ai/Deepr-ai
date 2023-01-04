@@ -1,4 +1,5 @@
+from deeprai.engine.cython import activation as act
 class LeakyRelu:
-    def __init__(self, neuron):
-        self.neuron = neuron
+    def leaky_relu(self, neuron):
+        self.output = act.leaky_relu(neuron)
 

@@ -1,4 +1,5 @@
+from deeprai.engine.cython import activation as act
 class Step:
-    def __init__(self, neuron):
-        self.neuron = neuron
+    def step(self, neuron):
+        self.output = act.step(neuron)
 

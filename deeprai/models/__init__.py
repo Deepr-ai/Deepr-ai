@@ -66,6 +66,7 @@ class FeedForward:
         self.base_weights = base.Weight(self.weights)
         self.base_bias = base.Bias(self.bias)
 
+
     def add_dense(self, neurons, activation=''):
         self.stack_layer.create_dense()
 
