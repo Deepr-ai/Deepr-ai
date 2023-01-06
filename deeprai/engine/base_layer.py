@@ -13,8 +13,8 @@ class Layer:
 
 
 class Kernel:
-    def __init__(self, kernels):
-        self.Kernels = kernels
+    def __init__(self):
+        self.Kernels = []
 
     def pop(self):
         self.Kernels = []

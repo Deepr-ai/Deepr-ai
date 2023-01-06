@@ -12,11 +12,11 @@ class Convolutional:
         self.output_labels = None
         self.stack_layer = stack.StackEvents()
         self.base_layer = base.Layer(self.layers)
-        self.base_kernel = base.Kernel(self.kernels)
+        self.base_kernel = base.Kernel()
         self.base_bias = base.Bias(self.bias)
 
     def add_kernel(self, amount, shape, max_size: int = 2, ):
-        self.stack_layer.create_kernel()
+        self.stack_layer.create_kernel(amount, shape, max_size)
 
     def add_pool(self, shape):
         self.stack_layer.create_pool()
