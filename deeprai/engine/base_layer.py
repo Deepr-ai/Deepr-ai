@@ -1,5 +1,6 @@
 """Keeps track of the networks values"""
 import build_model
+import numpy as np
 class Layer:
     def __init__(self):
         self.Layers = None
@@ -64,12 +65,22 @@ class Derivative:
     def pop(self):
         self.Derivatives = []
 
+#Spacific use cases (note to self, add condition statements)
 
+class Velocity:
+    def __init__(self):
+        self.Velocities = None
+    def pop(self):
+        self.Velocities = []
 
 #GLOBAL NETWORK VALUES
-Biases = Bias()
-Weight = Weight()
-Kernels = Kernel()
-Layers = Layer()
-Neurons = Neuron()
+BiasVals = Bias()
+WeightVals = Weight()
+KernelVals = Kernel()
+LayerVals = Layer()
+NeuronVals = Neuron()
+DerivativeVals = Derivative()
+# LOCAL NETWORK VALUES
+VelocityVals = Velocity()
+
 
