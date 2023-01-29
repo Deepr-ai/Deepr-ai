@@ -1,5 +1,5 @@
 import deeprai.engine.base_layer as base
-import deeprai.engine.network_stack as stack
+import deeprai.engine.build_model as stack
 
 
 class Convolutional:
@@ -10,7 +10,7 @@ class Convolutional:
         self.padding = None
         self.strides = None
         self.output_labels = None
-        self.stack_layer = stack.StackEvents()
+        self.stack_layer = stack.Build()
         self.base_layer = base.Layer(self.layers)
         self.base_kernel = base.Kernel()
         self.base_bias = base.Bias(self.bias)
@@ -62,7 +62,7 @@ class FeedForward:
     def __init__(self):
         self.bias = []
         self.weights = []
-        self.stack_layer = stack.StackEvents()
+        self.stack_layer = stack.Build()
         self.base_weights = base.Weight(self.weights)
         self.base_bias = base.Bias(self.bias)
 
@@ -73,7 +73,7 @@ class FeedForward:
     def model_optimizers(self, optimizer='', loss=''):
         pass
 
-    def train_model(self, input_data, label, verify_data=(), batch_size=10):
+    def train_model(self, input_data, verify_data, batch_size=10, epochs=200):
         pass
 
     def update_network(self):
@@ -93,3 +93,5 @@ class FeedForward:
 
     def summery(self):
         pass
+    def run(self, inputs):
+        return

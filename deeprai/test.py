@@ -1,29 +1,27 @@
+import numpy as np
 from deeprai import models
 """
 Final syntax structure
 """
+inputs = np.array([[]])
+target = np.array([])
+#declaring the model type
+models = models.FeedForward()
+#add input layer
+models.add_dense(2, activation='Relu')
+#add hidden layer
+models.add_dense(10, activation='Relu')
+#add output layer
+models.add_dense(1, activation='softmax')
+#optinal but default is optimizer is gradient decent, default loss is mean square error
+models.model_optimizers(optimizer='gradient decent', loss='mean square error')
+#trains the model
+models.train_model(input_data=inputs, verify_data=target, batch_size=36, epochs=500)
+#saves the model
+models.save('file.dpr')
+# summarizes th data
+models.summery()
 
 
-# model = models.Convolutional()
-# model.add_kernel(2, [3,2], actation='relu', dim='2d')
-# model.add_pool([3,3], mode = 'max', dim='2d')
-# model.flatten()
-# model.add_dense(23, actavation='tanh')
-# model.add_dense(12, actavation='softmax')
-# model.model_optimizers(optimizer='adem', loss='ccs')
-# model.train_model(x,y, verify_data=(x, y), batch_size=20)
-# model.save('m1.dpr')
-# model.summery()
-#
-# """
-# Turbo
-# """
-# from deeprai.tools import Turbo as dpr
-#
-# model = dpr.build(model="conv", autofit = True)
-# model.set_data('file.csv')
-# model.run(output_file='path/to/file')
-
-model = models.Convolutional()
-model.add_kernel(2, [3,2], 4)
-print("hi")
+# run an input through the model
+models.run(np.array([3.4]))
