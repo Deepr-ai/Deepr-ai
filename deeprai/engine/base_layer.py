@@ -1,12 +1,9 @@
 """Keeps track of the networks values"""
-import build_model
 import numpy as np
 class Layer:
     def __init__(self):
-        self.Layers = None
-
-    def initialize(self, layers):
-        self.Layers = layers
+        #size of network for weight generation
+        self.Layers = []
 
     def pop(self):
         self.Layers = []
@@ -14,56 +11,45 @@ class Layer:
 
 class Kernel:
     def __init__(self):
-        self.Kernels = None
-
-    def initialize(self):
-        self.Kernels = []
+        self.Kernels = np.array([])
 
     def pop(self):
-        self.Kernels = []
+        self.Kernels = np.array([])
 
 
 class Bias:
     def __init__(self):
-        self.Biases = None
-
-    def initialize(self, bias):
-        self.Biases = bias
+        self.Biases = np.array([])
 
     def pop(self):
-        self.Biases = []
+        self.Biases = np.array([])
 
 
 
 class Weight:
     def __init__(self):
-        self.Weights = None
-
-    def initialize(self, weight):
-        self.Weights = weight
+        self.Weights = []
 
     def pop(self):
         self.Weights = []
 
+    def add(self, val):
+        self.Weights.append(val)
+
+
 class Neuron:
     def __init__(self):
-        self.Neurons = None
-
-    def initialize(self, neurons):
-        self.Neurons = neurons
+        self.Neurons = np.array([])
 
     def pop(self):
-        self.Neurons = []
+        self.Neurons = np.array([])
 
 class Derivative:
     def __init__(self):
-        self.Derivatives = None
-
-    def initialize(self, derivatives):
-        self.Derivatives = derivatives
+        self.Derivatives = np.array([])
 
     def pop(self):
-        self.Derivatives = []
+        self.Derivatives = np.array([])
 
 #Spacific use cases (note to self, add condition statements)
 
@@ -81,5 +67,8 @@ NeuronVals = Neuron()
 DerivativeVals = Derivative()
 # LOCAL NETWORK VALUES
 VelocityVals = Velocity()
-
+ActivationList = []
+ActivationDerivativeList = []
+Optimizer = ['gradient decent']
+Loss = ['mean square error']
 

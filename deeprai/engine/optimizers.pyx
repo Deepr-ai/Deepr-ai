@@ -1,4 +1,4 @@
-from base_layer import WeightVals, DerivativeVals
+from deeprai.engine.base_layer import WeightVals, DerivativeVals
 import numpy as np
 cimport numpy as np
 
