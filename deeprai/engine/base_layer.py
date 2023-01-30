@@ -74,7 +74,6 @@ class Velocity:
         self.Velocities = []
 
 #GLOBAL NETWORK VALUES
-BiasVals = Bias()
 WeightVals = Weight()
 KernelVals = Kernel()
 LayerVals = Layer()
