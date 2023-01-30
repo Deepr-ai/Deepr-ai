@@ -7,8 +7,8 @@ cimport numpy as np
 cpdef np.ndarray[np.float64_t, ndim=1] tanh(np.ndarray[np.float64_t, ndim=1] n):
     return np.tanh(n)
 
-cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
-    cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):
+    cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
     return dy_dx
 
 #relu

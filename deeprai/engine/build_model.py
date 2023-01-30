@@ -1,4 +1,4 @@
-from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList
+from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, NeuronVals, DerivativeVals
 import deeprai.engine.cython.activation as act
 import numpy as np
 class Build:
@@ -26,9 +26,11 @@ class Build:
         ActivationDerivativeList.append(lambda n: self.activationDerivativeMap[activation](n))
         #works backwards to generate weight values
         layers = LayerVals.Layers
+        NeuronVals.add(np.zeros(size))
         try:
             layers.append(size)
             WeightVals.add(np.random.rand(layers[-2], layers[-1]) * np.sqrt(2 / (layers[-2] + layers[-1])))
+            DerivativeVals.add(np.zeros((layers[-2], layers[-1])))
         except IndexError:
             pass
             #input neuron

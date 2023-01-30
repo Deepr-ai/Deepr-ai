@@ -39,17 +39,25 @@ class Weight:
 
 class Neuron:
     def __init__(self):
-        self.Neurons = np.array([])
+        self.Neurons = []
 
     def pop(self):
-        self.Neurons = np.array([])
+        self.Neurons = []
+
+    def add(self, val):
+        self.Neurons.append(val)
+
 
 class Derivative:
     def __init__(self):
-        self.Derivatives = np.array([])
+        self.Derivatives = []
 
     def pop(self):
-        self.Derivatives = np.array([])
+        self.Derivatives = []
+
+    def add(self, val):
+        self.Derivatives.append(val)
+
 
 #Spacific use cases (note to self, add condition statements)
 

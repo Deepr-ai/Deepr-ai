@@ -61,7 +61,7 @@ class FeedForward:
     def __init__(self):
         self.spawn = builder.Build()
         self.OptimizerMap = {"gradient decent": opt.gradient_descent}
-        self.LossMap = {'mean square error': lossFunc.mean_square_error}
+        self.LossMap = {'mean square error': lossFunc.mean_square_error, "categorical cross entropy": lossFunc.categorical_cross_entropy}
 
 
     def add_dense(self, neurons, activation=''):
@@ -72,8 +72,8 @@ class FeedForward:
         Loss[0] = loss
 
     def train_model(self, input_data, verify_data, batch_size=10, epochs=500, learning_rate=0.1, momentum=0.6, verbose=True):
-        loss_function = [lambda e: self.OptimizerMap[Optimizer[0]](e)]
-
+        loss_function = [lambda o,t: self.LossMap[Loss[0]](o,t)]
+        print(ActivationList)
         train(inputs=input_data, targets=verify_data, epochs=epochs, learning_rate=learning_rate, momentum=momentum,
               activation_list=ActivationList, activation_derv_list=ActivationDerivativeList, loss_function=loss_function,
               verbose=verbose, batch_size=batch_size)

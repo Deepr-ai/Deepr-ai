@@ -1524,7 +1524,7 @@ struct __pyx_opt_args_7deeprai_6engine_10activation_leaky_relu_derivative {
   PyObject *alpha;
 };
 
-/* "deeprai/engine/activation.pyx":69
+/* "deeprai/engine/activation.pyx":70
  * 
  * #leaky relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):             # <<<<<<<<<<<<<<
@@ -1536,7 +1536,7 @@ struct __pyx_opt_args_7deeprai_6engine_10activation_cython_leaky_relu {
   double alpha;
 };
 
-/* "deeprai/engine/activation.pyx":74
+/* "deeprai/engine/activation.pyx":75
  *     else:
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):             # <<<<<<<<<<<<<<
@@ -2956,7 +2956,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_tanh(PyArrayObject *
  * cpdef np.ndarray[np.float64_t, ndim=1] tanh(np.ndarray[np.float64_t, ndim=1] n):
  *     return np.tanh(n)             # <<<<<<<<<<<<<<
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
@@ -3148,8 +3148,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_tanh(CYTHON_UNUSED PyObj
 /* "deeprai/engine/activation.pyx":10
  *     return np.tanh(n)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx
  */
 
@@ -3189,14 +3189,14 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_tanh_derivative(PyAr
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
-  __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_x.diminfo[1].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_x.diminfo[1].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[1];
+  __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
 
   /* "deeprai/engine/activation.pyx":11
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))             # <<<<<<<<<<<<<<
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))             # <<<<<<<<<<<<<<
  *     return dy_dx
  * 
  */
@@ -3258,10 +3258,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_tanh_derivative(PyAr
   __pyx_t_7 = ((PyArrayObject *)__pyx_t_3);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_dy_dx = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.buf = NULL;
       __PYX_ERR(0, 11, __pyx_L1_error)
-    } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_dy_dx.diminfo[1].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_dy_dx.diminfo[1].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[1];
+    } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0];
     }
   }
   __pyx_t_7 = 0;
@@ -3269,8 +3269,8 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_tanh_derivative(PyAr
   __pyx_t_3 = 0;
 
   /* "deeprai/engine/activation.pyx":12
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx             # <<<<<<<<<<<<<<
  * 
  * #relu
@@ -3283,8 +3283,8 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_tanh_derivative(PyAr
   /* "deeprai/engine/activation.pyx":10
  *     return np.tanh(n)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx
  */
 
@@ -3411,9 +3411,9 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_2tanh_derivative(CYTHON_
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
-  __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_x.diminfo[1].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_x.diminfo[1].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[1];
+  __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_10activation_tanh_derivative(__pyx_v_x, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -5117,7 +5117,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_14softmax_derivative(CYT
  * #Sigmoid
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
  *     return 1.0 / (1.0 + np.exp(-n))
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ * 
  */
 
 static PyObject *__pyx_pw_7deeprai_6engine_10activation_17sigmoid(PyObject *__pyx_self, 
@@ -5155,8 +5155,8 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_sigmoid(PyArrayObjec
  * #Sigmoid
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
  *     return 1.0 / (1.0 + np.exp(-n))             # <<<<<<<<<<<<<<
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
- *     return x * (1 - x)
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
@@ -5203,7 +5203,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_sigmoid(PyArrayObjec
  * #Sigmoid
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
  *     return 1.0 / (1.0 + np.exp(-n))
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ * 
  */
 
   /* function exit code */
@@ -5355,9 +5355,9 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_16sigmoid(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":46
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
+/* "deeprai/engine/activation.pyx":47
  *     return 1.0 / (1.0 + np.exp(-n))
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
  *     return x * (1 - x)
  * 
@@ -5387,31 +5387,31 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_sigmoid_derivative(P
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 46, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 47, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":47
- *     return 1.0 / (1.0 + np.exp(-n))
+  /* "deeprai/engine/activation.pyx":48
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
  *     return x * (1 - x)             # <<<<<<<<<<<<<<
  * 
  * #Private Functions for other cython files (faster)
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(((PyObject *)__pyx_v_x), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(((PyObject *)__pyx_v_x), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":46
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
+  /* "deeprai/engine/activation.pyx":47
  *     return 1.0 / (1.0 + np.exp(-n))
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
  *     return x * (1 - x)
  * 
@@ -5484,12 +5484,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "sigmoid_derivative") < 0)) __PYX_ERR(0, 46, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "sigmoid_derivative") < 0)) __PYX_ERR(0, 47, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5500,13 +5500,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("sigmoid_derivative", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 46, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("sigmoid_derivative", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 47, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.activation.sigmoid_derivative", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 47, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_10activation_18sigmoid_derivative(__pyx_self, __pyx_v_x);
 
   /* function exit code */
@@ -5534,11 +5534,11 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_18sigmoid_derivative(CYT
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 46, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 47, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_10activation_sigmoid_derivative(__pyx_v_x, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_10activation_sigmoid_derivative(__pyx_v_x, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5564,7 +5564,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_10activation_18sigmoid_derivative(CYT
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":51
+/* "deeprai/engine/activation.pyx":52
  * #Private Functions for other cython files (faster)
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -5591,11 +5591,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh(PyArrayO
   __pyx_pybuffernd_n.rcbuffer = &__pyx_pybuffer_n;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 51, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
   }
   __pyx_pybuffernd_n.diminfo[0].strides = __pyx_pybuffernd_n.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n.diminfo[0].shape = __pyx_pybuffernd_n.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":52
+  /* "deeprai/engine/activation.pyx":53
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh(np.ndarray[np.float64_t, ndim=1] n):
  *     return np.tanh(n)             # <<<<<<<<<<<<<<
@@ -5603,9 +5603,9 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh(PyArrayO
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_tanh); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_tanh); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -5624,16 +5624,16 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh(PyArrayO
     PyObject *__pyx_callargs[2] = {__pyx_t_2, ((PyObject *)__pyx_v_n)};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 53, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":51
+  /* "deeprai/engine/activation.pyx":52
  * #Private Functions for other cython files (faster)
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -5663,7 +5663,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh(PyArrayO
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":54
+/* "deeprai/engine/activation.pyx":55
  *     return np.tanh(n)
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
@@ -5700,25 +5700,25 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 54, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 55, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_x.diminfo[1].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_x.diminfo[1].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/activation.pyx":55
+  /* "deeprai/engine/activation.pyx":56
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))             # <<<<<<<<<<<<<<
  *     return dy_dx
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_square); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_square); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_tanh); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_tanh); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -5737,7 +5737,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
     PyObject *__pyx_callargs[2] = {__pyx_t_4, ((PyObject *)__pyx_v_x)};
     __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -5758,20 +5758,20 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_3 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_t_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_t_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 56, __pyx_L1_error)
   __pyx_t_7 = ((PyArrayObject *)__pyx_t_3);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_dy_dx = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 55, __pyx_L1_error)
+      __PYX_ERR(0, 56, __pyx_L1_error)
     } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_dy_dx.diminfo[1].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_dy_dx.diminfo[1].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -5779,7 +5779,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
   __pyx_v_dy_dx = ((PyArrayObject *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "deeprai/engine/activation.pyx":56
+  /* "deeprai/engine/activation.pyx":57
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx             # <<<<<<<<<<<<<<
@@ -5791,7 +5791,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
   __pyx_r = ((PyArrayObject *)__pyx_v_dy_dx);
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":54
+  /* "deeprai/engine/activation.pyx":55
  *     return np.tanh(n)
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
@@ -5826,7 +5826,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_tanh_derivati
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":59
+/* "deeprai/engine/activation.pyx":60
  * 
  * #relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -5851,23 +5851,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu(PyArrayO
   __pyx_pybuffernd_n.rcbuffer = &__pyx_pybuffer_n;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 59, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 60, __pyx_L1_error)
   }
   __pyx_pybuffernd_n.diminfo[0].strides = __pyx_pybuffernd_n.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n.diminfo[0].shape = __pyx_pybuffernd_n.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":60
+  /* "deeprai/engine/activation.pyx":61
  * #relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu(np.ndarray[np.float64_t, ndim=1] n):
  *     if n < 0:             # <<<<<<<<<<<<<<
  *         return 0
  *     else:
  */
-  __pyx_t_1 = PyObject_RichCompare(((PyObject *)__pyx_v_n), __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(((PyObject *)__pyx_v_n), __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "deeprai/engine/activation.pyx":61
+    /* "deeprai/engine/activation.pyx":62
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu(np.ndarray[np.float64_t, ndim=1] n):
  *     if n < 0:
  *         return 0             # <<<<<<<<<<<<<<
@@ -5875,12 +5875,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu(PyArrayO
  *         return n
  */
     __Pyx_XDECREF((PyObject *)__pyx_r);
-    if (!(likely(__Pyx_TypeTest(__pyx_int_0, __pyx_ptype_5numpy_ndarray)))) __PYX_ERR(0, 61, __pyx_L1_error)
+    if (!(likely(__Pyx_TypeTest(__pyx_int_0, __pyx_ptype_5numpy_ndarray)))) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_INCREF(__pyx_int_0);
     __pyx_r = ((PyArrayObject *)__pyx_int_0);
     goto __pyx_L0;
 
-    /* "deeprai/engine/activation.pyx":60
+    /* "deeprai/engine/activation.pyx":61
  * #relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu(np.ndarray[np.float64_t, ndim=1] n):
  *     if n < 0:             # <<<<<<<<<<<<<<
@@ -5889,7 +5889,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu(PyArrayO
  */
   }
 
-  /* "deeprai/engine/activation.pyx":63
+  /* "deeprai/engine/activation.pyx":64
  *         return 0
  *     else:
  *         return n             # <<<<<<<<<<<<<<
@@ -5903,7 +5903,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu(PyArrayO
     goto __pyx_L0;
   }
 
-  /* "deeprai/engine/activation.pyx":59
+  /* "deeprai/engine/activation.pyx":60
  * 
  * #relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -5931,7 +5931,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu(PyArrayO
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":64
+/* "deeprai/engine/activation.pyx":65
  *     else:
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
@@ -5967,23 +5967,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu_derivati
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 64, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 65, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_x.diminfo[1].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_x.diminfo[1].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/activation.pyx":65
+  /* "deeprai/engine/activation.pyx":66
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu_derivative(np.ndarray[np.float64_t, ndim=2] x):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, 0)             # <<<<<<<<<<<<<<
  *     return dy_dx
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_where); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_where); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)__pyx_v_x), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)__pyx_v_x), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -6001,17 +6001,17 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu_derivati
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 3+__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 65, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 66, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_dy_dx = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 65, __pyx_L1_error)
+      __PYX_ERR(0, 66, __pyx_L1_error)
     } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_dy_dx.diminfo[1].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_dy_dx.diminfo[1].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -6019,7 +6019,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu_derivati
   __pyx_v_dy_dx = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/activation.pyx":66
+  /* "deeprai/engine/activation.pyx":67
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu_derivative(np.ndarray[np.float64_t, ndim=2] x):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, 0)
  *     return dy_dx             # <<<<<<<<<<<<<<
@@ -6031,7 +6031,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu_derivati
   __pyx_r = ((PyArrayObject *)__pyx_v_dy_dx);
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":64
+  /* "deeprai/engine/activation.pyx":65
  *     else:
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_relu_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
@@ -6065,7 +6065,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_relu_derivati
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":69
+/* "deeprai/engine/activation.pyx":70
  * 
  * #leaky relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):             # <<<<<<<<<<<<<<
@@ -6097,23 +6097,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu(Py
   __pyx_pybuffernd_n.rcbuffer = &__pyx_pybuffer_n;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 69, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 70, __pyx_L1_error)
   }
   __pyx_pybuffernd_n.diminfo[0].strides = __pyx_pybuffernd_n.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n.diminfo[0].shape = __pyx_pybuffernd_n.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":70
+  /* "deeprai/engine/activation.pyx":71
  * #leaky relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):
  *     if n < 0:             # <<<<<<<<<<<<<<
  *         return alpha * n
  *     else:
  */
-  __pyx_t_1 = PyObject_RichCompare(((PyObject *)__pyx_v_n), __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(((PyObject *)__pyx_v_n), __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "deeprai/engine/activation.pyx":71
+    /* "deeprai/engine/activation.pyx":72
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):
  *     if n < 0:
  *         return alpha * n             # <<<<<<<<<<<<<<
@@ -6121,17 +6121,17 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu(Py
  *         return n
  */
     __Pyx_XDECREF((PyObject *)__pyx_r);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, ((PyObject *)__pyx_v_n)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, ((PyObject *)__pyx_v_n)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 71, __pyx_L1_error)
+    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 72, __pyx_L1_error)
     __pyx_r = ((PyArrayObject *)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "deeprai/engine/activation.pyx":70
+    /* "deeprai/engine/activation.pyx":71
  * #leaky relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):
  *     if n < 0:             # <<<<<<<<<<<<<<
@@ -6140,7 +6140,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu(Py
  */
   }
 
-  /* "deeprai/engine/activation.pyx":73
+  /* "deeprai/engine/activation.pyx":74
  *         return alpha * n
  *     else:
  *         return n             # <<<<<<<<<<<<<<
@@ -6154,7 +6154,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu(Py
     goto __pyx_L0;
   }
 
-  /* "deeprai/engine/activation.pyx":69
+  /* "deeprai/engine/activation.pyx":70
  * 
  * #leaky relu
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):             # <<<<<<<<<<<<<<
@@ -6183,7 +6183,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu(Py
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":74
+/* "deeprai/engine/activation.pyx":75
  *     else:
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):             # <<<<<<<<<<<<<<
@@ -6225,23 +6225,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu_de
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 74, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 75, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_x.diminfo[1].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_x.diminfo[1].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/activation.pyx":75
+  /* "deeprai/engine/activation.pyx":76
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, alpha)             # <<<<<<<<<<<<<<
  *     return dy_dx
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_where); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_where); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)__pyx_v_x), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)__pyx_v_x), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -6259,17 +6259,17 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu_de
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 3+__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 75, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 76, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_dy_dx = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 75, __pyx_L1_error)
+      __PYX_ERR(0, 76, __pyx_L1_error)
     } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_dy_dx.diminfo[1].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_dy_dx.diminfo[1].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -6277,7 +6277,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu_de
   __pyx_v_dy_dx = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/activation.pyx":76
+  /* "deeprai/engine/activation.pyx":77
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, alpha)
  *     return dy_dx             # <<<<<<<<<<<<<<
@@ -6289,7 +6289,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu_de
   __pyx_r = ((PyArrayObject *)__pyx_v_dy_dx);
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":74
+  /* "deeprai/engine/activation.pyx":75
  *     else:
  *         return n
  * cdef np.ndarray[np.float64_t, ndim=1] cython_leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):             # <<<<<<<<<<<<<<
@@ -6323,7 +6323,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_leaky_relu_de
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":79
+/* "deeprai/engine/activation.pyx":80
  * 
  * #Softmax
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax(np.ndarray[np.float64_t, ndim=1] arr):             # <<<<<<<<<<<<<<
@@ -6351,20 +6351,20 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax(PyArr
   __pyx_pybuffernd_arr.rcbuffer = &__pyx_pybuffer_arr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)__pyx_v_arr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 79, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)__pyx_v_arr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 80, __pyx_L1_error)
   }
   __pyx_pybuffernd_arr.diminfo[0].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_arr.diminfo[0].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":80
+  /* "deeprai/engine/activation.pyx":81
  * #Softmax
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax(np.ndarray[np.float64_t, ndim=1] arr):
  *     cdef e = np.exp(arr)             # <<<<<<<<<<<<<<
  *     return e / e.sum()
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_exp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_exp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -6383,14 +6383,14 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax(PyArr
     PyObject *__pyx_callargs[2] = {__pyx_t_2, ((PyObject *)__pyx_v_arr)};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __pyx_v_e = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/activation.pyx":81
+  /* "deeprai/engine/activation.pyx":82
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax(np.ndarray[np.float64_t, ndim=1] arr):
  *     cdef e = np.exp(arr)
  *     return e / e.sum()             # <<<<<<<<<<<<<<
@@ -6398,7 +6398,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax(PyArr
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_sum); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_sum); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = NULL;
   __pyx_t_4 = 0;
@@ -6416,19 +6416,19 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax(PyArr
     PyObject *__pyx_callargs[1] = {__pyx_t_2, };
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_v_e, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_v_e, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 81, __pyx_L1_error)
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 82, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":79
+  /* "deeprai/engine/activation.pyx":80
  * 
  * #Softmax
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax(np.ndarray[np.float64_t, ndim=1] arr):             # <<<<<<<<<<<<<<
@@ -6459,7 +6459,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax(PyArr
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":83
+/* "deeprai/engine/activation.pyx":84
  *     return e / e.sum()
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):             # <<<<<<<<<<<<<<
@@ -6497,20 +6497,20 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   __pyx_pybuffernd_y.rcbuffer = &__pyx_pybuffer_y;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 84, __pyx_L1_error)
   }
   __pyx_pybuffernd_y.diminfo[0].strides = __pyx_pybuffernd_y.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y.diminfo[0].shape = __pyx_pybuffernd_y.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_y.diminfo[1].strides = __pyx_pybuffernd_y.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_y.diminfo[1].shape = __pyx_pybuffernd_y.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/activation.pyx":84
+  /* "deeprai/engine/activation.pyx":85
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.diagflat(y) - np.dot(y[:,np.newaxis], y[np.newaxis,:])             # <<<<<<<<<<<<<<
  *     return dy_dx
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_diagflat); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_diagflat); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -6529,21 +6529,21 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
     PyObject *__pyx_callargs[2] = {__pyx_t_2, ((PyObject *)__pyx_v_y)};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_newaxis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_newaxis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
@@ -6551,15 +6551,15 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y), __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y), __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_newaxis); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_newaxis); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_7);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7);
@@ -6567,7 +6567,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_slice_);
   __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y), __pyx_t_2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y), __pyx_t_2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -6588,21 +6588,21 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
-  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 84, __pyx_L1_error)
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 85, __pyx_L1_error)
   __pyx_t_8 = ((PyArrayObject *)__pyx_t_5);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_dy_dx.rcbuffer->pybuffer, (PyObject*)__pyx_t_8, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_dy_dx = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 84, __pyx_L1_error)
+      __PYX_ERR(0, 85, __pyx_L1_error)
     } else {__pyx_pybuffernd_dy_dx.diminfo[0].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_dy_dx.diminfo[0].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_dy_dx.diminfo[1].strides = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_dy_dx.diminfo[1].shape = __pyx_pybuffernd_dy_dx.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -6610,7 +6610,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   __pyx_v_dy_dx = ((PyArrayObject *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "deeprai/engine/activation.pyx":85
+  /* "deeprai/engine/activation.pyx":86
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):
  *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.diagflat(y) - np.dot(y[:,np.newaxis], y[np.newaxis,:])
  *     return dy_dx             # <<<<<<<<<<<<<<
@@ -6622,7 +6622,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   __pyx_r = ((PyArrayObject *)__pyx_v_dy_dx);
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":83
+  /* "deeprai/engine/activation.pyx":84
  *     return e / e.sum()
  * 
  * cdef np.ndarray[np.float64_t, ndim=1] cython_softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):             # <<<<<<<<<<<<<<
@@ -6658,7 +6658,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_softmax_deriv
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":88
+/* "deeprai/engine/activation.pyx":89
  * 
  * #Sigmoid
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -6686,11 +6686,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_sigmoid(PyArr
   __pyx_pybuffernd_n.rcbuffer = &__pyx_pybuffer_n;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 88, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n.rcbuffer->pybuffer, (PyObject*)__pyx_v_n, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 89, __pyx_L1_error)
   }
   __pyx_pybuffernd_n.diminfo[0].strides = __pyx_pybuffernd_n.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n.diminfo[0].shape = __pyx_pybuffernd_n.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":89
+  /* "deeprai/engine/activation.pyx":90
  * #Sigmoid
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid(np.ndarray[np.float64_t, ndim=1] n):
  *     return 1.0 / (1.0 + np.exp(-n))             # <<<<<<<<<<<<<<
@@ -6698,12 +6698,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_sigmoid(PyArr
  *     return x * (1 - x)
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_exp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_exp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Negative(((PyObject *)__pyx_v_n)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Negative(((PyObject *)__pyx_v_n)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -6722,22 +6722,22 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_sigmoid(PyArr
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_3 = __Pyx_PyFloat_AddCObj(__pyx_float_1_0, __pyx_t_1, 1.0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyFloat_AddCObj(__pyx_float_1_0, __pyx_t_1, 1.0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyFloat_TrueDivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyFloat_TrueDivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 90, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":88
+  /* "deeprai/engine/activation.pyx":89
  * 
  * #Sigmoid
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
@@ -6768,7 +6768,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_sigmoid(PyArr
   return __pyx_r;
 }
 
-/* "deeprai/engine/activation.pyx":90
+/* "deeprai/engine/activation.pyx":91
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid(np.ndarray[np.float64_t, ndim=1] n):
  *     return 1.0 / (1.0 + np.exp(-n))
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
@@ -6793,28 +6793,28 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10activation_cython_sigmoid_deriv
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 90, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/activation.pyx":91
+  /* "deeprai/engine/activation.pyx":92
  *     return 1.0 / (1.0 + np.exp(-n))
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
  *     return x * (1 - x)             # <<<<<<<<<<<<<<
  * 
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(((PyObject *)__pyx_v_x), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(((PyObject *)__pyx_v_x), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 92, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/activation.pyx":90
+  /* "deeprai/engine/activation.pyx":91
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid(np.ndarray[np.float64_t, ndim=1] n):
  *     return 1.0 / (1.0 + np.exp(-n))
  * cdef np.ndarray[np.float64_t, ndim=1] cython_sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
@@ -8271,8 +8271,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "deeprai/engine/activation.pyx":10
  *     return np.tanh(n)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx
  */
   __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_x); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 10, __pyx_L1_error)
@@ -8357,18 +8357,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * #Sigmoid
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
  *     return 1.0 / (1.0 + np.exp(-n))
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ * 
  */
   __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_activation_pyx, __pyx_n_s_sigmoid, 44, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 44, __pyx_L1_error)
 
-  /* "deeprai/engine/activation.pyx":46
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
+  /* "deeprai/engine/activation.pyx":47
  *     return 1.0 / (1.0 + np.exp(-n))
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
  *     return x * (1 - x)
  * 
  */
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_activation_pyx, __pyx_n_s_sigmoid_derivative, 46, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_activation_pyx, __pyx_n_s_sigmoid_derivative, 47, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -8892,8 +8892,8 @@ if (!__Pyx_RefNanny) {
   /* "deeprai/engine/activation.pyx":10
  *     return np.tanh(n)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=2] x):             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = 1 - np.square(np.tanh(x))
+ * cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] dy_dx = 1 - np.square(np.tanh(x))
  *     return dy_dx
  */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_10activation_3tanh_derivative, 0, __pyx_n_s_tanh_derivative, NULL, __pyx_n_s_deeprai_engine_activation, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
@@ -8980,23 +8980,23 @@ if (!__Pyx_RefNanny) {
  * #Sigmoid
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):             # <<<<<<<<<<<<<<
  *     return 1.0 / (1.0 + np.exp(-n))
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):
+ * 
  */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_10activation_17sigmoid, 0, __pyx_n_s_sigmoid, NULL, __pyx_n_s_deeprai_engine_activation, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_sigmoid, __pyx_t_2) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "deeprai/engine/activation.pyx":46
- * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
+  /* "deeprai/engine/activation.pyx":47
  *     return 1.0 / (1.0 + np.exp(-n))
+ * 
  * cpdef np.ndarray[np.float64_t, ndim=1] sigmoid_derivative(np.ndarray[np.float64_t, ndim=1] x):             # <<<<<<<<<<<<<<
  *     return x * (1 - x)
  * 
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_10activation_19sigmoid_derivative, 0, __pyx_n_s_sigmoid_derivative, NULL, __pyx_n_s_deeprai_engine_activation, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_10activation_19sigmoid_derivative, 0, __pyx_n_s_sigmoid_derivative, NULL, __pyx_n_s_deeprai_engine_activation, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sigmoid_derivative, __pyx_t_2) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sigmoid_derivative, __pyx_t_2) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "deeprai/engine/activation.pyx":1

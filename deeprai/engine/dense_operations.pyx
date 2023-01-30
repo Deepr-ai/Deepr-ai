@@ -9,7 +9,7 @@ weights = WeightVals.Weights
 
 #PUBLIC FUNCTION
 cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list):
-    neurons[0] = inputs
+    neurons[0]= inputs
     # activation_list -> a list of lambda functions
     cdef np.ndarray[np.float64_t, ndim = 1] layer_outputs
     for layer, weight in enumerate(weights):
@@ -18,7 +18,8 @@ cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t
     return neurons[-1]
 
 cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list ):
-    cdef np.ndarray[np.float64_t, ndim = 1] delta, delta_reshape, current_reshaped
+    cdef np.ndarray[np.float64_t, ndim = 1] delta
+    cdef np.ndarray[np.float64_t, ndim = 2] delta_reshape, current_reshaped
     for layer in reversed(range(len(derv))):
         delta = loss * activation_derv_list[layer](neurons[layer+1])
         delta_reshape = delta.reshape(delta.shape[0], -1).T
