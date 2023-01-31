@@ -3,6 +3,12 @@ import numpy as np
 cimport numpy as np
 #Public Functions for python wrapper
 
+#none (input data)
+cpdef np.ndarray[np.float64_t, ndim=1] linear(np.ndarray[np.float64_t, ndim=1] n):
+    return n
+
+cpdef np.ndarray[np.float64_t, ndim=1] linear_derivative(np.ndarray[np.float64_t, ndim=1] x):
+    return np.ones_like(x)
 #tanh
 cpdef np.ndarray[np.float64_t, ndim=1] tanh(np.ndarray[np.float64_t, ndim=1] n):
     return np.tanh(n)
@@ -13,12 +19,10 @@ cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, 
 
 #relu
 cpdef np.ndarray[np.float64_t, ndim=1] relu(np.ndarray[np.float64_t, ndim=1] n):
-    if n < 0:
-        return 0
-    else:
-        return n
-cpdef np.ndarray[np.float64_t, ndim=1] relu_derivative(np.ndarray[np.float64_t, ndim=2] x):
-    cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, 0)
+    return np.maximum(n, 0)
+
+cpdef np.ndarray[np.float64_t, ndim=1] relu_derivative(np.ndarray[np.float64_t, ndim=1] x):
+    cdef np.ndarray[np.float64_t, ndim=1] dy_dx = np.where(x > 0, 1, 0).astype(np.float64)
     return dy_dx
 
 #leaky relu

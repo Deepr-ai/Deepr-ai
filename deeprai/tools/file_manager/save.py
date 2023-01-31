@@ -1,19 +1,19 @@
 from pyndb import PYNDatabase
-from deeprai.engine.base_layer import VelocityVals, WeightVals, NeuronVals, ActivationList, \
-    ActivationDerivativeList, DerivativeVals, Optimizer, Loss
+from deeprai.engine.base_layer import VelocityVals, WeightVals, NeuronVals, ActivationListString, \
+    ActivationDerivativeListString, DerivativeVals, OptimizerString, LossString
 class Save:
     def __init__(self, file_location):
         file_location = self.format_file(file_location)
-        self.db = PYNDatabase(file_location, filetype='pyndb')
+        self.db = PYNDatabase(file_location, filetype='pickled')
         self.FileLocation = file_location
         self.Velocity = VelocityVals.Velocities
         self.Weight = WeightVals.Weights
         self.NeuronVals = NeuronVals.Neurons
         self.Derivative = DerivativeVals.Derivatives
-        self.Activation = ActivationList
-        self.ActivationDerivative = ActivationDerivativeList
-        self.Optimizer = Optimizer
-        self.Loss = Loss
+        self.Activation = ActivationListString
+        self.ActivationDerivative = ActivationDerivativeListString
+        # self.Optimizer = OptimizerString
+        self.Loss = LossString
 
     def save(self):
         self.db.set("Velocity",self.Velocity)
@@ -22,7 +22,7 @@ class Save:
         self.db.set("Derivative", self.Derivative)
         self.db.set("Activation", self.Activation)
         self.db.set("ActivationDerivative", self.ActivationDerivative)
-        self.db.set("Optimizer", self.Optimizer)
+        # self.db.set("Optimizer", self.Optimizer)
         self.db.set("Loss", self.Loss)
         self.db.save(self.FileLocation)
 

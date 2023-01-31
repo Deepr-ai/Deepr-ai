@@ -77,6 +77,9 @@ DerivativeVals = Derivative()
 VelocityVals = Velocity()
 ActivationList = []
 ActivationDerivativeList = []
-Optimizer = ['gradient decent']
-Loss = ['mean square error']
-
+ActivationListString = []
+ActivationDerivativeListString = []
+OptimizerString = ['gradient decent']
+LossString = ['mean square error']
+Loss = []
+Optimizer = []
