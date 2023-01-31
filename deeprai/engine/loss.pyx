@@ -10,7 +10,7 @@ cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, 
 cpdef float mean_square_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
     return np.mean((targets - outputs)**2)
 
-cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
+cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
     return np.mean(np.abs(outputs-targets))
 
 #PRIVATE FUNCTIONS

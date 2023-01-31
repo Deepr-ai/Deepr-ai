@@ -26,6 +26,6 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                 opti.gradient_descent(learning_rate)
                 sum_error += loss_function[0](output, target)
         if verbose:
-            print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+            print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
     print("Training complete!")
 

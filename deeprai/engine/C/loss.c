@@ -1742,6 +1742,11 @@ static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
 /* BufferFallbackError.proto */
 static void __Pyx_RaiseBufferFallbackError(void);
 
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
+
 /* TupleAndListFromArray.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n);
@@ -1802,11 +1807,6 @@ static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject *const *kwvalues
     ((likely(__Pyx_IS_TYPE(obj, type) | (none_allowed && (obj == Py_None)))) ? 1 :\
         __Pyx__ArgTypeTest(obj, type, name, exact))
 static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
 
 /* GetTopmostException.proto */
 #if CYTHON_USE_EXC_INFO_STACK
@@ -2245,9 +2245,9 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 /* Module declarations from "deeprai.engine.loss" */
 #if !CYTHON_USE_MODULE_STATE
 #endif
-static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
+static float __pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
 static float __pyx_f_7deeprai_6engine_4loss_mean_square_error(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
-static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
+static float __pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
 /* #### Code section: typeinfo ### */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
 /* #### Code section: before_global_var ### */
@@ -2638,9 +2638,9 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 /* "deeprai/engine/loss.pyx":5
  * 
  * #PUBLIC FUNCTIONS
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  */
 
 static PyObject *__pyx_pw_7deeprai_6engine_4loss_1categorical_cross_entropy(PyObject *__pyx_self, 
@@ -2650,15 +2650,13 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(PyArrayObject *__pyx_v_outputs, PyArrayObject *__pyx_v_targets, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  PyArrayObject *__pyx_v_cross_entropy = 0;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_cross_entropy;
-  __Pyx_Buffer __pyx_pybuffer_cross_entropy;
+static float __pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(PyArrayObject *__pyx_v_outputs, PyArrayObject *__pyx_v_targets, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  float __pyx_v_cross_entropy;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_outputs;
   __Pyx_Buffer __pyx_pybuffer_outputs;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_targets;
   __Pyx_Buffer __pyx_pybuffer_targets;
-  PyArrayObject *__pyx_r = NULL;
+  float __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -2671,16 +2669,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(P
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
-  PyArrayObject *__pyx_t_12 = NULL;
+  float __pyx_t_12;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("categorical_cross_entropy", 0);
   __Pyx_INCREF((PyObject *)__pyx_v_outputs);
-  __pyx_pybuffer_cross_entropy.pybuffer.buf = NULL;
-  __pyx_pybuffer_cross_entropy.refcount = 0;
-  __pyx_pybuffernd_cross_entropy.data = NULL;
-  __pyx_pybuffernd_cross_entropy.rcbuffer = &__pyx_pybuffer_cross_entropy;
   __pyx_pybuffer_outputs.pybuffer.buf = NULL;
   __pyx_pybuffer_outputs.refcount = 0;
   __pyx_pybuffernd_outputs.data = NULL;
@@ -2702,9 +2696,9 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(P
 
   /* "deeprai/engine/loss.pyx":6
  * #PUBLIC FUNCTIONS
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  *     return cross_entropy
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
@@ -2759,9 +2753,9 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(P
   __pyx_t_1 = 0;
 
   /* "deeprai/engine/loss.pyx":7
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]             # <<<<<<<<<<<<<<
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]             # <<<<<<<<<<<<<<
  *     return cross_entropy
  * 
  */
@@ -2831,38 +2825,26 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(P
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_10) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_10, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 7, __pyx_L1_error)
-  __pyx_t_12 = ((PyArrayObject *)__pyx_t_10);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer, (PyObject*)__pyx_t_12, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_cross_entropy = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 7, __pyx_L1_error)
-    } else {__pyx_pybuffernd_cross_entropy.diminfo[0].strides = __pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_cross_entropy.diminfo[0].shape = __pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer.shape[0];
-    }
-  }
-  __pyx_t_12 = 0;
-  __pyx_v_cross_entropy = ((PyArrayObject *)__pyx_t_10);
-  __pyx_t_10 = 0;
+  __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_10); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_v_cross_entropy = __pyx_t_12;
 
   /* "deeprai/engine/loss.pyx":8
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  *     return cross_entropy             # <<<<<<<<<<<<<<
  * 
  * cpdef float mean_square_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  */
-  __Pyx_XDECREF((PyObject *)__pyx_r);
-  __Pyx_INCREF((PyObject *)__pyx_v_cross_entropy);
-  __pyx_r = ((PyArrayObject *)__pyx_v_cross_entropy);
+  __pyx_r = __pyx_v_cross_entropy;
   goto __pyx_L0;
 
   /* "deeprai/engine/loss.pyx":5
  * 
  * #PUBLIC FUNCTIONS
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  */
 
   /* function exit code */
@@ -2877,21 +2859,17 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(P
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_outputs.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("deeprai.engine.loss.categorical_cross_entropy", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_WriteUnraisable("deeprai.engine.loss.categorical_cross_entropy", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_cross_entropy.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_outputs.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_cross_entropy);
   __Pyx_XDECREF((PyObject *)__pyx_v_outputs);
-  __Pyx_XGIVEREF((PyObject *)__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3020,7 +2998,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_4loss_categorical_cross_entropy(CYTHO
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(__pyx_v_outputs, __pyx_v_targets, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_7deeprai_6engine_4loss_categorical_cross_entropy(__pyx_v_outputs, __pyx_v_targets, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3104,7 +3082,7 @@ static float __pyx_f_7deeprai_6engine_4loss_mean_square_error(PyArrayObject *__p
  * cpdef float mean_square_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  *     return np.mean((targets - outputs)**2)             # <<<<<<<<<<<<<<
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3329,7 +3307,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_4loss_2mean_square_error(CYTHON_UNUSE
 /* "deeprai/engine/loss.pyx":13
  *     return np.mean((targets - outputs)**2)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     return np.mean(np.abs(outputs-targets))
  * 
  */
@@ -3341,12 +3319,12 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArrayObject *__pyx_v_outputs, PyArrayObject *__pyx_v_targets, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static float __pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArrayObject *__pyx_v_outputs, PyArrayObject *__pyx_v_targets, CYTHON_UNUSED int __pyx_skip_dispatch) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_outputs;
   __Pyx_Buffer __pyx_pybuffer_outputs;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_targets;
   __Pyx_Buffer __pyx_pybuffer_targets;
-  PyArrayObject *__pyx_r = NULL;
+  float __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3355,6 +3333,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArray
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
+  float __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3380,12 +3359,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArray
 
   /* "deeprai/engine/loss.pyx":14
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):
  *     return np.mean(np.abs(outputs-targets))             # <<<<<<<<<<<<<<
  * 
  * #PRIVATE FUNCTIONS
  */
-  __Pyx_XDECREF((PyObject *)__pyx_r);
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_mean); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 14, __pyx_L1_error)
@@ -3440,15 +3418,15 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArray
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 14, __pyx_L1_error)
-  __pyx_r = ((PyArrayObject *)__pyx_t_1);
-  __pyx_t_1 = 0;
+  __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_8;
   goto __pyx_L0;
 
   /* "deeprai/engine/loss.pyx":13
  *     return np.mean((targets - outputs)**2)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     return np.mean(np.abs(outputs-targets))
  * 
  */
@@ -3468,14 +3446,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(PyArray
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_outputs.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("deeprai.engine.loss.mean_absolute_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_WriteUnraisable("deeprai.engine.loss.mean_absolute_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_outputs.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XGIVEREF((PyObject *)__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3604,7 +3581,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_4loss_4mean_absolute_error(CYTHON_UNU
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(__pyx_v_outputs, __pyx_v_targets, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_7deeprai_6engine_4loss_mean_absolute_error(__pyx_v_outputs, __pyx_v_targets, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5526,9 +5503,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "deeprai/engine/loss.pyx":5
  * 
  * #PUBLIC FUNCTIONS
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  */
   __pyx_tuple__4 = PyTuple_Pack(2, __pyx_n_s_outputs, __pyx_n_s_targets); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
@@ -5547,7 +5524,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "deeprai/engine/loss.pyx":13
  *     return np.mean((targets - outputs)**2)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     return np.mean(np.abs(outputs-targets))
  * 
  */
@@ -6037,9 +6014,9 @@ if (!__Pyx_RefNanny) {
   /* "deeprai/engine/loss.pyx":5
  * 
  * #PUBLIC FUNCTIONS
- * cpdef np.ndarray[np.float64_t, ndim=1] categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float categorical_cross_entropy(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     outputs = np.clip(outputs, 1e-7, 1. - 1e-7)
- *     cdef np.ndarray[np.float64_t, ndim=1] cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
+ *     cdef float cross_entropy = -np.sum(targets * np.log(outputs + 1e-9)) / outputs.shape[0]
  */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_4loss_1categorical_cross_entropy, 0, __pyx_n_s_categorical_cross_entropy, NULL, __pyx_n_s_deeprai_engine_loss, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -6061,7 +6038,7 @@ if (!__Pyx_RefNanny) {
   /* "deeprai/engine/loss.pyx":13
  *     return np.mean((targets - outputs)**2)
  * 
- * cpdef np.ndarray[np.float64_t, ndim=1] mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
+ * cpdef float mean_absolute_error(np.ndarray[np.float64_t, ndim=1] outputs, np.ndarray[np.float64_t, ndim=1] targets):             # <<<<<<<<<<<<<<
  *     return np.mean(np.abs(outputs-targets))
  * 
  */
@@ -7138,6 +7115,52 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_FastCallDict(PyObject *func, PyObj
      "Buffer acquisition failed on assignment; and then reacquiring the old buffer failed too!");
 }
 
+/* WriteUnraisableException */
+  static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    CYTHON_UNUSED_VAR(clineno);
+    CYTHON_UNUSED_VAR(lineno);
+    CYTHON_UNUSED_VAR(filename);
+    CYTHON_MAYBE_UNUSED_VAR(nogil);
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
+}
+
 /* TupleAndListFromArray */
   #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE void __Pyx_copy_object_array(PyObject *const *CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
@@ -7526,52 +7549,6 @@ bad:
     __Pyx_DECREF_TypeName(type_name);
     __Pyx_DECREF_TypeName(obj_type_name);
     return 0;
-}
-
-/* WriteUnraisableException */
-  static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    CYTHON_UNUSED_VAR(clineno);
-    CYTHON_UNUSED_VAR(lineno);
-    CYTHON_UNUSED_VAR(filename);
-    CYTHON_MAYBE_UNUSED_VAR(nogil);
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
 }
 
 /* GetTopmostException */

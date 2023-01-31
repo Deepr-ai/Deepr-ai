@@ -2368,7 +2368,7 @@ static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_inputs[] = "inputs";
 static const char __pyx_k_targets[] = "targets";
 static const char __pyx_k_verbose[] = "verbose";
-static const char __pyx_k_at_epoch[] = " at epoch";
+static const char __pyx_k_at_epoch[] = " at epoch: ";
 static const char __pyx_k_momentum[] = "momentum";
 static const char __pyx_k_activation[] = "activation";
 static const char __pyx_k_batch_size[] = "batch_size";
@@ -3397,7 +3397,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
  *                 opti.gradient_descent(learning_rate)
  *                 sum_error += loss_function[0](output, target)             # <<<<<<<<<<<<<<
  *         if verbose:
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
  */
         __pyx_t_8 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 27, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
@@ -3459,7 +3459,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
  *                 opti.gradient_descent(learning_rate)
  *                 sum_error += loss_function[0](output, target)
  *         if verbose:             # <<<<<<<<<<<<<<
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
  *     print("Training complete!")
  */
     __pyx_t_22 = (__pyx_v_verbose != 0);
@@ -3468,7 +3468,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
       /* "deeprai/engine/dense_train_loop.pyx":29
  *                 sum_error += loss_function[0](output, target)
  *         if verbose:
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")             # <<<<<<<<<<<<<<
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")             # <<<<<<<<<<<<<<
  *     print("Training complete!")
  * 
  */
@@ -3496,7 +3496,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
       PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_17);
       __pyx_t_17 = 0;
       __Pyx_INCREF(__pyx_kp_u_at_epoch);
-      __pyx_t_6 += 9;
+      __pyx_t_6 += 11;
       __Pyx_GIVEREF(__pyx_kp_u_at_epoch);
       PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_kp_u_at_epoch);
       __pyx_t_17 = __Pyx_PyInt_AddObjC(__pyx_v_epoch, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 29, __pyx_L1_error)
@@ -3521,7 +3521,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
  *                 opti.gradient_descent(learning_rate)
  *                 sum_error += loss_function[0](output, target)
  *         if verbose:             # <<<<<<<<<<<<<<
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
  *     print("Training complete!")
  */
     }
@@ -3538,7 +3538,7 @@ static PyObject *__pyx_f_7deeprai_6engine_16dense_train_loop_train(PyArrayObject
 
   /* "deeprai/engine/dense_train_loop.pyx":30
  *         if verbose:
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
  *     print("Training complete!")             # <<<<<<<<<<<<<<
  * 
  */
@@ -5243,7 +5243,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
   /* "deeprai/engine/dense_train_loop.pyx":30
  *         if verbose:
- *             print(f"Cost: {sum_error/(len(inputs))} at epoch{epoch +1}")
+ *             print(f"Cost: {sum_error/(len(inputs))} at epoch: {epoch +1}")
  *     print("Training complete!")             # <<<<<<<<<<<<<<
  * 
  */

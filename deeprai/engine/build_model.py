@@ -1,6 +1,7 @@
 from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, NeuronVals, DerivativeVals
 import deeprai.engine.cython.activation as act
 import numpy as np
+
 class Build:
     def __init__(self):
         self.NetworkQueue = []
@@ -19,7 +20,6 @@ class Build:
         return local_kernels
     def create_pool(self):
         pass
-
     def create_dense(self, size, activation='sigmoid'):
         #creats activation map
         ActivationList.append(lambda n: self.activationMap[activation](n))

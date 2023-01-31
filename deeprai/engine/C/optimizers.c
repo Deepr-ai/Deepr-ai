@@ -2562,6 +2562,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_10optimizers_gradient_descent(flo
  *     for layer in range(len(WeightVals.Weights)):
  *         WeightVals.Weights[layer] += DerivativeVals.Derivatives[layer] * learning_rate             # <<<<<<<<<<<<<<
  * 
+ * # cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate, float momentum):
  */
     __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);

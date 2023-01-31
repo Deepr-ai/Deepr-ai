@@ -2,7 +2,6 @@ import numpy as np
 cimport numpy as np
 from deeprai.engine.cython import activation as act
 from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
-
 neurons = NeuronVals.Neurons
 derv = DerivativeVals.Derivatives
 weights = WeightVals.Weights
@@ -16,7 +15,6 @@ cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t
         layer_outputs = np.dot(neurons[layer], weight)
         neurons[layer+1] = activation_list[layer](layer_outputs)
     return neurons[-1]
-
 cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list ):
     cdef np.ndarray[np.float64_t, ndim = 1] delta
     cdef np.ndarray[np.float64_t, ndim = 2] delta_reshape, current_reshaped
