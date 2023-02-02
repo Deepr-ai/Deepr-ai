@@ -39,7 +39,7 @@ setup(
         'cython',
         'numpy',
         'pyndb',
-        'alive-progress',
+        'alive_progress',
         'colorama'
     ],
 classifiers=["Programming Language :: Python :: 3",
