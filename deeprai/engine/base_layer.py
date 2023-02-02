@@ -1,4 +1,4 @@
-"""Keeps track of the networks values"""
+"""Keeps track of the network's values"""
 import numpy as np
 class Layer:
     def __init__(self):
@@ -81,5 +81,5 @@ ActivationListString = []
 ActivationDerivativeListString = []
 OptimizerString = ['gradient decent']
 LossString = ['mean square error']
-Loss = []
+Loss = [[]]
 Optimizer = []

@@ -4,15 +4,14 @@ import deeprai.engine.cython.activation as act
 from deeprai.engine.cython import optimizers as opt
 from deeprai.engine.cython import loss as lossFunc
 import numpy as np
-
 class Build:
     def __init__(self):
         self.NetworkQueue = []
-        self.activationMap = {"tanh":act.tanh,"relu":act.relu,"leaky relu":act.leaky_relu, "softmax":act.softmax,
-                              "sigmoid":act.sigmoid, "liner":act.linear_derivative}
+        self.activationMap = {"tanh":act.tanh,"relu":act.relu,"leaky relu":act.leaky_relu,
+                              "sigmoid":act.sigmoid, "linear":act.linear}
         self.activationDerivativeMap = {"tanh":act.tanh_derivative,"relu":act.relu_derivative,
-                                        "leaky relu":act.leaky_relu_derivative, "softmax":act.softmax_derivative,
-                                        "sigmoid":act.sigmoid_derivative,"liner":act.linear_derivative}
+                                        "leaky relu":act.leaky_relu_derivative,
+                                        "sigmoid":act.sigmoid_derivative,"linear":act.linear_derivative}
         self.OptimizerMap = {"gradient decent": opt.gradient_descent}
         self.LossMap = {'mean square error': lossFunc.mean_square_error, "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}
@@ -27,11 +26,13 @@ class Build:
     def create_pool(self):
         pass
 
-    def convert_activations(self, activation): ActivationList.append(lambda n: self.activationMap[activation](n))
+    def convert_activations(self, activation):
+        print(activation)
+        ActivationList.append(lambda n: self.activationMap[activation](n))
 
     def convert_derivatives(self, activation): ActivationDerivativeList.append(lambda n: self.activationDerivativeMap[activation](n))
 
-    def convert_loss(self, lossF): Loss.append(lambda o,t: self.LossMap[lossF[0]](o,t))
+    def convert_loss(self, lossF): Loss[0]=(lambda o,t: self.LossMap[lossF[0]](o,t))
 
     def create_dense(self, size, activation='sigmoid'):
         #creats activation map
@@ -48,7 +49,8 @@ class Build:
             WeightVals.add(np.random.rand(layers[-2], layers[-1]) * np.sqrt(2 / (layers[-2] + layers[-1])))
             DerivativeVals.add(np.zeros((layers[-2], layers[-1])))
         except IndexError:
-            pass
+            del ActivationList[0]
+            del ActivationDerivativeList[0]
             #input neuron
 
     def create_flat(self):

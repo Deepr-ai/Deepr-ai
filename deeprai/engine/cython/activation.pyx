@@ -5,10 +5,10 @@ cimport numpy as np
 
 #none (input data)
 cpdef np.ndarray[np.float64_t, ndim=1] linear(np.ndarray[np.float64_t, ndim=1] n):
-    return n
+    return n*1
 
 cpdef np.ndarray[np.float64_t, ndim=1] linear_derivative(np.ndarray[np.float64_t, ndim=1] x):
-    return np.ones_like(x)
+    return x**0
 #tanh
 cpdef np.ndarray[np.float64_t, ndim=1] tanh(np.ndarray[np.float64_t, ndim=1] n):
     return np.tanh(n)
@@ -27,22 +27,28 @@ cpdef np.ndarray[np.float64_t, ndim=1] relu_derivative(np.ndarray[np.float64_t, 
 
 #leaky relu
 cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):
-    if n < 0:
-        return alpha * n
-    else:
-        return n
-cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu_derivative(np.ndarray[np.float64_t, ndim=2] x, alpha=0.01):
-    cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.where(x > 0, 1, alpha)
+    return np.where(n >= 0, n, alpha * n)
+
+cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu_derivative(np.ndarray[np.float64_t, ndim=1] x, alpha=0.01):
+    cdef np.ndarray[np.float64_t, ndim=1] dy_dx = np.where(x > 0, 1, alpha)
     return dy_dx
 
-#Softmax
-cpdef np.ndarray[np.float64_t, ndim=1] softmax(np.ndarray[np.float64_t, ndim=1] arr):
-    cdef e = np.exp(arr)
-    return e / e.sum()
-
-cpdef np.ndarray[np.float64_t, ndim=1] softmax_derivative(np.ndarray[np.float64_t, ndim=2] y):
-    cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.diagflat(y) - np.dot(y[:,np.newaxis], y[np.newaxis,:])
-    return dy_dx
+# #Softmax
+# cpdef np.ndarray[np.float64_t, ndim=1] softmax(np.ndarray[np.float64_t, ndim=1] x):
+#     cdef np.ndarray[np.float64_t, ndim=1] exp_x = np.exp(x)
+#     cdef np.float64_t sum_exp_x = np.sum(exp_x)
+#     return exp_x / sum_exp_x
+#
+# cpdef np.ndarray[np.float64_t, ndim=1] softmax_derivative(np.ndarray[np.float64_t, ndim=1] y):
+#     cdef int n = y.shape[0]
+#     cdef np.ndarray[np.float64_t, ndim=2] dy_dx = np.zeros((n, n))
+#     for i in range(n):
+#         for j in range(n):
+#             if i == j:
+#                 dy_dx[i, j] = y[i] * (1 - y[j])
+#             else:
+#                 dy_dx[i, j] = -y[i] * y[j]
+#     return dy_dx.ravel()
 
 #Sigmoid
 cpdef np.ndarray[np.float64_t, ndim=1] sigmoid(np.ndarray[np.float64_t, ndim=1] n):
