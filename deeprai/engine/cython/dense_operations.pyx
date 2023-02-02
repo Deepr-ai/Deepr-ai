@@ -37,6 +37,7 @@ cdef np.ndarray[np.float64_t, ndim=1] cython_back_propagate(np.ndarray[np.float6
         derv[layer] = np.dot(current_reshaped, delta_reshape)
         loss = np.dot(delta, weights[layer].T)
 
+
 cdef np.ndarray[np.float64_t, ndim=1] cython_forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list):
     neurons[0] = inputs
     # activation_list -> a list of lambda functions
