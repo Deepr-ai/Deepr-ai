@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "dense_train_loop",
+        "name": "deeprai.engine.cython.dense_train_loop",
         "sources": [
             "deeprai/engine/cython/dense_train_loop.pyx"
         ]
     },
-    "module_name": "dense_train_loop"
+    "module_name": "deeprai.engine.cython.dense_train_loop"
 }
 END: Cython Metadata */
 
@@ -944,8 +944,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__dense_train_loop
-#define __PYX_HAVE_API__dense_train_loop
+#define __PYX_HAVE__deeprai__engine__cython__dense_train_loop
+#define __PYX_HAVE_API__deeprai__engine__cython__dense_train_loop
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1704,6 +1704,9 @@ static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_ve
 static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
 #endif
 
+/* RaiseUnexpectedTypeError.proto */
+static int __Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj);
+
 /* PyObjectCall.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
@@ -2335,18 +2338,18 @@ static PyTypeObject *__pyx_ptype_5numpy_character = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 #endif
 
-/* Module declarations from "dense_train_loop" */
+/* Module declarations from "deeprai.engine.cython.dense_train_loop" */
 #if !CYTHON_USE_MODULE_STATE
 #endif
-static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *, PyArrayObject *, int, float, float, PyObject *, PyObject *, PyObject *, int, int, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArrayObject *, PyArrayObject *, int, float, float, PyObject *, PyObject *, PyObject *, int, int, int __pyx_skip_dispatch); /*proto*/
 /* #### Code section: typeinfo ### */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "dense_train_loop"
-extern int __pyx_module_is_main_dense_train_loop;
-int __pyx_module_is_main_dense_train_loop = 0;
+#define __Pyx_MODULE_NAME "deeprai.engine.cython.dense_train_loop"
+extern int __pyx_module_is_main_deeprai__engine__cython__dense_train_loop;
+int __pyx_module_is_main_deeprai__engine__cython__dense_train_loop = 0;
 
-/* Implementation of "dense_train_loop" */
+/* Implementation of "deeprai.engine.cython.dense_train_loop" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_zip;
@@ -2378,6 +2381,8 @@ static const char __pyx_k_waves[] = "waves";
 static const char __pyx_k_epochs[] = "epochs";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_inputs[] = "inputs";
+static const char __pyx_k_Neurons[] = "Neurons";
+static const char __pyx_k_Weights[] = "Weights";
 static const char __pyx_k_spinner[] = "spinner";
 static const char __pyx_k_targets[] = "targets";
 static const char __pyx_k_verbose[] = "verbose";
@@ -2385,20 +2390,22 @@ static const char __pyx_k_Training[] = "Training";
 static const char __pyx_k_momentum[] = "momentum";
 static const char __pyx_k_alive_bar[] = "alive_bar";
 static const char __pyx_k_dual_line[] = "dual_line";
-static const char __pyx_k_force_tty[] = "force_tty";
+static const char __pyx_k_NeuronVals[] = "NeuronVals";
+static const char __pyx_k_WeightVals[] = "WeightVals";
 static const char __pyx_k_activation[] = "activation";
 static const char __pyx_k_batch_size[] = "batch_size";
 static const char __pyx_k_optimizers[] = "optimizers";
+static const char __pyx_k_Derivatives[] = "Derivatives";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_class_getitem[] = "__class_getitem__";
 static const char __pyx_k_learning_rate[] = "learning_rate";
 static const char __pyx_k_loss_function[] = "loss_function";
+static const char __pyx_k_DerivativeVals[] = "DerivativeVals";
 static const char __pyx_k_alive_progress[] = "alive_progress";
 static const char __pyx_k_back_propagate[] = "back_propagate";
 static const char __pyx_k_activation_list[] = "activation_list";
-static const char __pyx_k_dense_train_loop[] = "dense_train_loop";
 static const char __pyx_k_gradient_descent[] = "gradient_descent";
 static const char __pyx_k_Training_complete[] = "Training complete!";
 static const char __pyx_k_forward_propagate[] = "forward_propagate";
@@ -2406,15 +2413,23 @@ static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_activation_derv_list[] = "activation_derv_list";
 static const char __pyx_k_deeprai_engine_cython[] = "deeprai.engine.cython";
+static const char __pyx_k_deeprai_engine_base_layer[] = "deeprai.engine.base_layer";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_deeprai_engine_cython_dense_oper[] = "deeprai.engine.cython.dense_operations";
 static const char __pyx_k_deeprai_engine_cython_dense_trai[] = "deeprai/engine/cython/dense_train_loop.pyx";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
+static const char __pyx_k_deeprai_engine_cython_dense_trai_2[] = "deeprai.engine.cython.dense_train_loop";
 #if !CYTHON_USE_MODULE_STATE
 static PyObject *__pyx_kp_u_Cost;
+static PyObject *__pyx_n_s_DerivativeVals;
+static PyObject *__pyx_n_s_Derivatives;
 static PyObject *__pyx_n_s_ImportError;
+static PyObject *__pyx_n_s_NeuronVals;
+static PyObject *__pyx_n_s_Neurons;
 static PyObject *__pyx_n_s_Training;
 static PyObject *__pyx_kp_s_Training_complete;
+static PyObject *__pyx_n_s_WeightVals;
+static PyObject *__pyx_n_s_Weights;
 static PyObject *__pyx_n_s__5;
 static PyObject *__pyx_kp_u__6;
 static PyObject *__pyx_n_s__9;
@@ -2429,15 +2444,15 @@ static PyObject *__pyx_n_s_back_propagate;
 static PyObject *__pyx_n_s_batch_size;
 static PyObject *__pyx_n_s_class_getitem;
 static PyObject *__pyx_n_s_cline_in_traceback;
+static PyObject *__pyx_n_s_deeprai_engine_base_layer;
 static PyObject *__pyx_n_s_deeprai_engine_cython;
 static PyObject *__pyx_n_s_deeprai_engine_cython_dense_oper;
 static PyObject *__pyx_kp_s_deeprai_engine_cython_dense_trai;
-static PyObject *__pyx_n_s_dense_train_loop;
+static PyObject *__pyx_n_s_deeprai_engine_cython_dense_trai_2;
 static PyObject *__pyx_n_s_dual_line;
 static PyObject *__pyx_n_s_enter;
 static PyObject *__pyx_n_s_epochs;
 static PyObject *__pyx_n_s_exit;
-static PyObject *__pyx_n_s_force_tty;
 static PyObject *__pyx_n_s_forward_propagate;
 static PyObject *__pyx_n_s_gradient_descent;
 static PyObject *__pyx_n_s_import;
@@ -2470,7 +2485,7 @@ static PyObject *__pyx_n_s_waves;
 static PyObject *__pyx_n_s_zip;
 #endif
 /* #### Code section: decls ### */
-static PyObject *__pyx_pf_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size); /* proto */
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size); /* proto */
 #if !CYTHON_USE_MODULE_STATE
 #endif
 #if !CYTHON_USE_MODULE_STATE
@@ -2514,9 +2529,15 @@ typedef struct {
   PyTypeObject *__pyx_ptype_5numpy_character;
   PyTypeObject *__pyx_ptype_5numpy_ufunc;
   PyObject *__pyx_kp_u_Cost;
+  PyObject *__pyx_n_s_DerivativeVals;
+  PyObject *__pyx_n_s_Derivatives;
   PyObject *__pyx_n_s_ImportError;
+  PyObject *__pyx_n_s_NeuronVals;
+  PyObject *__pyx_n_s_Neurons;
   PyObject *__pyx_n_s_Training;
   PyObject *__pyx_kp_s_Training_complete;
+  PyObject *__pyx_n_s_WeightVals;
+  PyObject *__pyx_n_s_Weights;
   PyObject *__pyx_n_s__5;
   PyObject *__pyx_kp_u__6;
   PyObject *__pyx_n_s__9;
@@ -2531,15 +2552,15 @@ typedef struct {
   PyObject *__pyx_n_s_batch_size;
   PyObject *__pyx_n_s_class_getitem;
   PyObject *__pyx_n_s_cline_in_traceback;
+  PyObject *__pyx_n_s_deeprai_engine_base_layer;
   PyObject *__pyx_n_s_deeprai_engine_cython;
   PyObject *__pyx_n_s_deeprai_engine_cython_dense_oper;
   PyObject *__pyx_kp_s_deeprai_engine_cython_dense_trai;
-  PyObject *__pyx_n_s_dense_train_loop;
+  PyObject *__pyx_n_s_deeprai_engine_cython_dense_trai_2;
   PyObject *__pyx_n_s_dual_line;
   PyObject *__pyx_n_s_enter;
   PyObject *__pyx_n_s_epochs;
   PyObject *__pyx_n_s_exit;
-  PyObject *__pyx_n_s_force_tty;
   PyObject *__pyx_n_s_forward_propagate;
   PyObject *__pyx_n_s_gradient_descent;
   PyObject *__pyx_n_s_import;
@@ -2626,9 +2647,15 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_character);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ufunc);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Cost);
+  Py_CLEAR(clear_module_state->__pyx_n_s_DerivativeVals);
+  Py_CLEAR(clear_module_state->__pyx_n_s_Derivatives);
   Py_CLEAR(clear_module_state->__pyx_n_s_ImportError);
+  Py_CLEAR(clear_module_state->__pyx_n_s_NeuronVals);
+  Py_CLEAR(clear_module_state->__pyx_n_s_Neurons);
   Py_CLEAR(clear_module_state->__pyx_n_s_Training);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Training_complete);
+  Py_CLEAR(clear_module_state->__pyx_n_s_WeightVals);
+  Py_CLEAR(clear_module_state->__pyx_n_s_Weights);
   Py_CLEAR(clear_module_state->__pyx_n_s__5);
   Py_CLEAR(clear_module_state->__pyx_kp_u__6);
   Py_CLEAR(clear_module_state->__pyx_n_s__9);
@@ -2643,15 +2670,15 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_batch_size);
   Py_CLEAR(clear_module_state->__pyx_n_s_class_getitem);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
+  Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_base_layer);
   Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_cython_dense_oper);
   Py_CLEAR(clear_module_state->__pyx_kp_s_deeprai_engine_cython_dense_trai);
-  Py_CLEAR(clear_module_state->__pyx_n_s_dense_train_loop);
+  Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_cython_dense_trai_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_dual_line);
   Py_CLEAR(clear_module_state->__pyx_n_s_enter);
   Py_CLEAR(clear_module_state->__pyx_n_s_epochs);
   Py_CLEAR(clear_module_state->__pyx_n_s_exit);
-  Py_CLEAR(clear_module_state->__pyx_n_s_force_tty);
   Py_CLEAR(clear_module_state->__pyx_n_s_forward_propagate);
   Py_CLEAR(clear_module_state->__pyx_n_s_gradient_descent);
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
@@ -2725,9 +2752,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_character);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ufunc);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Cost);
+  Py_VISIT(traverse_module_state->__pyx_n_s_DerivativeVals);
+  Py_VISIT(traverse_module_state->__pyx_n_s_Derivatives);
   Py_VISIT(traverse_module_state->__pyx_n_s_ImportError);
+  Py_VISIT(traverse_module_state->__pyx_n_s_NeuronVals);
+  Py_VISIT(traverse_module_state->__pyx_n_s_Neurons);
   Py_VISIT(traverse_module_state->__pyx_n_s_Training);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Training_complete);
+  Py_VISIT(traverse_module_state->__pyx_n_s_WeightVals);
+  Py_VISIT(traverse_module_state->__pyx_n_s_Weights);
   Py_VISIT(traverse_module_state->__pyx_n_s__5);
   Py_VISIT(traverse_module_state->__pyx_kp_u__6);
   Py_VISIT(traverse_module_state->__pyx_n_s__9);
@@ -2742,15 +2775,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_batch_size);
   Py_VISIT(traverse_module_state->__pyx_n_s_class_getitem);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
+  Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_base_layer);
   Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_cython_dense_oper);
   Py_VISIT(traverse_module_state->__pyx_kp_s_deeprai_engine_cython_dense_trai);
-  Py_VISIT(traverse_module_state->__pyx_n_s_dense_train_loop);
+  Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_cython_dense_trai_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_dual_line);
   Py_VISIT(traverse_module_state->__pyx_n_s_enter);
   Py_VISIT(traverse_module_state->__pyx_n_s_epochs);
   Py_VISIT(traverse_module_state->__pyx_n_s_exit);
-  Py_VISIT(traverse_module_state->__pyx_n_s_force_tty);
   Py_VISIT(traverse_module_state->__pyx_n_s_forward_propagate);
   Py_VISIT(traverse_module_state->__pyx_n_s_gradient_descent);
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
@@ -2821,9 +2854,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_ptype_5numpy_character __pyx_mstate_global->__pyx_ptype_5numpy_character
 #define __pyx_ptype_5numpy_ufunc __pyx_mstate_global->__pyx_ptype_5numpy_ufunc
 #define __pyx_kp_u_Cost __pyx_mstate_global->__pyx_kp_u_Cost
+#define __pyx_n_s_DerivativeVals __pyx_mstate_global->__pyx_n_s_DerivativeVals
+#define __pyx_n_s_Derivatives __pyx_mstate_global->__pyx_n_s_Derivatives
 #define __pyx_n_s_ImportError __pyx_mstate_global->__pyx_n_s_ImportError
+#define __pyx_n_s_NeuronVals __pyx_mstate_global->__pyx_n_s_NeuronVals
+#define __pyx_n_s_Neurons __pyx_mstate_global->__pyx_n_s_Neurons
 #define __pyx_n_s_Training __pyx_mstate_global->__pyx_n_s_Training
 #define __pyx_kp_s_Training_complete __pyx_mstate_global->__pyx_kp_s_Training_complete
+#define __pyx_n_s_WeightVals __pyx_mstate_global->__pyx_n_s_WeightVals
+#define __pyx_n_s_Weights __pyx_mstate_global->__pyx_n_s_Weights
 #define __pyx_n_s__5 __pyx_mstate_global->__pyx_n_s__5
 #define __pyx_kp_u__6 __pyx_mstate_global->__pyx_kp_u__6
 #define __pyx_n_s__9 __pyx_mstate_global->__pyx_n_s__9
@@ -2838,15 +2877,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_batch_size __pyx_mstate_global->__pyx_n_s_batch_size
 #define __pyx_n_s_class_getitem __pyx_mstate_global->__pyx_n_s_class_getitem
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
+#define __pyx_n_s_deeprai_engine_base_layer __pyx_mstate_global->__pyx_n_s_deeprai_engine_base_layer
 #define __pyx_n_s_deeprai_engine_cython __pyx_mstate_global->__pyx_n_s_deeprai_engine_cython
 #define __pyx_n_s_deeprai_engine_cython_dense_oper __pyx_mstate_global->__pyx_n_s_deeprai_engine_cython_dense_oper
 #define __pyx_kp_s_deeprai_engine_cython_dense_trai __pyx_mstate_global->__pyx_kp_s_deeprai_engine_cython_dense_trai
-#define __pyx_n_s_dense_train_loop __pyx_mstate_global->__pyx_n_s_dense_train_loop
+#define __pyx_n_s_deeprai_engine_cython_dense_trai_2 __pyx_mstate_global->__pyx_n_s_deeprai_engine_cython_dense_trai_2
 #define __pyx_n_s_dual_line __pyx_mstate_global->__pyx_n_s_dual_line
 #define __pyx_n_s_enter __pyx_mstate_global->__pyx_n_s_enter
 #define __pyx_n_s_epochs __pyx_mstate_global->__pyx_n_s_epochs
 #define __pyx_n_s_exit __pyx_mstate_global->__pyx_n_s_exit
-#define __pyx_n_s_force_tty __pyx_mstate_global->__pyx_n_s_force_tty
 #define __pyx_n_s_forward_propagate __pyx_mstate_global->__pyx_n_s_forward_propagate
 #define __pyx_n_s_gradient_descent __pyx_mstate_global->__pyx_n_s_gradient_descent
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
@@ -2886,22 +2925,22 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #endif
 /* #### Code section: module_code ### */
 
-/* "dense_train_loop.pyx":9
- * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
+/* "deeprai/engine/cython/dense_train_loop.pyx":10
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  * 
  * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,             # <<<<<<<<<<<<<<
  *             float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
  *             bint verbose, int batch_size):
  */
 
-static PyObject *__pyx_pw_16dense_train_loop_1train(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_train_loop_1train(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, CYTHON_UNUSED float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, CYTHON_UNUSED float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_start;
   int __pyx_v_end;
   int __pyx_v_num_batches;
@@ -2909,6 +2948,9 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
   PyArrayObject *__pyx_v_batch_inputs = 0;
   PyArrayObject *__pyx_v_batch_targets = 0;
   PyArrayObject *__pyx_v_output = 0;
+  PyObject *__pyx_v_neurons = 0;
+  PyObject *__pyx_v_weights = 0;
+  PyObject *__pyx_v_derv = 0;
   PyObject *__pyx_v_bar = NULL;
   CYTHON_UNUSED int __pyx_v_epoch;
   PyObject *__pyx_v_batch = NULL;
@@ -2979,87 +3021,134 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
   __pyx_pybuffernd_targets.rcbuffer = &__pyx_pybuffer_targets;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 9, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_inputs.diminfo[1].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_inputs.diminfo[1].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 9, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_targets.diminfo[1].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_targets.diminfo[1].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[1];
 
-  /* "dense_train_loop.pyx":16
+  /* "deeprai/engine/cython/dense_train_loop.pyx":47
  *     cdef np.ndarray[np.float64_t, ndim=2] batch_inputs, batch_targets
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  *     num_batches = len(inputs) // batch_size             # <<<<<<<<<<<<<<
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:
- *         for epoch in range(epochs):
+ *     cdef list neurons = NeuronVals.Neurons
+ *     cdef list weights = WeightVals.Weights
  */
-  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 47, __pyx_L1_error)
   if (unlikely(__pyx_v_batch_size == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-    __PYX_ERR(0, 16, __pyx_L1_error)
+    __PYX_ERR(0, 47, __pyx_L1_error)
   }
   else if (sizeof(Py_ssize_t) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_batch_size == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_1))) {
     PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-    __PYX_ERR(0, 16, __pyx_L1_error)
+    __PYX_ERR(0, 47, __pyx_L1_error)
   }
   __pyx_v_num_batches = __Pyx_div_Py_ssize_t(__pyx_t_1, __pyx_v_batch_size);
 
-  /* "dense_train_loop.pyx":17
+  /* "deeprai/engine/cython/dense_train_loop.pyx":48
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  *     num_batches = len(inputs) // batch_size
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
+ *     cdef list neurons = NeuronVals.Neurons             # <<<<<<<<<<<<<<
+ *     cdef list weights = WeightVals.Weights
+ *     cdef list derv = DerivativeVals.Derivatives
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(PyList_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("list", __pyx_t_3))) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_v_neurons = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "deeprai/engine/cython/dense_train_loop.pyx":49
+ *     num_batches = len(inputs) // batch_size
+ *     cdef list neurons = NeuronVals.Neurons
+ *     cdef list weights = WeightVals.Weights             # <<<<<<<<<<<<<<
+ *     cdef list derv = DerivativeVals.Derivatives
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Weights); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(PyList_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("list", __pyx_t_2))) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_v_weights = ((PyObject*)__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_train_loop.pyx":50
+ *     cdef list neurons = NeuronVals.Neurons
+ *     cdef list weights = WeightVals.Weights
+ *     cdef list derv = DerivativeVals.Derivatives             # <<<<<<<<<<<<<<
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:
+ *         for epoch in range(epochs):
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_DerivativeVals); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Derivatives); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(PyList_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("list", __pyx_t_3))) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_v_derv = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "deeprai/engine/cython/dense_train_loop.pyx":51
+ *     cdef list weights = WeightVals.Weights
+ *     cdef list derv = DerivativeVals.Derivatives
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
  *         for epoch in range(epochs):
  *             sum_error = 0
  */
   /*with:*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_alive_bar); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_alive_bar); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_epochs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_epochs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_GIVEREF(__pyx_t_3);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
-    __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_force_tty, Py_True) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dual_line, Py_True) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_title, __pyx_n_s_Training) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_spinner, __pyx_n_s_waves) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dual_line, Py_True) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_title, __pyx_n_s_Training) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_spinner, __pyx_n_s_waves) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_6 = __Pyx_PyObject_LookupSpecial(__pyx_t_5, __pyx_n_s_exit); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 17, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_6 = __Pyx_PyObject_LookupSpecial(__pyx_t_5, __pyx_n_s_exit); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyObject_LookupSpecial(__pyx_t_5, __pyx_n_s_enter); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L3_error)
+    __pyx_t_4 = __Pyx_PyObject_LookupSpecial(__pyx_t_5, __pyx_n_s_enter); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L3_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = NULL;
+    __pyx_t_3 = NULL;
     __pyx_t_7 = 0;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
-      if (likely(__pyx_t_2)) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_3)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-        __Pyx_INCREF(__pyx_t_2);
+        __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_4, function);
         __pyx_t_7 = 1;
       }
     }
     {
-      PyObject *__pyx_callargs[1] = {__pyx_t_2, };
-      __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_7, 0+__pyx_t_7);
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_3);
+      PyObject *__pyx_callargs[1] = {__pyx_t_3, };
+      __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_7, 0+__pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
-    __pyx_t_4 = __pyx_t_3;
-    __pyx_t_3 = 0;
+    __pyx_t_4 = __pyx_t_2;
+    __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     /*try:*/ {
       {
@@ -3073,9 +3162,9 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
           __pyx_v_bar = __pyx_t_4;
           __pyx_t_4 = 0;
 
-          /* "dense_train_loop.pyx":18
- *     num_batches = len(inputs) // batch_size
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:
+          /* "deeprai/engine/cython/dense_train_loop.pyx":52
+ *     cdef list derv = DerivativeVals.Derivatives
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:
  *         for epoch in range(epochs):             # <<<<<<<<<<<<<<
  *             sum_error = 0
  *             for batch in range(num_batches):
@@ -3085,8 +3174,8 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
           for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
             __pyx_v_epoch = __pyx_t_12;
 
-            /* "dense_train_loop.pyx":19
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:
+            /* "deeprai/engine/cython/dense_train_loop.pyx":53
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:
  *         for epoch in range(epochs):
  *             sum_error = 0             # <<<<<<<<<<<<<<
  *             for batch in range(num_batches):
@@ -3094,25 +3183,25 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
  */
             __pyx_v_sum_error = 0.0;
 
-            /* "dense_train_loop.pyx":20
+            /* "deeprai/engine/cython/dense_train_loop.pyx":54
  *         for epoch in range(epochs):
  *             sum_error = 0
  *             for batch in range(num_batches):             # <<<<<<<<<<<<<<
  *                 start = batch * batch_size
  *                 end = start + batch_size
  */
-            __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_num_batches); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L7_error)
+            __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_num_batches); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_4);
-            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L7_error)
+            __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_5);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             if (likely(PyList_CheckExact(__pyx_t_5)) || PyTuple_CheckExact(__pyx_t_5)) {
               __pyx_t_4 = __pyx_t_5; __Pyx_INCREF(__pyx_t_4); __pyx_t_1 = 0;
               __pyx_t_13 = NULL;
             } else {
-              __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L7_error)
+              __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_4);
-              __pyx_t_13 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 20, __pyx_L7_error)
+              __pyx_t_13 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 54, __pyx_L7_error)
             }
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             for (;;) {
@@ -3120,17 +3209,17 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                 if (likely(PyList_CheckExact(__pyx_t_4))) {
                   if (__pyx_t_1 >= PyList_GET_SIZE(__pyx_t_4)) break;
                   #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                  __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely((0 < 0))) __PYX_ERR(0, 20, __pyx_L7_error)
+                  __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely((0 < 0))) __PYX_ERR(0, 54, __pyx_L7_error)
                   #else
-                  __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L7_error)
+                  __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_5);
                   #endif
                 } else {
                   if (__pyx_t_1 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
                   #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                  __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely((0 < 0))) __PYX_ERR(0, 20, __pyx_L7_error)
+                  __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely((0 < 0))) __PYX_ERR(0, 54, __pyx_L7_error)
                   #else
-                  __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L7_error)
+                  __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_5);
                   #endif
                 }
@@ -3140,7 +3229,7 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   PyObject* exc_type = PyErr_Occurred();
                   if (exc_type) {
                     if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                    else __PYX_ERR(0, 20, __pyx_L7_error)
+                    else __PYX_ERR(0, 54, __pyx_L7_error)
                   }
                   break;
                 }
@@ -3149,23 +3238,23 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
               __Pyx_XDECREF_SET(__pyx_v_batch, __pyx_t_5);
               __pyx_t_5 = 0;
 
-              /* "dense_train_loop.pyx":21
+              /* "deeprai/engine/cython/dense_train_loop.pyx":55
  *             sum_error = 0
  *             for batch in range(num_batches):
  *                 start = batch * batch_size             # <<<<<<<<<<<<<<
  *                 end = start + batch_size
  *                 batch_inputs = inputs[start:end]
  */
-              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_batch_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L7_error)
+              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_batch_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_3 = PyNumber_Multiply(__pyx_v_batch, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_2 = PyNumber_Multiply(__pyx_v_batch, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L7_error)
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L7_error)
+              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               __pyx_v_start = __pyx_t_14;
 
-              /* "dense_train_loop.pyx":22
+              /* "deeprai/engine/cython/dense_train_loop.pyx":56
  *             for batch in range(num_batches):
  *                 start = batch * batch_size
  *                 end = start + batch_size             # <<<<<<<<<<<<<<
@@ -3174,25 +3263,25 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
  */
               __pyx_v_end = (__pyx_v_start + __pyx_v_batch_size);
 
-              /* "dense_train_loop.pyx":23
+              /* "deeprai/engine/cython/dense_train_loop.pyx":57
  *                 start = batch * batch_size
  *                 end = start + batch_size
  *                 batch_inputs = inputs[start:end]             # <<<<<<<<<<<<<<
  *                 batch_targets = targets[start:end]
  *                 for input, target in zip(batch_inputs, batch_targets):
  */
-              __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_start); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_2 = PySlice_New(__pyx_t_3, __pyx_t_5, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L7_error)
+              __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_2);
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_inputs), __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L7_error)
+              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_5);
+              __pyx_t_3 = PySlice_New(__pyx_t_2, __pyx_t_5, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_3);
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 23, __pyx_L7_error)
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+              __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_inputs), __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_5);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 57, __pyx_L7_error)
               __pyx_t_15 = ((PyArrayObject *)__pyx_t_5);
               {
                 __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -3209,32 +3298,32 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   __pyx_t_16 = __pyx_t_17 = __pyx_t_18 = 0;
                 }
                 __pyx_pybuffernd_batch_inputs.diminfo[0].strides = __pyx_pybuffernd_batch_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_batch_inputs.diminfo[0].shape = __pyx_pybuffernd_batch_inputs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_batch_inputs.diminfo[1].strides = __pyx_pybuffernd_batch_inputs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_batch_inputs.diminfo[1].shape = __pyx_pybuffernd_batch_inputs.rcbuffer->pybuffer.shape[1];
-                if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 23, __pyx_L7_error)
+                if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 57, __pyx_L7_error)
               }
               __pyx_t_15 = 0;
               __Pyx_XDECREF_SET(__pyx_v_batch_inputs, ((PyArrayObject *)__pyx_t_5));
               __pyx_t_5 = 0;
 
-              /* "dense_train_loop.pyx":24
+              /* "deeprai/engine/cython/dense_train_loop.pyx":58
  *                 end = start + batch_size
  *                 batch_inputs = inputs[start:end]
  *                 batch_targets = targets[start:end]             # <<<<<<<<<<<<<<
  *                 for input, target in zip(batch_inputs, batch_targets):
- *                     output = forward_propagate(input, activation_list)
+ *                     output = forward_propagate(input, activation_list, neurons, weights)
  */
-              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_start); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L7_error)
+              __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_start); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 58, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_5);
-              __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_2);
-              __pyx_t_3 = PySlice_New(__pyx_t_5, __pyx_t_2, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L7_error)
+              __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              __pyx_t_2 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_targets), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L7_error)
+              __pyx_t_2 = PySlice_New(__pyx_t_5, __pyx_t_3, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_2);
+              __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 24, __pyx_L7_error)
-              __pyx_t_15 = ((PyArrayObject *)__pyx_t_2);
+              __pyx_t_3 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_targets), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+              if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 58, __pyx_L7_error)
+              __pyx_t_15 = ((PyArrayObject *)__pyx_t_3);
               {
                 __Pyx_BufFmt_StackElem __pyx_stack[1];
                 __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_batch_targets.rcbuffer->pybuffer);
@@ -3250,77 +3339,77 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   __pyx_t_18 = __pyx_t_17 = __pyx_t_16 = 0;
                 }
                 __pyx_pybuffernd_batch_targets.diminfo[0].strides = __pyx_pybuffernd_batch_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_batch_targets.diminfo[0].shape = __pyx_pybuffernd_batch_targets.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_batch_targets.diminfo[1].strides = __pyx_pybuffernd_batch_targets.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_batch_targets.diminfo[1].shape = __pyx_pybuffernd_batch_targets.rcbuffer->pybuffer.shape[1];
-                if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 24, __pyx_L7_error)
+                if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 58, __pyx_L7_error)
               }
               __pyx_t_15 = 0;
-              __Pyx_XDECREF_SET(__pyx_v_batch_targets, ((PyArrayObject *)__pyx_t_2));
-              __pyx_t_2 = 0;
+              __Pyx_XDECREF_SET(__pyx_v_batch_targets, ((PyArrayObject *)__pyx_t_3));
+              __pyx_t_3 = 0;
 
-              /* "dense_train_loop.pyx":25
+              /* "deeprai/engine/cython/dense_train_loop.pyx":59
  *                 batch_inputs = inputs[start:end]
  *                 batch_targets = targets[start:end]
  *                 for input, target in zip(batch_inputs, batch_targets):             # <<<<<<<<<<<<<<
- *                     output = forward_propagate(input, activation_list)
- *                     back_propagate(target - output, activation_derv_list)
+ *                     output = forward_propagate(input, activation_list, neurons, weights)
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
  */
-              __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_2);
+              __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_3);
               __Pyx_INCREF((PyObject *)__pyx_v_batch_inputs);
               __Pyx_GIVEREF((PyObject *)__pyx_v_batch_inputs);
-              PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_v_batch_inputs));
+              PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_v_batch_inputs));
               __Pyx_INCREF((PyObject *)__pyx_v_batch_targets);
               __Pyx_GIVEREF((PyObject *)__pyx_v_batch_targets);
-              PyTuple_SET_ITEM(__pyx_t_2, 1, ((PyObject *)__pyx_v_batch_targets));
-              __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
-                __pyx_t_2 = __pyx_t_3; __Pyx_INCREF(__pyx_t_2); __pyx_t_19 = 0;
+              PyTuple_SET_ITEM(__pyx_t_3, 1, ((PyObject *)__pyx_v_batch_targets));
+              __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_2);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
+                __pyx_t_3 = __pyx_t_2; __Pyx_INCREF(__pyx_t_3); __pyx_t_19 = 0;
                 __pyx_t_20 = NULL;
               } else {
-                __pyx_t_19 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L7_error)
-                __Pyx_GOTREF(__pyx_t_2);
-                __pyx_t_20 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 25, __pyx_L7_error)
+                __pyx_t_19 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L7_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __pyx_t_20 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 59, __pyx_L7_error)
               }
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               for (;;) {
                 if (likely(!__pyx_t_20)) {
-                  if (likely(PyList_CheckExact(__pyx_t_2))) {
-                    if (__pyx_t_19 >= PyList_GET_SIZE(__pyx_t_2)) break;
+                  if (likely(PyList_CheckExact(__pyx_t_3))) {
+                    if (__pyx_t_19 >= PyList_GET_SIZE(__pyx_t_3)) break;
                     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_19); __Pyx_INCREF(__pyx_t_3); __pyx_t_19++; if (unlikely((0 < 0))) __PYX_ERR(0, 25, __pyx_L7_error)
+                    __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_19); __Pyx_INCREF(__pyx_t_2); __pyx_t_19++; if (unlikely((0 < 0))) __PYX_ERR(0, 59, __pyx_L7_error)
                     #else
-                    __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_19); __pyx_t_19++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L7_error)
-                    __Pyx_GOTREF(__pyx_t_3);
+                    __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_19); __pyx_t_19++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L7_error)
+                    __Pyx_GOTREF(__pyx_t_2);
                     #endif
                   } else {
-                    if (__pyx_t_19 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
+                    if (__pyx_t_19 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
                     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_19); __Pyx_INCREF(__pyx_t_3); __pyx_t_19++; if (unlikely((0 < 0))) __PYX_ERR(0, 25, __pyx_L7_error)
+                    __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_19); __Pyx_INCREF(__pyx_t_2); __pyx_t_19++; if (unlikely((0 < 0))) __PYX_ERR(0, 59, __pyx_L7_error)
                     #else
-                    __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_19); __pyx_t_19++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L7_error)
-                    __Pyx_GOTREF(__pyx_t_3);
+                    __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_19); __pyx_t_19++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L7_error)
+                    __Pyx_GOTREF(__pyx_t_2);
                     #endif
                   }
                 } else {
-                  __pyx_t_3 = __pyx_t_20(__pyx_t_2);
-                  if (unlikely(!__pyx_t_3)) {
+                  __pyx_t_2 = __pyx_t_20(__pyx_t_3);
+                  if (unlikely(!__pyx_t_2)) {
                     PyObject* exc_type = PyErr_Occurred();
                     if (exc_type) {
                       if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                      else __PYX_ERR(0, 25, __pyx_L7_error)
+                      else __PYX_ERR(0, 59, __pyx_L7_error)
                     }
                     break;
                   }
-                  __Pyx_GOTREF(__pyx_t_3);
+                  __Pyx_GOTREF(__pyx_t_2);
                 }
-                if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
-                  PyObject* sequence = __pyx_t_3;
+                if ((likely(PyTuple_CheckExact(__pyx_t_2))) || (PyList_CheckExact(__pyx_t_2))) {
+                  PyObject* sequence = __pyx_t_2;
                   Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
                   if (unlikely(size != 2)) {
                     if (size > 2) __Pyx_RaiseTooManyValuesError(2);
                     else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-                    __PYX_ERR(0, 25, __pyx_L7_error)
+                    __PYX_ERR(0, 59, __pyx_L7_error)
                   }
                   #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
                   if (likely(PyTuple_CheckExact(sequence))) {
@@ -3333,23 +3422,23 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   __Pyx_INCREF(__pyx_t_5);
                   __Pyx_INCREF(__pyx_t_21);
                   #else
-                  __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L7_error)
+                  __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 59, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_5);
-                  __pyx_t_21 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 25, __pyx_L7_error)
+                  __pyx_t_21 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 59, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_21);
                   #endif
-                  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                 } else {
                   Py_ssize_t index = -1;
-                  __pyx_t_22 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 25, __pyx_L7_error)
+                  __pyx_t_22 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 59, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_22);
-                  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                   __pyx_t_23 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_22);
                   index = 0; __pyx_t_5 = __pyx_t_23(__pyx_t_22); if (unlikely(!__pyx_t_5)) goto __pyx_L19_unpacking_failed;
                   __Pyx_GOTREF(__pyx_t_5);
                   index = 1; __pyx_t_21 = __pyx_t_23(__pyx_t_22); if (unlikely(!__pyx_t_21)) goto __pyx_L19_unpacking_failed;
                   __Pyx_GOTREF(__pyx_t_21);
-                  if (__Pyx_IternextUnpackEndCheck(__pyx_t_23(__pyx_t_22), 2) < 0) __PYX_ERR(0, 25, __pyx_L7_error)
+                  if (__Pyx_IternextUnpackEndCheck(__pyx_t_23(__pyx_t_22), 2) < 0) __PYX_ERR(0, 59, __pyx_L7_error)
                   __pyx_t_23 = NULL;
                   __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
                   goto __pyx_L20_unpacking_done;
@@ -3357,7 +3446,7 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
                   __pyx_t_23 = NULL;
                   if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-                  __PYX_ERR(0, 25, __pyx_L7_error)
+                  __PYX_ERR(0, 59, __pyx_L7_error)
                   __pyx_L20_unpacking_done:;
                 }
                 __Pyx_XDECREF_SET(__pyx_v_input, __pyx_t_5);
@@ -3365,14 +3454,14 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                 __Pyx_XDECREF_SET(__pyx_v_target, __pyx_t_21);
                 __pyx_t_21 = 0;
 
-                /* "dense_train_loop.pyx":26
+                /* "deeprai/engine/cython/dense_train_loop.pyx":60
  *                 batch_targets = targets[start:end]
  *                 for input, target in zip(batch_inputs, batch_targets):
- *                     output = forward_propagate(input, activation_list)             # <<<<<<<<<<<<<<
- *                     back_propagate(target - output, activation_derv_list)
+ *                     output = forward_propagate(input, activation_list, neurons, weights)             # <<<<<<<<<<<<<<
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
  *                     opti.gradient_descent(learning_rate)
  */
-                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_forward_propagate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 26, __pyx_L7_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_forward_propagate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 60, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
                 __pyx_t_5 = NULL;
                 __pyx_t_14 = 0;
@@ -3387,15 +3476,15 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   }
                 }
                 {
-                  PyObject *__pyx_callargs[3] = {__pyx_t_5, __pyx_v_input, __pyx_v_activation_list};
-                  __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_21, __pyx_callargs+1-__pyx_t_14, 2+__pyx_t_14);
+                  PyObject *__pyx_callargs[5] = {__pyx_t_5, __pyx_v_input, __pyx_v_activation_list, __pyx_v_neurons, __pyx_v_weights};
+                  __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_21, __pyx_callargs+1-__pyx_t_14, 4+__pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L7_error)
-                  __Pyx_GOTREF(__pyx_t_3);
+                  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L7_error)
+                  __Pyx_GOTREF(__pyx_t_2);
                   __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
                 }
-                if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 26, __pyx_L7_error)
-                __pyx_t_24 = ((PyArrayObject *)__pyx_t_3);
+                if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 60, __pyx_L7_error)
+                __pyx_t_24 = ((PyArrayObject *)__pyx_t_2);
                 {
                   __Pyx_BufFmt_StackElem __pyx_stack[1];
                   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_output.rcbuffer->pybuffer);
@@ -3411,22 +3500,22 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                     __pyx_t_16 = __pyx_t_17 = __pyx_t_18 = 0;
                   }
                   __pyx_pybuffernd_output.diminfo[0].strides = __pyx_pybuffernd_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_output.diminfo[0].shape = __pyx_pybuffernd_output.rcbuffer->pybuffer.shape[0];
-                  if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 26, __pyx_L7_error)
+                  if (unlikely((__pyx_t_14 < 0))) __PYX_ERR(0, 60, __pyx_L7_error)
                 }
                 __pyx_t_24 = 0;
-                __Pyx_XDECREF_SET(__pyx_v_output, ((PyArrayObject *)__pyx_t_3));
-                __pyx_t_3 = 0;
+                __Pyx_XDECREF_SET(__pyx_v_output, ((PyArrayObject *)__pyx_t_2));
+                __pyx_t_2 = 0;
 
-                /* "dense_train_loop.pyx":27
+                /* "deeprai/engine/cython/dense_train_loop.pyx":61
  *                 for input, target in zip(batch_inputs, batch_targets):
- *                     output = forward_propagate(input, activation_list)
- *                     back_propagate(target - output, activation_derv_list)             # <<<<<<<<<<<<<<
+ *                     output = forward_propagate(input, activation_list, neurons, weights)
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)             # <<<<<<<<<<<<<<
  *                     opti.gradient_descent(learning_rate)
  *                     sum_error += loss_function[0](output, target)
  */
-                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_back_propagate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 27, __pyx_L7_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_back_propagate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 61, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
-                __pyx_t_5 = PyNumber_Subtract(__pyx_v_target, ((PyObject *)__pyx_v_output)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 27, __pyx_L7_error)
+                __pyx_t_5 = PyNumber_Subtract(__pyx_v_target, ((PyObject *)__pyx_v_output)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_5);
                 __pyx_t_22 = NULL;
                 __pyx_t_14 = 0;
@@ -3441,29 +3530,29 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   }
                 }
                 {
-                  PyObject *__pyx_callargs[3] = {__pyx_t_22, __pyx_t_5, __pyx_v_activation_derv_list};
-                  __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_21, __pyx_callargs+1-__pyx_t_14, 2+__pyx_t_14);
+                  PyObject *__pyx_callargs[6] = {__pyx_t_22, __pyx_t_5, __pyx_v_activation_derv_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_derv};
+                  __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_21, __pyx_callargs+1-__pyx_t_14, 5+__pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_22); __pyx_t_22 = 0;
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L7_error)
-                  __Pyx_GOTREF(__pyx_t_3);
+                  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L7_error)
+                  __Pyx_GOTREF(__pyx_t_2);
                   __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
                 }
-                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-                /* "dense_train_loop.pyx":28
- *                     output = forward_propagate(input, activation_list)
- *                     back_propagate(target - output, activation_derv_list)
+                /* "deeprai/engine/cython/dense_train_loop.pyx":62
+ *                     output = forward_propagate(input, activation_list, neurons, weights)
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
  *                     opti.gradient_descent(learning_rate)             # <<<<<<<<<<<<<<
  *                     sum_error += loss_function[0](output, target)
  *             if verbose:
  */
-                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_opti); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 28, __pyx_L7_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_opti); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 62, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
-                __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_21, __pyx_n_s_gradient_descent); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L7_error)
+                __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_21, __pyx_n_s_gradient_descent); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_5);
                 __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
-                __pyx_t_21 = PyFloat_FromDouble(__pyx_v_learning_rate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 28, __pyx_L7_error)
+                __pyx_t_21 = PyFloat_FromDouble(__pyx_v_learning_rate); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 62, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
                 __pyx_t_22 = NULL;
                 __pyx_t_14 = 0;
@@ -3479,29 +3568,29 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                 }
                 {
                   PyObject *__pyx_callargs[2] = {__pyx_t_22, __pyx_t_21};
-                  __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_14, 1+__pyx_t_14);
+                  __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_14, 1+__pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_22); __pyx_t_22 = 0;
                   __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L7_error)
-                  __Pyx_GOTREF(__pyx_t_3);
+                  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L7_error)
+                  __Pyx_GOTREF(__pyx_t_2);
                   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
                 }
-                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-                /* "dense_train_loop.pyx":29
- *                     back_propagate(target - output, activation_derv_list)
+                /* "deeprai/engine/cython/dense_train_loop.pyx":63
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
  *                     opti.gradient_descent(learning_rate)
  *                     sum_error += loss_function[0](output, target)             # <<<<<<<<<<<<<<
  *             if verbose:
  *                 bar.text = f"Cost: {sum_error/(len(inputs))}"
  */
-                __pyx_t_3 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L7_error)
-                __Pyx_GOTREF(__pyx_t_3);
+                __pyx_t_2 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L7_error)
+                __Pyx_GOTREF(__pyx_t_2);
                 if (unlikely(__pyx_v_loss_function == Py_None)) {
                   PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-                  __PYX_ERR(0, 29, __pyx_L7_error)
+                  __PYX_ERR(0, 63, __pyx_L7_error)
                 }
-                __pyx_t_21 = __Pyx_GetItemInt_List(__pyx_v_loss_function, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 29, __pyx_L7_error)
+                __pyx_t_21 = __Pyx_GetItemInt_List(__pyx_v_loss_function, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 63, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
                 __pyx_t_22 = NULL;
                 __pyx_t_14 = 0;
@@ -3519,29 +3608,29 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
                   PyObject *__pyx_callargs[3] = {__pyx_t_22, ((PyObject *)__pyx_v_output), __pyx_v_target};
                   __pyx_t_5 = __Pyx_PyObject_FastCall(__pyx_t_21, __pyx_callargs+1-__pyx_t_14, 2+__pyx_t_14);
                   __Pyx_XDECREF(__pyx_t_22); __pyx_t_22 = 0;
-                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L7_error)
+                  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L7_error)
                   __Pyx_GOTREF(__pyx_t_5);
                   __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
                 }
-                __pyx_t_21 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 29, __pyx_L7_error)
+                __pyx_t_21 = PyNumber_InPlaceAdd(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 63, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_21);
-                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-                __pyx_t_25 = __pyx_PyFloat_AsFloat(__pyx_t_21); if (unlikely((__pyx_t_25 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L7_error)
+                __pyx_t_25 = __pyx_PyFloat_AsFloat(__pyx_t_21); if (unlikely((__pyx_t_25 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L7_error)
                 __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
                 __pyx_v_sum_error = __pyx_t_25;
 
-                /* "dense_train_loop.pyx":25
+                /* "deeprai/engine/cython/dense_train_loop.pyx":59
  *                 batch_inputs = inputs[start:end]
  *                 batch_targets = targets[start:end]
  *                 for input, target in zip(batch_inputs, batch_targets):             # <<<<<<<<<<<<<<
- *                     output = forward_propagate(input, activation_list)
- *                     back_propagate(target - output, activation_derv_list)
+ *                     output = forward_propagate(input, activation_list, neurons, weights)
+ *                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
  */
               }
-              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-              /* "dense_train_loop.pyx":20
+              /* "deeprai/engine/cython/dense_train_loop.pyx":54
  *         for epoch in range(epochs):
  *             sum_error = 0
  *             for batch in range(num_batches):             # <<<<<<<<<<<<<<
@@ -3551,7 +3640,7 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
             }
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-            /* "dense_train_loop.pyx":30
+            /* "deeprai/engine/cython/dense_train_loop.pyx":64
  *                     opti.gradient_descent(learning_rate)
  *                     sum_error += loss_function[0](output, target)
  *             if verbose:             # <<<<<<<<<<<<<<
@@ -3561,30 +3650,30 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
             __pyx_t_26 = (__pyx_v_verbose != 0);
             if (__pyx_t_26) {
 
-              /* "dense_train_loop.pyx":31
+              /* "deeprai/engine/cython/dense_train_loop.pyx":65
  *                     sum_error += loss_function[0](output, target)
  *             if verbose:
  *                 bar.text = f"Cost: {sum_error/(len(inputs))}"             # <<<<<<<<<<<<<<
  *                 bar()
  *     print("Training complete!")
  */
-              __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 31, __pyx_L7_error)
+              __pyx_t_1 = PyObject_Length(((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 65, __pyx_L7_error)
               if (unlikely(__pyx_t_1 == 0)) {
                 PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-                __PYX_ERR(0, 31, __pyx_L7_error)
+                __PYX_ERR(0, 65, __pyx_L7_error)
               }
-              __pyx_t_4 = PyFloat_FromDouble((__pyx_v_sum_error / ((float)__pyx_t_1))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L7_error)
+              __pyx_t_4 = PyFloat_FromDouble((__pyx_v_sum_error / ((float)__pyx_t_1))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_4);
-              __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L7_error)
-              __Pyx_GOTREF(__pyx_t_2);
+              __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L7_error)
+              __Pyx_GOTREF(__pyx_t_3);
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Cost, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L7_error)
+              __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Cost, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_4);
-              __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              if (__Pyx_PyObject_SetAttrStr(__pyx_v_bar, __pyx_n_s_text, __pyx_t_4) < 0) __PYX_ERR(0, 31, __pyx_L7_error)
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (__Pyx_PyObject_SetAttrStr(__pyx_v_bar, __pyx_n_s_text, __pyx_t_4) < 0) __PYX_ERR(0, 65, __pyx_L7_error)
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "dense_train_loop.pyx":32
+              /* "deeprai/engine/cython/dense_train_loop.pyx":66
  *             if verbose:
  *                 bar.text = f"Cost: {sum_error/(len(inputs))}"
  *                 bar()             # <<<<<<<<<<<<<<
@@ -3592,29 +3681,29 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
  * 
  */
               __Pyx_INCREF(__pyx_v_bar);
-              __pyx_t_2 = __pyx_v_bar; __pyx_t_21 = NULL;
+              __pyx_t_3 = __pyx_v_bar; __pyx_t_21 = NULL;
               __pyx_t_14 = 0;
-              if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-                __pyx_t_21 = PyMethod_GET_SELF(__pyx_t_2);
+              if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+                __pyx_t_21 = PyMethod_GET_SELF(__pyx_t_3);
                 if (likely(__pyx_t_21)) {
-                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
                   __Pyx_INCREF(__pyx_t_21);
                   __Pyx_INCREF(function);
-                  __Pyx_DECREF_SET(__pyx_t_2, function);
+                  __Pyx_DECREF_SET(__pyx_t_3, function);
                   __pyx_t_14 = 1;
                 }
               }
               {
                 PyObject *__pyx_callargs[1] = {__pyx_t_21, };
-                __pyx_t_4 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_14, 0+__pyx_t_14);
+                __pyx_t_4 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_14, 0+__pyx_t_14);
                 __Pyx_XDECREF(__pyx_t_21); __pyx_t_21 = 0;
-                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L7_error)
+                if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
               }
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "dense_train_loop.pyx":30
+              /* "deeprai/engine/cython/dense_train_loop.pyx":64
  *                     opti.gradient_descent(learning_rate)
  *                     sum_error += loss_function[0](output, target)
  *             if verbose:             # <<<<<<<<<<<<<<
@@ -3624,10 +3713,10 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
             }
           }
 
-          /* "dense_train_loop.pyx":17
- *     cdef np.ndarray[np.float64_t, ndim=1] output
- *     num_batches = len(inputs) // batch_size
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
+          /* "deeprai/engine/cython/dense_train_loop.pyx":51
+ *     cdef list weights = WeightVals.Weights
+ *     cdef list derv = DerivativeVals.Derivatives
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
  *         for epoch in range(epochs):
  *             sum_error = 0
  */
@@ -3644,32 +3733,32 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         /*except:*/ {
-          __Pyx_AddTraceback("dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_2, &__pyx_t_21) < 0) __PYX_ERR(0, 17, __pyx_L9_except_error)
+          __Pyx_AddTraceback("deeprai.engine.cython.dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
+          if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_3, &__pyx_t_21) < 0) __PYX_ERR(0, 51, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_GOTREF(__pyx_t_2);
+          __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GOTREF(__pyx_t_21);
-          __pyx_t_5 = PyTuple_Pack(3, __pyx_t_4, __pyx_t_2, __pyx_t_21); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L9_except_error)
+          __pyx_t_5 = PyTuple_Pack(3, __pyx_t_4, __pyx_t_3, __pyx_t_21); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_5);
           __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 17, __pyx_L9_except_error)
+          if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 51, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_18);
           __pyx_t_26 = __Pyx_PyObject_IsTrue(__pyx_t_18);
           __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
-          if (__pyx_t_26 < 0) __PYX_ERR(0, 17, __pyx_L9_except_error)
+          if (__pyx_t_26 < 0) __PYX_ERR(0, 51, __pyx_L9_except_error)
           __pyx_t_27 = ((!(__pyx_t_26 != 0)) != 0);
           if (unlikely(__pyx_t_27)) {
             __Pyx_GIVEREF(__pyx_t_4);
-            __Pyx_GIVEREF(__pyx_t_2);
+            __Pyx_GIVEREF(__pyx_t_3);
             __Pyx_XGIVEREF(__pyx_t_21);
-            __Pyx_ErrRestoreWithState(__pyx_t_4, __pyx_t_2, __pyx_t_21);
-            __pyx_t_4 = 0; __pyx_t_2 = 0; __pyx_t_21 = 0; 
-            __PYX_ERR(0, 17, __pyx_L9_except_error)
+            __Pyx_ErrRestoreWithState(__pyx_t_4, __pyx_t_3, __pyx_t_21);
+            __pyx_t_4 = 0; __pyx_t_3 = 0; __pyx_t_21 = 0; 
+            __PYX_ERR(0, 51, __pyx_L9_except_error)
           }
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+          __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_XDECREF(__pyx_t_21); __pyx_t_21 = 0;
           goto __pyx_L8_exception_handled;
         }
@@ -3692,7 +3781,7 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
         if (__pyx_t_6) {
           __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_tuple_, NULL);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 17, __pyx_L1_error)
+          if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 51, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
@@ -3707,18 +3796,18 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
     __pyx_L25:;
   }
 
-  /* "dense_train_loop.pyx":33
+  /* "deeprai/engine/cython/dense_train_loop.pyx":67
  *                 bar.text = f"Cost: {sum_error/(len(inputs))}"
  *                 bar()
  *     print("Training complete!")             # <<<<<<<<<<<<<<
  * 
  */
-  __pyx_t_21 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_21 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_21);
   __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
 
-  /* "dense_train_loop.pyx":9
- * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
+  /* "deeprai/engine/cython/dense_train_loop.pyx":10
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  * 
  * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,             # <<<<<<<<<<<<<<
  *             float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
@@ -3745,7 +3834,7 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_output.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3758,6 +3847,9 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
   __Pyx_XDECREF((PyObject *)__pyx_v_batch_inputs);
   __Pyx_XDECREF((PyObject *)__pyx_v_batch_targets);
   __Pyx_XDECREF((PyObject *)__pyx_v_output);
+  __Pyx_XDECREF(__pyx_v_neurons);
+  __Pyx_XDECREF(__pyx_v_weights);
+  __Pyx_XDECREF(__pyx_v_derv);
   __Pyx_XDECREF(__pyx_v_bar);
   __Pyx_XDECREF(__pyx_v_batch);
   __Pyx_XDECREF(__pyx_v_input);
@@ -3768,15 +3860,16 @@ static PyObject *__pyx_f_16dense_train_loop_train(PyArrayObject *__pyx_v_inputs,
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16dense_train_loop_1train(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_train_loop_1train(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_16dense_train_loop_1train = {"train", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_16dense_train_loop_1train, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16dense_train_loop_1train(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_7deeprai_6engine_6cython_16dense_train_loop_train, "\n     Trains a neural network model using gradient descent optimization.\n\n     Parameters:\n     -----------\n     inputs: np.ndarray[np.float64_t, ndim=2]\n         Input features to the neural network.\n     targets: np.ndarray[np.float64_t, ndim=2]\n         Target values for the model to learn.\n     epochs: int\n         Number of iterations over the entire input data.\n     learning_rate: float\n         Step size for gradient descent optimization.\n     momentum: float\n         Momentum term for the optimization.\n     activation_list: list\n         List of activation functions to use in the network.\n     activation_derv_list: list\n         List of activation functions derivatives to use in backpropagation.\n     loss_function: list\n         Loss function to use for computing error.\n     verbose: bool\n         Whether to display progress bar or not.\n     batch_size: int\n         Number of input samples per forward-backward pass.\n\n     Returns:\n     --------\n     None\n     ");
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_16dense_train_loop_1train = {"train", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7deeprai_6engine_6cython_16dense_train_loop_1train, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_16dense_train_loop_train};
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_train_loop_1train(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -3840,75 +3933,75 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_inputs)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_targets)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 1); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 1); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_epochs)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 2); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 2); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_learning_rate)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 3); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 3); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_momentum)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 4); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 4); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_activation_list)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 5); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 5); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_activation_derv_list)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 6); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 6); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_loss_function)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 7); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 7); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_verbose)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 8); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 8); __PYX_ERR(0, 10, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_batch_size)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 9); __PYX_ERR(0, 9, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, 9); __PYX_ERR(0, 10, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "train") < 0)) __PYX_ERR(0, 9, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "train") < 0)) __PYX_ERR(0, 10, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 10)) {
       goto __pyx_L5_argtuple_error;
@@ -3926,29 +4019,29 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     }
     __pyx_v_inputs = ((PyArrayObject *)values[0]);
     __pyx_v_targets = ((PyArrayObject *)values[1]);
-    __pyx_v_epochs = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_epochs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
-    __pyx_v_learning_rate = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_learning_rate == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
-    __pyx_v_momentum = __pyx_PyFloat_AsFloat(values[4]); if (unlikely((__pyx_v_momentum == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
+    __pyx_v_epochs = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_epochs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
+    __pyx_v_learning_rate = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_learning_rate == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 11, __pyx_L3_error)
+    __pyx_v_momentum = __pyx_PyFloat_AsFloat(values[4]); if (unlikely((__pyx_v_momentum == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 11, __pyx_L3_error)
     __pyx_v_activation_list = ((PyObject*)values[5]);
     __pyx_v_activation_derv_list = ((PyObject*)values[6]);
     __pyx_v_loss_function = ((PyObject*)values[7]);
-    __pyx_v_verbose = __Pyx_PyObject_IsTrue(values[8]); if (unlikely((__pyx_v_verbose == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 11, __pyx_L3_error)
-    __pyx_v_batch_size = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_batch_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 11, __pyx_L3_error)
+    __pyx_v_verbose = __Pyx_PyObject_IsTrue(values[8]); if (unlikely((__pyx_v_verbose == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L3_error)
+    __pyx_v_batch_size = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_batch_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, __pyx_nargs); __PYX_ERR(0, 9, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("train", 1, 10, 10, __pyx_nargs); __PYX_ERR(0, 10, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_targets), __pyx_ptype_5numpy_ndarray, 1, "targets", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 10, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_derv_list), (&PyList_Type), 1, "activation_derv_list", 1))) __PYX_ERR(0, 10, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_function), (&PyList_Type), 1, "loss_function", 1))) __PYX_ERR(0, 10, __pyx_L1_error)
-  __pyx_r = __pyx_pf_16dense_train_loop_train(__pyx_self, __pyx_v_inputs, __pyx_v_targets, __pyx_v_epochs, __pyx_v_learning_rate, __pyx_v_momentum, __pyx_v_activation_list, __pyx_v_activation_derv_list, __pyx_v_loss_function, __pyx_v_verbose, __pyx_v_batch_size);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_targets), __pyx_ptype_5numpy_ndarray, 1, "targets", 0))) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 11, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_derv_list), (&PyList_Type), 1, "activation_derv_list", 1))) __PYX_ERR(0, 11, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_function), (&PyList_Type), 1, "loss_function", 1))) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_train_loop_train(__pyx_self, __pyx_v_inputs, __pyx_v_targets, __pyx_v_epochs, __pyx_v_learning_rate, __pyx_v_momentum, __pyx_v_activation_list, __pyx_v_activation_derv_list, __pyx_v_loss_function, __pyx_v_verbose, __pyx_v_batch_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3959,7 +4052,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size) {
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, int __pyx_v_epochs, float __pyx_v_learning_rate, float __pyx_v_momentum, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_loss_function, int __pyx_v_verbose, int __pyx_v_batch_size) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_inputs;
   __Pyx_Buffer __pyx_pybuffer_inputs;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_targets;
@@ -3981,16 +4074,16 @@ static PyObject *__pyx_pf_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx
   __pyx_pybuffernd_targets.rcbuffer = &__pyx_pybuffer_targets;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 9, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_inputs.diminfo[1].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_inputs.diminfo[1].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 9, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 10, __pyx_L1_error)
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_targets.diminfo[1].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_targets.diminfo[1].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[1];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_16dense_train_loop_train(__pyx_v_inputs, __pyx_v_targets, __pyx_v_epochs, __pyx_v_learning_rate, __pyx_v_momentum, __pyx_v_activation_list, __pyx_v_activation_derv_list, __pyx_v_loss_function, __pyx_v_verbose, __pyx_v_batch_size, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(__pyx_v_inputs, __pyx_v_targets, __pyx_v_epochs, __pyx_v_learning_rate, __pyx_v_momentum, __pyx_v_activation_list, __pyx_v_activation_derv_list, __pyx_v_loss_function, __pyx_v_verbose, __pyx_v_batch_size, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4006,7 +4099,7 @@ static PyObject *__pyx_pf_16dense_train_loop_train(CYTHON_UNUSED PyObject *__pyx
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.dense_train_loop.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -5298,9 +5391,15 @@ static PyMethodDef __pyx_methods[] = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   #if CYTHON_USE_MODULE_STATE
   {0, __pyx_k_Cost, sizeof(__pyx_k_Cost), 0, 1, 0, 0},
+  {0, __pyx_k_DerivativeVals, sizeof(__pyx_k_DerivativeVals), 0, 0, 1, 1},
+  {0, __pyx_k_Derivatives, sizeof(__pyx_k_Derivatives), 0, 0, 1, 1},
   {0, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
+  {0, __pyx_k_NeuronVals, sizeof(__pyx_k_NeuronVals), 0, 0, 1, 1},
+  {0, __pyx_k_Neurons, sizeof(__pyx_k_Neurons), 0, 0, 1, 1},
   {0, __pyx_k_Training, sizeof(__pyx_k_Training), 0, 0, 1, 1},
   {0, __pyx_k_Training_complete, sizeof(__pyx_k_Training_complete), 0, 0, 1, 0},
+  {0, __pyx_k_WeightVals, sizeof(__pyx_k_WeightVals), 0, 0, 1, 1},
+  {0, __pyx_k_Weights, sizeof(__pyx_k_Weights), 0, 0, 1, 1},
   {0, __pyx_k__5, sizeof(__pyx_k__5), 0, 0, 1, 1},
   {0, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
   {0, __pyx_k__9, sizeof(__pyx_k__9), 0, 0, 1, 1},
@@ -5315,15 +5414,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_batch_size, sizeof(__pyx_k_batch_size), 0, 0, 1, 1},
   {0, __pyx_k_class_getitem, sizeof(__pyx_k_class_getitem), 0, 0, 1, 1},
   {0, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
+  {0, __pyx_k_deeprai_engine_base_layer, sizeof(__pyx_k_deeprai_engine_base_layer), 0, 0, 1, 1},
   {0, __pyx_k_deeprai_engine_cython, sizeof(__pyx_k_deeprai_engine_cython), 0, 0, 1, 1},
   {0, __pyx_k_deeprai_engine_cython_dense_oper, sizeof(__pyx_k_deeprai_engine_cython_dense_oper), 0, 0, 1, 1},
   {0, __pyx_k_deeprai_engine_cython_dense_trai, sizeof(__pyx_k_deeprai_engine_cython_dense_trai), 0, 0, 1, 0},
-  {0, __pyx_k_dense_train_loop, sizeof(__pyx_k_dense_train_loop), 0, 0, 1, 1},
+  {0, __pyx_k_deeprai_engine_cython_dense_trai_2, sizeof(__pyx_k_deeprai_engine_cython_dense_trai_2), 0, 0, 1, 1},
   {0, __pyx_k_dual_line, sizeof(__pyx_k_dual_line), 0, 0, 1, 1},
   {0, __pyx_k_enter, sizeof(__pyx_k_enter), 0, 0, 1, 1},
   {0, __pyx_k_epochs, sizeof(__pyx_k_epochs), 0, 0, 1, 1},
   {0, __pyx_k_exit, sizeof(__pyx_k_exit), 0, 0, 1, 1},
-  {0, __pyx_k_force_tty, sizeof(__pyx_k_force_tty), 0, 0, 1, 1},
   {0, __pyx_k_forward_propagate, sizeof(__pyx_k_forward_propagate), 0, 0, 1, 1},
   {0, __pyx_k_gradient_descent, sizeof(__pyx_k_gradient_descent), 0, 0, 1, 1},
   {0, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -5356,9 +5455,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_zip, sizeof(__pyx_k_zip), 0, 0, 1, 1},
   #else
   {&__pyx_kp_u_Cost, __pyx_k_Cost, sizeof(__pyx_k_Cost), 0, 1, 0, 0},
+  {&__pyx_n_s_DerivativeVals, __pyx_k_DerivativeVals, sizeof(__pyx_k_DerivativeVals), 0, 0, 1, 1},
+  {&__pyx_n_s_Derivatives, __pyx_k_Derivatives, sizeof(__pyx_k_Derivatives), 0, 0, 1, 1},
   {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
+  {&__pyx_n_s_NeuronVals, __pyx_k_NeuronVals, sizeof(__pyx_k_NeuronVals), 0, 0, 1, 1},
+  {&__pyx_n_s_Neurons, __pyx_k_Neurons, sizeof(__pyx_k_Neurons), 0, 0, 1, 1},
   {&__pyx_n_s_Training, __pyx_k_Training, sizeof(__pyx_k_Training), 0, 0, 1, 1},
   {&__pyx_kp_s_Training_complete, __pyx_k_Training_complete, sizeof(__pyx_k_Training_complete), 0, 0, 1, 0},
+  {&__pyx_n_s_WeightVals, __pyx_k_WeightVals, sizeof(__pyx_k_WeightVals), 0, 0, 1, 1},
+  {&__pyx_n_s_Weights, __pyx_k_Weights, sizeof(__pyx_k_Weights), 0, 0, 1, 1},
   {&__pyx_n_s__5, __pyx_k__5, sizeof(__pyx_k__5), 0, 0, 1, 1},
   {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
   {&__pyx_n_s__9, __pyx_k__9, sizeof(__pyx_k__9), 0, 0, 1, 1},
@@ -5373,15 +5478,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_batch_size, __pyx_k_batch_size, sizeof(__pyx_k_batch_size), 0, 0, 1, 1},
   {&__pyx_n_s_class_getitem, __pyx_k_class_getitem, sizeof(__pyx_k_class_getitem), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
+  {&__pyx_n_s_deeprai_engine_base_layer, __pyx_k_deeprai_engine_base_layer, sizeof(__pyx_k_deeprai_engine_base_layer), 0, 0, 1, 1},
   {&__pyx_n_s_deeprai_engine_cython, __pyx_k_deeprai_engine_cython, sizeof(__pyx_k_deeprai_engine_cython), 0, 0, 1, 1},
   {&__pyx_n_s_deeprai_engine_cython_dense_oper, __pyx_k_deeprai_engine_cython_dense_oper, sizeof(__pyx_k_deeprai_engine_cython_dense_oper), 0, 0, 1, 1},
   {&__pyx_kp_s_deeprai_engine_cython_dense_trai, __pyx_k_deeprai_engine_cython_dense_trai, sizeof(__pyx_k_deeprai_engine_cython_dense_trai), 0, 0, 1, 0},
-  {&__pyx_n_s_dense_train_loop, __pyx_k_dense_train_loop, sizeof(__pyx_k_dense_train_loop), 0, 0, 1, 1},
+  {&__pyx_n_s_deeprai_engine_cython_dense_trai_2, __pyx_k_deeprai_engine_cython_dense_trai_2, sizeof(__pyx_k_deeprai_engine_cython_dense_trai_2), 0, 0, 1, 1},
   {&__pyx_n_s_dual_line, __pyx_k_dual_line, sizeof(__pyx_k_dual_line), 0, 0, 1, 1},
   {&__pyx_n_s_enter, __pyx_k_enter, sizeof(__pyx_k_enter), 0, 0, 1, 1},
   {&__pyx_n_s_epochs, __pyx_k_epochs, sizeof(__pyx_k_epochs), 0, 0, 1, 1},
   {&__pyx_n_s_exit, __pyx_k_exit, sizeof(__pyx_k_exit), 0, 0, 1, 1},
-  {&__pyx_n_s_force_tty, __pyx_k_force_tty, sizeof(__pyx_k_force_tty), 0, 0, 1, 1},
   {&__pyx_n_s_forward_propagate, __pyx_k_forward_propagate, sizeof(__pyx_k_forward_propagate), 0, 0, 1, 1},
   {&__pyx_n_s_gradient_descent, __pyx_k_gradient_descent, sizeof(__pyx_k_gradient_descent), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -5417,9 +5522,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 18, __pyx_L1_error)
-  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 25, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 67, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 987, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -5431,24 +5536,24 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "dense_train_loop.pyx":17
- *     cdef np.ndarray[np.float64_t, ndim=1] output
- *     num_batches = len(inputs) // batch_size
- *     with alive_bar(epochs, force_tty=True, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
+  /* "deeprai/engine/cython/dense_train_loop.pyx":51
+ *     cdef list weights = WeightVals.Weights
+ *     cdef list derv = DerivativeVals.Derivatives
+ *     with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:             # <<<<<<<<<<<<<<
  *         for epoch in range(epochs):
  *             sum_error = 0
  */
-  __pyx_tuple_ = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "dense_train_loop.pyx":33
+  /* "deeprai/engine/cython/dense_train_loop.pyx":67
  *                 bar.text = f"Cost: {sum_error/(len(inputs))}"
  *                 bar()
  *     print("Training complete!")             # <<<<<<<<<<<<<<
  * 
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_Training_complete); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_Training_complete); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
@@ -5474,17 +5579,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "dense_train_loop.pyx":9
- * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
+  /* "deeprai/engine/cython/dense_train_loop.pyx":10
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  * 
  * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,             # <<<<<<<<<<<<<<
  *             float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
  *             bint verbose, int batch_size):
  */
-  __pyx_tuple__7 = PyTuple_Pack(10, __pyx_n_s_inputs, __pyx_n_s_targets, __pyx_n_s_epochs, __pyx_n_s_learning_rate, __pyx_n_s_momentum, __pyx_n_s_activation_list, __pyx_n_s_activation_derv_list, __pyx_n_s_loss_function, __pyx_n_s_verbose, __pyx_n_s_batch_size); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(10, __pyx_n_s_inputs, __pyx_n_s_targets, __pyx_n_s_epochs, __pyx_n_s_learning_rate, __pyx_n_s_momentum, __pyx_n_s_activation_list, __pyx_n_s_activation_derv_list, __pyx_n_s_loss_function, __pyx_n_s_verbose, __pyx_n_s_batch_size); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(10, 0, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_deeprai_engine_cython_dense_trai, __pyx_n_s_train, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(10, 0, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_deeprai_engine_cython_dense_trai, __pyx_n_s_train, 10, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5496,62 +5601,68 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   #if CYTHON_USE_MODULE_STATE
   if (__Pyx_InitString(__pyx_string_tab[0], &__pyx_kp_u_Cost) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[1], &__pyx_n_s_ImportError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_s_Training) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_kp_s_Training_complete) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s__5) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_kp_u__6) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s__9) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s_act) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_activation) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_activation_derv_list) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_activation_list) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_alive_bar) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s_alive_progress) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_asyncio_coroutines) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_back_propagate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_batch_size) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_class_getitem) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_deeprai_engine_cython) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_deeprai_engine_cython_dense_oper) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_kp_s_deeprai_engine_cython_dense_trai) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_n_s_dense_train_loop) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_n_s_dual_line) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_n_s_enter) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_n_s_epochs) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_exit) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_force_tty) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[27], &__pyx_n_s_forward_propagate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[28], &__pyx_n_s_gradient_descent) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[29], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[30], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[31], &__pyx_n_s_inputs) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[32], &__pyx_n_s_is_coroutine) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[33], &__pyx_n_s_learning_rate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[34], &__pyx_n_s_loss) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[35], &__pyx_n_s_loss_function) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[36], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[37], &__pyx_n_s_momentum) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[38], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[39], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[40], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[41], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[42], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[43], &__pyx_n_s_opti) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[44], &__pyx_n_s_optimizers) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[45], &__pyx_n_s_print) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[46], &__pyx_n_s_range) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[47], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[48], &__pyx_n_s_spinner) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[49], &__pyx_n_s_targets) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[50], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[51], &__pyx_n_s_text) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[52], &__pyx_n_s_title) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[53], &__pyx_n_s_train) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[54], &__pyx_n_s_verbose) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[55], &__pyx_n_s_waves) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[56], &__pyx_n_s_zip) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[1], &__pyx_n_s_DerivativeVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_s_Derivatives) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_ImportError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s_NeuronVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s_Neurons) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s_Training) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_kp_s_Training_complete) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_WeightVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_Weights) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s__5) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_kp_u__6) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s__9) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_act) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_activation) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_activation_derv_list) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_activation_list) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_alive_bar) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_alive_progress) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_asyncio_coroutines) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_n_s_back_propagate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_n_s_batch_size) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_n_s_class_getitem) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_n_s_deeprai_engine_base_layer) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_deeprai_engine_cython) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_deeprai_engine_cython_dense_oper) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[27], &__pyx_kp_s_deeprai_engine_cython_dense_trai) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[28], &__pyx_n_s_deeprai_engine_cython_dense_trai_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[29], &__pyx_n_s_dual_line) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[30], &__pyx_n_s_enter) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[31], &__pyx_n_s_epochs) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[32], &__pyx_n_s_exit) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[33], &__pyx_n_s_forward_propagate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[34], &__pyx_n_s_gradient_descent) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[35], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[36], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[37], &__pyx_n_s_inputs) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[38], &__pyx_n_s_is_coroutine) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[39], &__pyx_n_s_learning_rate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[40], &__pyx_n_s_loss) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[41], &__pyx_n_s_loss_function) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[42], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[43], &__pyx_n_s_momentum) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[44], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[45], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[46], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[47], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[48], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[49], &__pyx_n_s_opti) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[50], &__pyx_n_s_optimizers) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[51], &__pyx_n_s_print) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[52], &__pyx_n_s_range) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[53], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[54], &__pyx_n_s_spinner) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[55], &__pyx_n_s_targets) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[56], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[57], &__pyx_n_s_text) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[58], &__pyx_n_s_title) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[59], &__pyx_n_s_train) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[60], &__pyx_n_s_verbose) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[61], &__pyx_n_s_waves) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[62], &__pyx_n_s_zip) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   #endif
   #if !CYTHON_USE_MODULE_STATE
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
@@ -5956,14 +6067,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_dense_train_loop) {
+  if (__pyx_module_is_main_deeprai__engine__cython__dense_train_loop) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "dense_train_loop")) {
-      if (unlikely((PyDict_SetItemString(modules, "dense_train_loop", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "deeprai.engine.cython.dense_train_loop")) {
+      if (unlikely((PyDict_SetItemString(modules, "deeprai.engine.cython.dense_train_loop", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -5984,7 +6095,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "dense_train_loop.pyx":1
+  /* "deeprai/engine/cython/dense_train_loop.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * from deeprai.engine.cython import optimizers as opti
@@ -5994,7 +6105,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "dense_train_loop.pyx":3
+  /* "deeprai/engine/cython/dense_train_loop.pyx":3
  * import numpy as np
  * cimport numpy as np
  * from deeprai.engine.cython import optimizers as opti             # <<<<<<<<<<<<<<
@@ -6015,7 +6126,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "dense_train_loop.pyx":4
+  /* "deeprai/engine/cython/dense_train_loop.pyx":4
  * cimport numpy as np
  * from deeprai.engine.cython import optimizers as opti
  * from alive_progress import alive_bar             # <<<<<<<<<<<<<<
@@ -6036,7 +6147,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "dense_train_loop.pyx":5
+  /* "deeprai/engine/cython/dense_train_loop.pyx":5
  * from deeprai.engine.cython import optimizers as opti
  * from alive_progress import alive_bar
  * from deeprai.engine.cython import activation as act             # <<<<<<<<<<<<<<
@@ -6057,12 +6168,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "dense_train_loop.pyx":6
+  /* "deeprai/engine/cython/dense_train_loop.pyx":6
  * from alive_progress import alive_bar
  * from deeprai.engine.cython import activation as act
  * from deeprai.engine.cython import loss as loss             # <<<<<<<<<<<<<<
  * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
- * 
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  */
   __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -6078,12 +6189,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "dense_train_loop.pyx":7
+  /* "deeprai/engine/cython/dense_train_loop.pyx":7
  * from deeprai.engine.cython import activation as act
  * from deeprai.engine.cython import loss as loss
  * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate             # <<<<<<<<<<<<<<
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  * 
- * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,
  */
   __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -6106,27 +6217,62 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "dense_train_loop.pyx":9
+  /* "deeprai/engine/cython/dense_train_loop.pyx":8
+ * from deeprai.engine.cython import loss as loss
  * from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals             # <<<<<<<<<<<<<<
+ * 
+ * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,
+ */
+  __pyx_t_3 = PyList_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_n_s_DerivativeVals);
+  __Pyx_GIVEREF(__pyx_n_s_DerivativeVals);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_n_s_DerivativeVals);
+  __Pyx_INCREF(__pyx_n_s_WeightVals);
+  __Pyx_GIVEREF(__pyx_n_s_WeightVals);
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_n_s_WeightVals);
+  __Pyx_INCREF(__pyx_n_s_NeuronVals);
+  __Pyx_GIVEREF(__pyx_n_s_NeuronVals);
+  PyList_SET_ITEM(__pyx_t_3, 2, __pyx_n_s_NeuronVals);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_deeprai_engine_base_layer, __pyx_t_3, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_DerivativeVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DerivativeVals, __pyx_t_3) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_WeightVals, __pyx_t_3) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NeuronVals, __pyx_t_3) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_train_loop.pyx":10
+ * from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
  * 
  * cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,             # <<<<<<<<<<<<<<
  *             float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
  *             bint verbose, int batch_size):
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_16dense_train_loop_1train, 0, __pyx_n_s_train, NULL, __pyx_n_s_dense_train_loop, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 9, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train, __pyx_t_3) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_6cython_16dense_train_loop_1train, 0, __pyx_n_s_train, NULL, __pyx_n_s_deeprai_engine_cython_dense_trai_2, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "dense_train_loop.pyx":1
+  /* "deeprai/engine/cython/dense_train_loop.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * from deeprai.engine.cython import optimizers as opti
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "../../../../../../../../usr/lib/python3/dist-packages/numpy/__init__.cython-30.pxd":1049
  * 
@@ -6144,13 +6290,13 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_3);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init dense_train_loop", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init deeprai.engine.cython.dense_train_loop", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init dense_train_loop");
+    PyErr_SetString(PyExc_ImportError, "init deeprai.engine.cython.dense_train_loop");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -6933,6 +7079,17 @@ static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name)
     PyErr_Clear();
 #endif
     return __Pyx_GetBuiltinName(name);
+}
+
+/* RaiseUnexpectedTypeError */
+  static int
+__Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj)
+{
+    __Pyx_TypeName obj_type_name = __Pyx_PyType_GetName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError, "Expected %s, got " __Pyx_FMT_TYPENAME,
+                 expected, obj_type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return 0;
 }
 
 /* PyObjectCall */

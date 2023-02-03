@@ -45,7 +45,7 @@ else:
 
 setup(
     name='deeprai',
-    version='0.0.7',
+    version='0.0.8',
     author='Kieran Carter',
     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
     long_description=long_description,

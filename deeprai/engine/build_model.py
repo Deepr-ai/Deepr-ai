@@ -26,8 +26,7 @@ class Build:
     def create_pool(self):
         pass
 
-    def convert_activations(self, activation):
-        ActivationList.append(lambda n: self.activationMap[activation](n))
+    def convert_activations(self, activation): ActivationList.append(lambda n: self.activationMap[activation](n))
 
     def convert_derivatives(self, activation): ActivationDerivativeList.append(lambda n: self.activationDerivativeMap[activation](n))
 
