@@ -1,8 +1,10 @@
 """Keeps track of the network's values"""
 import numpy as np
+
+
 class Layer:
     def __init__(self):
-        #size of network for weight generation
+        # size of network for weight generation
         self.Layers = []
 
     def pop(self):
@@ -23,7 +25,6 @@ class Bias:
 
     def pop(self):
         self.Biases = np.array([])
-
 
 
 class Weight:
@@ -59,23 +60,37 @@ class Derivative:
         self.Derivatives.append(val)
 
 
-#Spacific use cases (note to self, add condition statements)
+# Spacific use cases (note to self, add condition statements)
 
 class Velocity:
     def __init__(self):
         self.Velocities = None
+
     def pop(self):
         self.Velocities = []
 
-#GLOBAL NETWORK VALUES
+class MomentEstimate:
+    def __init__(self):
+        self.moment_estimate_1 = []
+        self.moment_estimate_2 = []
+
+    def pop(self):
+        self.Velocities = []
+
+
+# GLOBAL NETWORK VALUES
 WeightVals = Weight()
 KernelVals = Kernel()
 LayerVals = Layer()
 NeuronVals = Neuron()
 DerivativeVals = Derivative()
+MomentEstimateVals = MomentEstimate()
 # LOCAL NETWORK VALUES
 VelocityVals = Velocity()
 ActivationList = []
+DropoutList = []
+l1PenaltyList = []
+l2PenaltyList = []
 ActivationDerivativeList = []
 ActivationListString = []
 ActivationDerivativeListString = []
@@ -83,3 +98,4 @@ OptimizerString = ['gradient decent']
 LossString = ['mean square error']
 Loss = [[]]
 Optimizer = []
+# Optimizer Values

@@ -8,8 +8,8 @@ from deeprai.engine.cython.dense_operations import back_propagate, forward_propa
 from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
 
 cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,
-            float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
-            bint verbose, int batch_size):
+            float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,list dropout_rate,
+            list l2_penalty,list l1_penalty, bint verbose, int batch_size):
     """
      Trains a neural network model using gradient descent optimization.
 
@@ -57,9 +57,9 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                 batch_inputs = inputs[start:end]
                 batch_targets = targets[start:end]
                 for input, target in zip(batch_inputs, batch_targets):
-                    output = forward_propagate(input, activation_list, neurons, weights)
+                    output = forward_propagate(input, activation_list, neurons, weights, dropout_rate, l1_penalty, l2_penalty)
                     back_propagate(target - output, activation_derv_list, neurons, weights, derv)
-                    opti.gradient_descent(learning_rate)
+                    opti.gradient_descent(learning_rate=learning_rate)
                     sum_error += loss_function[0](output, target)
             if verbose:
                 bar.text = f"Cost: {sum_error/(len(inputs))}"

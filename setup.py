@@ -44,8 +44,8 @@ else:
     extensions = no_cythonize(extensions)
 
 setup(
-    name='deeprai',
-    version='0.0.8',
+    name='DeeprAI',
+    version='0.0.9',
     author='Kieran Carter',
     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
     long_description=long_description,

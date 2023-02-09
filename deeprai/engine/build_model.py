@@ -1,5 +1,5 @@
 from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, NeuronVals, \
-    DerivativeVals, ActivationListString, ActivationDerivativeListString, Loss
+    DerivativeVals, ActivationListString, ActivationDerivativeListString, Loss, DropoutList, l1PenaltyList, l2PenaltyList
 import deeprai.engine.cython.activation as act
 from deeprai.engine.cython import optimizers as opt
 from deeprai.engine.cython import loss as lossFunc
@@ -32,10 +32,14 @@ class Build:
 
     def convert_loss(self, lossF): Loss[0]=(lambda o,t: self.LossMap[lossF[0]](o,t))
 
-    def create_dense(self, size, activation='sigmoid'):
+    def create_dense(self, size, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         #creats activation map
         ActivationListString.append(activation)
         ActivationDerivativeListString.append(activation)
+        DropoutList.append(float(dropout))
+        l1PenaltyList.append(float(l1_penalty))
+        l2PenaltyList.append(float(l2_penalty))
+
 
         self.convert_activations(activation)
         self.convert_derivatives(activation)
@@ -49,6 +53,9 @@ class Build:
         except IndexError:
             del ActivationList[0]
             del ActivationDerivativeList[0]
+            del DropoutList[0]
+            del l2PenaltyList[0]
+            del l1PenaltyList[0]
             #input neuron
 
     def create_flat(self):

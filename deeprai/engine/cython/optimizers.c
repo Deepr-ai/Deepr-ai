@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "optimizers",
+        "name": "deeprai.engine.cython.optimizers",
         "sources": [
             "deeprai/engine/cython/optimizers.pyx"
         ]
     },
-    "module_name": "optimizers"
+    "module_name": "deeprai.engine.cython.optimizers"
 }
 END: Cython Metadata */
 
@@ -944,8 +944,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__optimizers
-#define __PYX_HAVE_API__optimizers
+#define __PYX_HAVE__deeprai__engine__cython__optimizers
+#define __PYX_HAVE_API__deeprai__engine__cython__optimizers
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -2148,17 +2148,17 @@ static PyTypeObject *__pyx_ptype_5numpy_character = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 #endif
 
-/* Module declarations from "optimizers" */
+/* Module declarations from "deeprai.engine.cython.optimizers" */
 #if !CYTHON_USE_MODULE_STATE
 #endif
-static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_gradient_descent(float, int __pyx_skip_dispatch); /*proto*/
 /* #### Code section: typeinfo ### */
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "optimizers"
-extern int __pyx_module_is_main_optimizers;
-int __pyx_module_is_main_optimizers = 0;
+#define __Pyx_MODULE_NAME "deeprai.engine.cython.optimizers"
+extern int __pyx_module_is_main_deeprai__engine__cython__optimizers;
+int __pyx_module_is_main_deeprai__engine__cython__optimizers = 0;
 
-/* Implementation of "optimizers" */
+/* Implementation of "deeprai.engine.cython.optimizers" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ImportError;
@@ -2176,7 +2176,6 @@ static const char __pyx_k_range[] = "range";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_Weights[] = "Weights";
 static const char __pyx_k_WeightVals[] = "WeightVals";
-static const char __pyx_k_optimizers[] = "optimizers";
 static const char __pyx_k_Derivatives[] = "Derivatives";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_initializing[] = "_initializing";
@@ -2184,16 +2183,19 @@ static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_learning_rate[] = "learning_rate";
 static const char __pyx_k_DerivativeVals[] = "DerivativeVals";
 static const char __pyx_k_gradient_descent[] = "gradient_descent";
+static const char __pyx_k_MomentEstimateVals[] = "MomentEstimateVals";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_deeprai_engine_base_layer[] = "deeprai.engine.base_layer";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_deeprai_engine_cython_optimizers[] = "deeprai/engine/cython/optimizers.pyx";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
+static const char __pyx_k_deeprai_engine_cython_optimizers_2[] = "deeprai.engine.cython.optimizers";
 #if !CYTHON_USE_MODULE_STATE
 static PyObject *__pyx_n_s_DerivativeVals;
 static PyObject *__pyx_n_s_Derivatives;
 static PyObject *__pyx_n_s_ImportError;
+static PyObject *__pyx_n_s_MomentEstimateVals;
 static PyObject *__pyx_n_s_WeightVals;
 static PyObject *__pyx_n_s_Weights;
 static PyObject *__pyx_kp_u__3;
@@ -2203,6 +2205,7 @@ static PyObject *__pyx_n_s_asyncio_coroutines;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_deeprai_engine_base_layer;
 static PyObject *__pyx_kp_s_deeprai_engine_cython_optimizers;
+static PyObject *__pyx_n_s_deeprai_engine_cython_optimizers_2;
 static PyObject *__pyx_n_s_gradient_descent;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_initializing;
@@ -2214,13 +2217,12 @@ static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
 static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
-static PyObject *__pyx_n_s_optimizers;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_spec;
 static PyObject *__pyx_n_s_test;
 #endif
 /* #### Code section: decls ### */
-static PyObject *__pyx_pf_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_learning_rate); /* proto */
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_learning_rate); /* proto */
 #if !CYTHON_USE_MODULE_STATE
 #endif
 #if !CYTHON_USE_MODULE_STATE
@@ -2264,6 +2266,7 @@ typedef struct {
   PyObject *__pyx_n_s_DerivativeVals;
   PyObject *__pyx_n_s_Derivatives;
   PyObject *__pyx_n_s_ImportError;
+  PyObject *__pyx_n_s_MomentEstimateVals;
   PyObject *__pyx_n_s_WeightVals;
   PyObject *__pyx_n_s_Weights;
   PyObject *__pyx_kp_u__3;
@@ -2273,6 +2276,7 @@ typedef struct {
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_n_s_deeprai_engine_base_layer;
   PyObject *__pyx_kp_s_deeprai_engine_cython_optimizers;
+  PyObject *__pyx_n_s_deeprai_engine_cython_optimizers_2;
   PyObject *__pyx_n_s_gradient_descent;
   PyObject *__pyx_n_s_import;
   PyObject *__pyx_n_s_initializing;
@@ -2284,7 +2288,6 @@ typedef struct {
   PyObject *__pyx_n_s_numpy;
   PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
   PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
-  PyObject *__pyx_n_s_optimizers;
   PyObject *__pyx_n_s_range;
   PyObject *__pyx_n_s_spec;
   PyObject *__pyx_n_s_test;
@@ -2344,6 +2347,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_DerivativeVals);
   Py_CLEAR(clear_module_state->__pyx_n_s_Derivatives);
   Py_CLEAR(clear_module_state->__pyx_n_s_ImportError);
+  Py_CLEAR(clear_module_state->__pyx_n_s_MomentEstimateVals);
   Py_CLEAR(clear_module_state->__pyx_n_s_WeightVals);
   Py_CLEAR(clear_module_state->__pyx_n_s_Weights);
   Py_CLEAR(clear_module_state->__pyx_kp_u__3);
@@ -2353,6 +2357,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_base_layer);
   Py_CLEAR(clear_module_state->__pyx_kp_s_deeprai_engine_cython_optimizers);
+  Py_CLEAR(clear_module_state->__pyx_n_s_deeprai_engine_cython_optimizers_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_gradient_descent);
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
   Py_CLEAR(clear_module_state->__pyx_n_s_initializing);
@@ -2364,7 +2369,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_numpy);
   Py_CLEAR(clear_module_state->__pyx_kp_s_numpy_core_multiarray_failed_to);
   Py_CLEAR(clear_module_state->__pyx_kp_s_numpy_core_umath_failed_to_impor);
-  Py_CLEAR(clear_module_state->__pyx_n_s_optimizers);
   Py_CLEAR(clear_module_state->__pyx_n_s_range);
   Py_CLEAR(clear_module_state->__pyx_n_s_spec);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
@@ -2411,6 +2415,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_DerivativeVals);
   Py_VISIT(traverse_module_state->__pyx_n_s_Derivatives);
   Py_VISIT(traverse_module_state->__pyx_n_s_ImportError);
+  Py_VISIT(traverse_module_state->__pyx_n_s_MomentEstimateVals);
   Py_VISIT(traverse_module_state->__pyx_n_s_WeightVals);
   Py_VISIT(traverse_module_state->__pyx_n_s_Weights);
   Py_VISIT(traverse_module_state->__pyx_kp_u__3);
@@ -2420,6 +2425,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_base_layer);
   Py_VISIT(traverse_module_state->__pyx_kp_s_deeprai_engine_cython_optimizers);
+  Py_VISIT(traverse_module_state->__pyx_n_s_deeprai_engine_cython_optimizers_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_gradient_descent);
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
   Py_VISIT(traverse_module_state->__pyx_n_s_initializing);
@@ -2431,7 +2437,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_numpy);
   Py_VISIT(traverse_module_state->__pyx_kp_s_numpy_core_multiarray_failed_to);
   Py_VISIT(traverse_module_state->__pyx_kp_s_numpy_core_umath_failed_to_impor);
-  Py_VISIT(traverse_module_state->__pyx_n_s_optimizers);
   Py_VISIT(traverse_module_state->__pyx_n_s_range);
   Py_VISIT(traverse_module_state->__pyx_n_s_spec);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
@@ -2475,6 +2480,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_DerivativeVals __pyx_mstate_global->__pyx_n_s_DerivativeVals
 #define __pyx_n_s_Derivatives __pyx_mstate_global->__pyx_n_s_Derivatives
 #define __pyx_n_s_ImportError __pyx_mstate_global->__pyx_n_s_ImportError
+#define __pyx_n_s_MomentEstimateVals __pyx_mstate_global->__pyx_n_s_MomentEstimateVals
 #define __pyx_n_s_WeightVals __pyx_mstate_global->__pyx_n_s_WeightVals
 #define __pyx_n_s_Weights __pyx_mstate_global->__pyx_n_s_Weights
 #define __pyx_kp_u__3 __pyx_mstate_global->__pyx_kp_u__3
@@ -2484,6 +2490,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_n_s_deeprai_engine_base_layer __pyx_mstate_global->__pyx_n_s_deeprai_engine_base_layer
 #define __pyx_kp_s_deeprai_engine_cython_optimizers __pyx_mstate_global->__pyx_kp_s_deeprai_engine_cython_optimizers
+#define __pyx_n_s_deeprai_engine_cython_optimizers_2 __pyx_mstate_global->__pyx_n_s_deeprai_engine_cython_optimizers_2
 #define __pyx_n_s_gradient_descent __pyx_mstate_global->__pyx_n_s_gradient_descent
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
 #define __pyx_n_s_initializing __pyx_mstate_global->__pyx_n_s_initializing
@@ -2495,7 +2502,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_numpy __pyx_mstate_global->__pyx_n_s_numpy
 #define __pyx_kp_s_numpy_core_multiarray_failed_to __pyx_mstate_global->__pyx_kp_s_numpy_core_multiarray_failed_to
 #define __pyx_kp_s_numpy_core_umath_failed_to_impor __pyx_mstate_global->__pyx_kp_s_numpy_core_umath_failed_to_impor
-#define __pyx_n_s_optimizers __pyx_mstate_global->__pyx_n_s_optimizers
 #define __pyx_n_s_range __pyx_mstate_global->__pyx_n_s_range
 #define __pyx_n_s_spec __pyx_mstate_global->__pyx_n_s_spec
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
@@ -2506,7 +2512,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #endif
 /* #### Code section: module_code ### */
 
-/* "optimizers.pyx":5
+/* "deeprai/engine/cython/optimizers.pyx":5
  * cimport numpy as np
  * #Standerd gradient decent
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):             # <<<<<<<<<<<<<<
@@ -2514,14 +2520,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
  *         WeightVals.Weights[layer] += DerivativeVals.Derivatives[layer] * learning_rate
  */
 
-static PyObject *__pyx_pw_10optimizers_1gradient_descent(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learning_rate, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_gradient_descent(float __pyx_v_learning_rate, CYTHON_UNUSED int __pyx_skip_dispatch) {
   Py_ssize_t __pyx_v_layer;
   PyArrayObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -2539,7 +2545,7 @@ static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learni
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("gradient_descent", 0);
 
-  /* "optimizers.pyx":6
+  /* "deeprai/engine/cython/optimizers.pyx":6
  * #Standerd gradient decent
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):
  *     for layer in range(len(WeightVals.Weights)):             # <<<<<<<<<<<<<<
@@ -2557,12 +2563,12 @@ static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learni
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_layer = __pyx_t_5;
 
-    /* "optimizers.pyx":7
+    /* "deeprai/engine/cython/optimizers.pyx":7
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):
  *     for layer in range(len(WeightVals.Weights)):
  *         WeightVals.Weights[layer] += DerivativeVals.Derivatives[layer] * learning_rate             # <<<<<<<<<<<<<<
  * 
- * # cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate, float momentum):
+ * 
  */
     __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -2595,7 +2601,7 @@ static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learni
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "optimizers.pyx":5
+  /* "deeprai/engine/cython/optimizers.pyx":5
  * cimport numpy as np
  * #Standerd gradient decent
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):             # <<<<<<<<<<<<<<
@@ -2612,7 +2618,7 @@ static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learni
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF((PyObject *)__pyx_r);
@@ -2621,15 +2627,15 @@ static PyArrayObject *__pyx_f_10optimizers_gradient_descent(float __pyx_v_learni
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10optimizers_1gradient_descent(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_10optimizers_1gradient_descent = {"gradient_descent", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10optimizers_1gradient_descent, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10optimizers_1gradient_descent(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_10optimizers_1gradient_descent = {"gradient_descent", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -2684,18 +2690,18 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("gradient_descent", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 5, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10optimizers_gradient_descent(__pyx_self, __pyx_v_learning_rate);
+  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_10optimizers_gradient_descent(__pyx_self, __pyx_v_learning_rate);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_learning_rate) {
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *__pyx_self, float __pyx_v_learning_rate) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2704,7 +2710,7 @@ static PyObject *__pyx_pf_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("gradient_descent", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_10optimizers_gradient_descent(__pyx_v_learning_rate, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_10optimizers_gradient_descent(__pyx_v_learning_rate, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2713,7 +2719,7 @@ static PyObject *__pyx_pf_10optimizers_gradient_descent(CYTHON_UNUSED PyObject *
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("deeprai.engine.cython.optimizers.gradient_descent", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4003,6 +4009,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_DerivativeVals, sizeof(__pyx_k_DerivativeVals), 0, 0, 1, 1},
   {0, __pyx_k_Derivatives, sizeof(__pyx_k_Derivatives), 0, 0, 1, 1},
   {0, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
+  {0, __pyx_k_MomentEstimateVals, sizeof(__pyx_k_MomentEstimateVals), 0, 0, 1, 1},
   {0, __pyx_k_WeightVals, sizeof(__pyx_k_WeightVals), 0, 0, 1, 1},
   {0, __pyx_k_Weights, sizeof(__pyx_k_Weights), 0, 0, 1, 1},
   {0, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
@@ -4012,6 +4019,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {0, __pyx_k_deeprai_engine_base_layer, sizeof(__pyx_k_deeprai_engine_base_layer), 0, 0, 1, 1},
   {0, __pyx_k_deeprai_engine_cython_optimizers, sizeof(__pyx_k_deeprai_engine_cython_optimizers), 0, 0, 1, 0},
+  {0, __pyx_k_deeprai_engine_cython_optimizers_2, sizeof(__pyx_k_deeprai_engine_cython_optimizers_2), 0, 0, 1, 1},
   {0, __pyx_k_gradient_descent, sizeof(__pyx_k_gradient_descent), 0, 0, 1, 1},
   {0, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {0, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
@@ -4023,7 +4031,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {0, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
   {0, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
-  {0, __pyx_k_optimizers, sizeof(__pyx_k_optimizers), 0, 0, 1, 1},
   {0, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {0, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
   {0, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -4031,6 +4038,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_DerivativeVals, __pyx_k_DerivativeVals, sizeof(__pyx_k_DerivativeVals), 0, 0, 1, 1},
   {&__pyx_n_s_Derivatives, __pyx_k_Derivatives, sizeof(__pyx_k_Derivatives), 0, 0, 1, 1},
   {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
+  {&__pyx_n_s_MomentEstimateVals, __pyx_k_MomentEstimateVals, sizeof(__pyx_k_MomentEstimateVals), 0, 0, 1, 1},
   {&__pyx_n_s_WeightVals, __pyx_k_WeightVals, sizeof(__pyx_k_WeightVals), 0, 0, 1, 1},
   {&__pyx_n_s_Weights, __pyx_k_Weights, sizeof(__pyx_k_Weights), 0, 0, 1, 1},
   {&__pyx_kp_u__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
@@ -4040,6 +4048,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_deeprai_engine_base_layer, __pyx_k_deeprai_engine_base_layer, sizeof(__pyx_k_deeprai_engine_base_layer), 0, 0, 1, 1},
   {&__pyx_kp_s_deeprai_engine_cython_optimizers, __pyx_k_deeprai_engine_cython_optimizers, sizeof(__pyx_k_deeprai_engine_cython_optimizers), 0, 0, 1, 0},
+  {&__pyx_n_s_deeprai_engine_cython_optimizers_2, __pyx_k_deeprai_engine_cython_optimizers_2, sizeof(__pyx_k_deeprai_engine_cython_optimizers_2), 0, 0, 1, 1},
   {&__pyx_n_s_gradient_descent, __pyx_k_gradient_descent, sizeof(__pyx_k_gradient_descent), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_initializing, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
@@ -4051,7 +4060,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
   {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
-  {&__pyx_n_s_optimizers, __pyx_k_optimizers, sizeof(__pyx_k_optimizers), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_spec, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -4094,7 +4102,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "optimizers.pyx":5
+  /* "deeprai/engine/cython/optimizers.pyx":5
  * cimport numpy as np
  * #Standerd gradient decent
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):             # <<<<<<<<<<<<<<
@@ -4118,30 +4126,31 @@ static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   if (__Pyx_InitString(__pyx_string_tab[0], &__pyx_n_s_DerivativeVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   if (__Pyx_InitString(__pyx_string_tab[1], &__pyx_n_s_Derivatives) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_s_ImportError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_WeightVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s_Weights) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_kp_u__3) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s__4) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s__7) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_asyncio_coroutines) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_deeprai_engine_base_layer) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_kp_s_deeprai_engine_cython_optimizers) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s_gradient_descent) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_is_coroutine) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_learning_rate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_n_s_optimizers) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_n_s_range) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_MomentEstimateVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s_WeightVals) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s_Weights) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_kp_u__3) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s__4) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s__7) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_asyncio_coroutines) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_deeprai_engine_base_layer) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_kp_s_deeprai_engine_cython_optimizers) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_deeprai_engine_cython_optimizers_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_gradient_descent) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_is_coroutine) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_learning_rate) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_range) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[27], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   #endif
   #if !CYTHON_USE_MODULE_STATE
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
@@ -4546,14 +4555,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_optimizers) {
+  if (__pyx_module_is_main_deeprai__engine__cython__optimizers) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "optimizers")) {
-      if (unlikely((PyDict_SetItemString(modules, "optimizers", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "deeprai.engine.cython.optimizers")) {
+      if (unlikely((PyDict_SetItemString(modules, "deeprai.engine.cython.optimizers", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -4574,12 +4583,12 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "optimizers.pyx":1
- * from deeprai.engine.base_layer import WeightVals, DerivativeVals             # <<<<<<<<<<<<<<
+  /* "deeprai/engine/cython/optimizers.pyx":1
+ * from deeprai.engine.base_layer import WeightVals, DerivativeVals, MomentEstimateVals             # <<<<<<<<<<<<<<
  * import numpy as np
  * cimport numpy as np
  */
-  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_n_s_WeightVals);
   __Pyx_GIVEREF(__pyx_n_s_WeightVals);
@@ -4587,6 +4596,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_DerivativeVals);
   __Pyx_GIVEREF(__pyx_n_s_DerivativeVals);
   PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_DerivativeVals);
+  __Pyx_INCREF(__pyx_n_s_MomentEstimateVals);
+  __Pyx_GIVEREF(__pyx_n_s_MomentEstimateVals);
+  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_MomentEstimateVals);
   __pyx_t_3 = __Pyx_Import(__pyx_n_s_deeprai_engine_base_layer, __pyx_t_2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4598,10 +4610,14 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_DerivativeVals, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_MomentEstimateVals); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MomentEstimateVals, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optimizers.pyx":2
- * from deeprai.engine.base_layer import WeightVals, DerivativeVals
+  /* "deeprai/engine/cython/optimizers.pyx":2
+ * from deeprai.engine.base_layer import WeightVals, DerivativeVals, MomentEstimateVals
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * #Standerd gradient decent
@@ -4611,20 +4627,20 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_3) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optimizers.pyx":5
+  /* "deeprai/engine/cython/optimizers.pyx":5
  * cimport numpy as np
  * #Standerd gradient decent
  * cpdef np.ndarray[np.float64_t, ndim=1] gradient_descent(float learning_rate):             # <<<<<<<<<<<<<<
  *     for layer in range(len(WeightVals.Weights)):
  *         WeightVals.Weights[layer] += DerivativeVals.Derivatives[layer] * learning_rate
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_10optimizers_1gradient_descent, 0, __pyx_n_s_gradient_descent, NULL, __pyx_n_s_optimizers, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_7deeprai_6engine_6cython_10optimizers_1gradient_descent, 0, __pyx_n_s_gradient_descent, NULL, __pyx_n_s_deeprai_engine_cython_optimizers_2, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_gradient_descent, __pyx_t_3) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optimizers.pyx":1
- * from deeprai.engine.base_layer import WeightVals, DerivativeVals             # <<<<<<<<<<<<<<
+  /* "deeprai/engine/cython/optimizers.pyx":1
+ * from deeprai.engine.base_layer import WeightVals, DerivativeVals, MomentEstimateVals             # <<<<<<<<<<<<<<
  * import numpy as np
  * cimport numpy as np
  */
@@ -4649,13 +4665,13 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_3);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init optimizers", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init deeprai.engine.cython.optimizers", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init optimizers");
+    PyErr_SetString(PyExc_ImportError, "init deeprai.engine.cython.optimizers");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
