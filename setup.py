@@ -30,11 +30,11 @@ def no_cythonize(extensions, **_ignore):
 
 
 extensions = [
-    Extension("deeprai/engine/cython/activation", ["deeprai/engine/cython/activation.c"], include_dirs=[numpy.get_include()]),
-    Extension("deeprai/engine/cython/dense_operations", ["deeprai/engine/cython/dense_operations.c"]),
-    Extension("deeprai/engine/cython/dense_train_loop", ["deeprai/engine/cython/dense_train_loop.c"]),
-    Extension("deeprai/engine/cython/loss",["deeprai/engine/cython/loss.c"]),
-    Extension("deeprai/engine/cython/optimizers", ["deeprai/engine/cython/optimizers.c"]),
+    Extension("deeprai/engine/cython/activation", ["deeprai/engine/cython/activation.c"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/dense_operations", ["deeprai/engine/cython/dense_operations.c"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/dense_train_loop", ["deeprai/engine/cython/dense_train_loop.c"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/loss",["deeprai/engine/cython/loss.c"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/optimizers", ["deeprai/engine/cython/optimizers.c"], include_dirs=[numpy.get_include()], libraries=["user32"]),
     
     ]
 CYTHONIZE = bool(int(os.getenv("CYTHONIZE", 0))) and cythonize is not None
