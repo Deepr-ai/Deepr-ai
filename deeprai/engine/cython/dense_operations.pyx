@@ -4,7 +4,7 @@ from deeprai.engine.cython import activation as act
 
 #PUBLIC FUNCTIONprint(models.run(x))
 cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list, list neurons,
-                                                         list weights, list dropout_rate, list l1_penalty, list l2_penalty):
+                                                         list weights, list dropout_rate):
     """
 Parameters:
 -----------
@@ -33,15 +33,13 @@ np.ndarray
         layer_outputs = np.dot(neurons[layer], weight)
         neurons[layer+1] = activation_list[layer](layer_outputs)
         if layer < len(weights) - 1 and dropout_rate[layer] > 0:
-            neurons[layer + 1] *= np.random.binomial([np.ones_like(neurons[layer + 1])], 1 - dropout_rate[layer])[0] * (1.0 / (1 - dropout_rate[layer]))
-        if l1_penalty[layer] > 0:
-            weight[:] = weight[:] - l1_penalty[layer] * np.sign(weight[:])
-        if l2_penalty[layer] > 0:
-            weight[:] = weight[:] - l2_penalty[layer] * weight[:]
+            neurons[layer + 1] *= np.random.binomial([np.ones_like(neurons[layer + 1])], 1 - dropout_rate[layer])[0] * (
+                        1.0 / (1 - dropout_rate[layer]))
     return neurons[-1]
 
 
-cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list, list neurons, list weights, list derv):
+cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list, list neurons, list weights, list derv, list l1_penalty,
+                                                      list l2_penalty):
     """
 Parameters:
 -----------
@@ -68,6 +66,10 @@ np.ndarray
         delta_reshape = delta.reshape(delta.shape[0], -1).T
         current_reshaped = neurons[layer].reshape(neurons[layer].shape[0], -1)
         derv[layer] = np.dot(current_reshaped, delta_reshape)
+        if l1_penalty[layer] > 0:
+            derv[layer] += l1_penalty[layer] * np.sign(weights[layer])
+        if l2_penalty[layer] > 0:
+            derv[layer] += 2 * l2_penalty[layer] * weights[layer]
         loss = np.dot(delta, weights[layer].T)
 
 #PRIVATE FUNCTION

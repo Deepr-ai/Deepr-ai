@@ -57,12 +57,17 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                 batch_inputs = inputs[start:end]
                 batch_targets = targets[start:end]
                 for input, target in zip(batch_inputs, batch_targets):
-                    output = forward_propagate(input, activation_list, neurons, weights, dropout_rate, l1_penalty, l2_penalty)
-                    back_propagate(target - output, activation_derv_list, neurons, weights, derv)
+                    output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
+                    back_propagate(target - output, activation_derv_list, neurons, weights, derv, l1_penalty, l2_penalty)
                     opti.gradient_descent(learning_rate=learning_rate)
                     sum_error += loss_function[0](output, target)
             if verbose:
-                bar.text = f"Cost: {sum_error/(len(inputs))}"
+                rel_error = 100 * (
+                            forward_propagate(inputs[4], activation_list, neurons, weights, dropout_rate
+                                              ) - targets[4]) / targets[4]
+                mask = np.isfinite(rel_error)
+                mean_rel_error = np.mean(np.abs(rel_error[mask]))
+                bar.text = f"Cost: {sum_error/(len(inputs))} Accuracy: {np.abs(100-mean_rel_error):.2f}%"
                 bar()
     print("Training complete!")
 
