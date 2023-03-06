@@ -7,8 +7,9 @@ from deeprai.engine.cython import loss as loss
 from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
 from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
 
-cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets, int epochs,
-            float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,list dropout_rate,
+cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets,np.ndarray[np.float64_t, ndim=2] test_inputs,
+            np.ndarray[np.float64_t, ndim=2] test_targets, int epochs,float learning_rate,
+            float momentum, list activation_list, list activation_derv_list, list loss_function,list dropout_rate,
             list l2_penalty,list l1_penalty, bint verbose, int batch_size):
     """
      Trains a neural network model using gradient descent optimization.
@@ -41,15 +42,16 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
      None
      """
     cdef int start, end, num_batches
-    cdef float sum_error
+    cdef float sum_error, error, total_rel_error, mean_rel_error
     cdef np.ndarray[np.float64_t, ndim=2] batch_inputs, batch_targets
-    cdef np.ndarray[np.float64_t, ndim=1] output
+    cdef np.ndarray[np.float64_t, ndim=1] output, abs_error, rel_error
     num_batches = len(inputs) // batch_size
     cdef list neurons = NeuronVals.Neurons
     cdef list weights = WeightVals.Weights
     cdef list derv = DerivativeVals.Derivatives
-    with alive_bar(epochs, dual_line=True, title="Training", spinner="waves") as bar:
-        for epoch in range(epochs):
+    print("Starting Training...")
+    for epoch in range(epochs):
+        with alive_bar(num_batches, title=f"Epoch {epoch+1}", spinner="waves", dual_line=False) as bar:
             sum_error = 0
             for batch in range(num_batches):
                 start = batch * batch_size
@@ -61,13 +63,16 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                     back_propagate(target - output, activation_derv_list, neurons, weights, derv, l1_penalty, l2_penalty)
                     opti.gradient_descent(learning_rate=learning_rate)
                     sum_error += loss_function[0](output, target)
-            if verbose:
-                rel_error = 100 * (
-                            forward_propagate(inputs[4], activation_list, neurons, weights, dropout_rate
-                                              ) - targets[4]) / targets[4]
-                mask = np.isfinite(rel_error)
-                mean_rel_error = np.mean(np.abs(rel_error[mask]))
-                bar.text = f"Cost: {sum_error/(len(inputs))} Accuracy: {np.abs(100-mean_rel_error):.2f}%"
                 bar()
+        error = 0
+        #Testing model
+        for input, target in zip(test_inputs, test_targets):
+            output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
+            abs_error = np.abs(output - target)
+            rel_error = np.divide(abs_error, target, where=target != 0)
+            mean_rel_error = np.mean(rel_error)*100
+            error += mean_rel_error
+        total_rel_error = error/len(test_inputs)
+        print(f"Epoch: {epoch+1} | Cost: {sum_error/(len(inputs)):4f} | Accuracy: {np.abs(100-total_rel_error):.2f} | Relative Error: {total_rel_error:.3f}")
     print("Training complete!")
 
