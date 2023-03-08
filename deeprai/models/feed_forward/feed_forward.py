@@ -13,7 +13,7 @@ class FeedForward:
     def add_dense(self, neurons, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         self.spawn.create_dense(neurons, activation, dropout, l1_penalty, l2_penalty)
 
-    def model_optimizers(self, optimizer='gradient decent', loss='mean square error'):
+    def config(self, optimizer='gradient decent', loss='mean square error'):
         OptimizerString[0] = optimizer
         LossString[0] = loss
 
@@ -30,9 +30,6 @@ class FeedForward:
 
     def run(self, inputs):
         return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights, DropoutList)
-
-    def save(self, filename):
-        pass
 
     def summery(self):
         pass

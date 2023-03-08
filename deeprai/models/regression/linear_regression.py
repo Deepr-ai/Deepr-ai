@@ -1,0 +1,2 @@
+class LinearRegression:
+    pass
