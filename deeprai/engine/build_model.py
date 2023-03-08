@@ -8,10 +8,10 @@ class Build:
     def __init__(self):
         self.NetworkQueue = []
         self.activationMap = {"tanh":act.tanh,"relu":act.relu,"leaky relu":act.leaky_relu,
-                              "sigmoid":act.sigmoid, "linear":act.linear}
+                              "sigmoid":act.sigmoid, "linear":act.linear, "softmax":act.softmax}
         self.activationDerivativeMap = {"tanh":act.tanh_derivative,"relu":act.relu_derivative,
                                         "leaky relu":act.leaky_relu_derivative,
-                                        "sigmoid":act.sigmoid_derivative,"linear":act.linear_derivative}
+                                        "sigmoid":act.sigmoid_derivative,"linear":act.linear_derivative, "softmax":act.softmax_derivative}
         self.OptimizerMap = {"gradient decent": opt.gradient_descent}
         self.LossMap = {'mean square error': lossFunc.mean_square_error, "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}

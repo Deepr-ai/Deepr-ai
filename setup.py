@@ -79,3 +79,4 @@ from Cython.Build import cythonize
 
 setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'))
 setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'))
+setup(ext_modules=cythonize('deeprai/engine/cython/activation.pyx'))

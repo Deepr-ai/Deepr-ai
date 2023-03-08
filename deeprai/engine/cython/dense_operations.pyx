@@ -1,8 +1,10 @@
 import numpy as np
 cimport numpy as np
 from deeprai.engine.cython import activation as act
+import cython
+#PUBLIC FUNCTIONprint(models.run(x))clear
 
-#PUBLIC FUNCTIONprint(models.run(x))
+@cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list, list neurons,
                                                          list weights, list dropout_rate):
     """
@@ -37,7 +39,8 @@ np.ndarray
                         1.0 / (1 - dropout_rate[layer]))
     return neurons[-1]
 
-
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list, list neurons, list weights, list derv, list l1_penalty,
                                                       list l2_penalty):
     """
