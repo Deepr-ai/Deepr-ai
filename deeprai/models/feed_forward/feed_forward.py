@@ -1,5 +1,5 @@
 from deeprai.engine.base_layer import WeightVals, Optimizer, Loss, ActivationList, ActivationDerivativeList, LossString, \
-    OptimizerString, NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList
+    OptimizerString, NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList, LayerVals
 import deeprai.engine.build_model as builder
 from deeprai.engine.cython.dense_train_loop import train as train
 from deeprai.engine.cython.dense_operations import forward_propagate
@@ -31,5 +31,21 @@ class FeedForward:
     def run(self, inputs):
         return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights, DropoutList)
 
-    def summery(self):
-        pass
+    def specs(self):  # 19
+        loss_table = {"categorical cross entropy": "Cross entropy",
+                      "mean square error": "MSE",
+                      "mean absolute error": "MAE"}
+        parameters = sum([LayerVals.Layers[i] * LayerVals.Layers[i + 1] for i in range(len(LayerVals.Layers) - 1)])
+        layer_model = 'x'.join(str(i) for i in LayerVals.Layers)
+
+        print(f"""  
+    .---------------.------------------.-----------------.------------------.
+    |      Key      |       Val        |       Key       |       Val        |
+    :---------------+------------------+-----------------+------------------:
+    | Model         | Feed Forward     | Optimizer       | Gradient Descent |
+    :---------------+------------------+-----------------+------------------:
+    | Parameters    | {parameters}{" " * (17 - len(str(parameters)))}| Layer Model     | {layer_model}{" "*(17-len(layer_model))}|
+    :---------------+------------------+-----------------+------------------:
+    | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.10 BETA      |
+    '---------------'------------------'-----------------'------------------'
+        """)
