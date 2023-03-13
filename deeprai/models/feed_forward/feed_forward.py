@@ -3,12 +3,13 @@ from deeprai.engine.base_layer import WeightVals, Optimizer, Loss, ActivationLis
 import deeprai.engine.build_model as builder
 from deeprai.engine.cython.dense_train_loop import train as train
 from deeprai.engine.cython.dense_operations import forward_propagate
-from numba import jit
+from deeprai.tools.graphing import neural_net_metrics
 
 
 class FeedForward:
     def __init__(self):
         self.spawn = builder.Build()
+        self.graph_engine = neural_net_metrics.MetricsGraphingEngine()
 
     def add_dense(self, neurons, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         self.spawn.create_dense(neurons, activation, dropout, l1_penalty, l2_penalty)
@@ -49,3 +50,14 @@ class FeedForward:
     | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.10 BETA      |
     '---------------'------------------'-----------------'------------------'
         """)
+
+    def graph(self, metric="cost"):
+        if metric == "cost":
+            self.graph_engine.graph_cost()
+        elif metric == "acc" or metric == "accuracy":
+            self.graph_engine.graph_accuracy()
+        elif metric == "error" or metric == "relative error":
+            self.graph_engine.graph_rel_error()
+        else:
+            print(f"Invalid metric: {metric}")
+

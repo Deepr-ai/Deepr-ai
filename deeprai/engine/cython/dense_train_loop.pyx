@@ -5,7 +5,7 @@ from alive_progress import alive_bar
 from deeprai.engine.cython import activation as act
 from deeprai.engine.cython import loss as loss
 from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
-from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals
+from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals, NetworkMetrics
 
 cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets,np.ndarray[np.float64_t, ndim=2] test_inputs,
             np.ndarray[np.float64_t, ndim=2] test_targets, int epochs,float learning_rate,
@@ -80,6 +80,12 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                     return
                 past_acc = cur_acc
         total_rel_error = error/len(test_inputs)
-        print(f"Epoch: {epoch+1} | Cost: {sum_error/(len(inputs)):4f} | Accuracy: {np.abs(100-total_rel_error):.2f} | Relative Error: {total_rel_error:.3f}")
+        accuracy = np.abs(100-total_rel_error)
+        cost = sum_error/(len(inputs))
+        NetworkMetrics[0].append(cost)
+        NetworkMetrics[1].append(accuracy)
+        NetworkMetrics[2].append(total_rel_error)
+        NetworkMetrics[3].append(epoch+1)
+        print(f"Epoch: {epoch+1} | Cost: {cost:4f} | Accuracy: {accuracy:.2f} | Relative Error: {total_rel_error:.3f}")
     print("Training complete!")
 
