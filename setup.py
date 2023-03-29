@@ -10,13 +10,14 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 extensions = [
-    Extension("deeprai.engine.cython.activation", ["deeprai/engine/cython/activation.pyx"]),
-    Extension("deeprai.engine.cython.dense_operations", ["deeprai/engine/cython/dense_operations.pyx"]),
-    Extension("deeprai.engine.cython.dense_train_loop", ["deeprai/engine/cython/dense_train_loop.pyx"]),
-    Extension("deeprai.engine.cython.loss", ["deeprai/engine/cython/loss.pyx"]),
-    Extension("deeprai.engine.cython.optimizers", ["deeprai/engine/cython/optimizers.pyx"]),
-    Extension("deeprai.engine.cython.regression", ["deeprai/engine/cython/regression.pyx"])
-]
+    Extension("deeprai/engine/cython/activation", ["deeprai/engine/cython/activation.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/dense_operations", ["deeprai/engine/cython/dense_operations.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/dense_train_loop", ["deeprai/engine/cython/dense_train_loop.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/loss",["deeprai/engine/cython/loss.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/optimizers", ["deeprai/engine/cython/optimizers.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/regression", ["deeprai/engine/cython/regression.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    
+    ]
 
 compiler_directives = {"language_level": 3, "embedsignature": True}
 extensions = cythonize(extensions, compiler_directives=compiler_directives)
@@ -62,4 +63,3 @@ for file in os.listdir('.'):
 # setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'))
 # setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'))
 # setup(ext_modules=cythonize('deeprai/engine/cython/regression.pyx'))
-
