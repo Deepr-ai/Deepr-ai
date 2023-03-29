@@ -4,30 +4,10 @@ from setuptools import find_packages
 from setuptools.extension import Extension
 import shutil
 import os
-import numpy
-try:
-    from Cython.Build import cythonize
-except ImportError:
-    cythonize = None
+from Cython.Build import cythonize
 
 with open("README.md", "r") as f:
     long_description = f.read()
-
-def no_cythonize(extensions, **_ignore):
-    for extension in extensions:
-        sources = []
-        for sfile in extension.sources:
-            path, ext = os.path.splitext(sfile)
-            if ext in (".pyx", ".py"):
-                if extension.language == "c++":
-                    ext = ".cpp"
-                else:
-                    ext = ".c"
-                sfile = path + ext
-            sources.append(sfile)
-        extension.sources[:] = sources
-    return extensions
-
 
 extensions = [
     Extension("deeprai/engine/cython/activation", ["deeprai/engine/cython/activation.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
@@ -35,19 +15,16 @@ extensions = [
     Extension("deeprai/engine/cython/dense_train_loop", ["deeprai/engine/cython/dense_train_loop.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
     Extension("deeprai/engine/cython/loss",["deeprai/engine/cython/loss.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
     Extension("deeprai/engine/cython/optimizers", ["deeprai/engine/cython/optimizers.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
+    Extension("deeprai/engine/cython/regression", ["deeprai/engine/cython/regression.pyx"], include_dirs=[numpy.get_include()], libraries=["user32"]),
     
     ]
-CYTHONIZE = bool(int(os.getenv("CYTHONIZE", 0))) and cythonize is not None
 
-if CYTHONIZE:
-    compiler_directives = {"language_level": 3, "embedsignature": True}
-    extensions = cythonize(extensions, compiler_directives=compiler_directives)
-else:
-    extensions = no_cythonize(extensions)
+compiler_directives = {"language_level": 3, "embedsignature": True}
+extensions = cythonize(extensions, compiler_directives=compiler_directives)
 
 setup(
     name='DeeprAI',
-    version='0.0.9',
+    version='0.0.10',
     author='Kieran Carter',
     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
     long_description=long_description,
@@ -63,14 +40,26 @@ setup(
         'colorama',
         'cryptography'
     ],
-classifiers=["Programming Language :: Python :: 3",
-             "Programming Language :: Cython",
-             "License :: OSI Approved :: Apache Software License",
-             "Operating System :: OS Independent",]
-
+    classifiers=["Programming Language :: Python :: 3",
+                 "Programming Language :: Cython",
+                 "License :: OSI Approved :: Apache Software License",
+                 "Operating System :: OS Independent", ],
+    package_data={'deeprai.engine.cython': ['*.pyx']},
+    exclude_package_data={'deeprai.engine.cython': ['*.c']},
 )
+
 for file in os.listdir('.'):
     if file.endswith('.so') or file.endswith('.pyd'):
         src = os.path.join(os.getcwd(), file)
         dst = os.path.join(os.getcwd(), 'deeprai/engine/cython', file)
         os.rename(src, dst)
+
+# from distutils.core import setup
+# from Cython.Build import cythonize
+#
+# setup(ext_modules=cythonize('deeprai/engine/cython/activation.pyx'))
+# setup(ext_modules=cythonize('deeprai/engine/cython/loss.pyx'))
+# setup(ext_modules=cythonize('deeprai/engine/cython/optimizers.pyx'))
+# setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'))
+# setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'))
+# setup(ext_modules=cythonize('deeprai/engine/cython/regression.pyx'))

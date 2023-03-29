@@ -1,8 +1,12 @@
 import deeprai.engine.build_model as builder
 from deeprai.models.feed_forward.feed_forward import FeedForward
 from deeprai.models.convolutional.convolutional import Convolutional
+from deeprai.models.regression.linear_regression import LinearRegression
+from deeprai.models.regression.sine_regression import SineRegression
+from deeprai.models.regression.poly_regression import PolyRegression
 from deeprai.tools.file_manager.save import Save
 from deeprai.tools.file_manager.load import Load
+
 
 class Convolutional(Convolutional):
     def __init__(self):
@@ -45,3 +49,17 @@ class FeedForward(FeedForward):
         self.weights = []
         self.bias = []
 
+
+class LinearRegression(LinearRegression):
+    def __int__(self):
+        super().__init__()
+
+
+class PolyRegression(PolyRegression):
+    def __int__(self):
+        super().__init__()
+
+
+class SineRegression(SineRegression):
+    def __int__(self):
+        super().__init__()
