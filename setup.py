@@ -4,6 +4,7 @@ from setuptools import find_packages
 from setuptools.extension import Extension
 import shutil
 import os
+import numpy
 from Cython.Build import cythonize
 
 with open("README.md", "r") as f:
