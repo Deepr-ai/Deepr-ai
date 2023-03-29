@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 import os
+
 for file in os.listdir('.'):
     if file.endswith('.so') or file.endswith('.pyd'):
         src = os.path.join(os.getcwd(), file)

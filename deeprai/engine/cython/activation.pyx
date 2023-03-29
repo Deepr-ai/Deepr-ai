@@ -3,18 +3,19 @@ import numpy as np
 cimport numpy as np
 import cython
 cimport cython
+
 #Public Functions for python wrapper
 
 #none (input data)
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] linear(np.ndarray[np.float64_t, ndim=1] n):
-    return n*1
+    return n
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] linear_derivative(np.ndarray[np.float64_t, ndim=1] x):
-    return x**0
+    return 1
 #tanh
 @cython.boundscheck(False)
 @cython.wraparound(False)
