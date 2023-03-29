@@ -1,0 +1,7 @@
+colorama
+cython
+deeprai-datasets
+matplotlib
+numpy
+pyndb
+alive_progress
