@@ -62,7 +62,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                 for input, target in zip(batch_inputs, batch_targets):
                     output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
                     back_propagate(target - output, activation_derv_list, neurons, weights, derv, l1_penalty, l2_penalty)
-                    opti.gradient_descent(learning_rate=learning_rate)
+                    opti.gradient_descent(learning_rate)
                     sum_error += loss_function[0](output, target)
                 bar()
         error = 0
