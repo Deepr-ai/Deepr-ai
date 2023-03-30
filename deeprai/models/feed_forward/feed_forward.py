@@ -18,12 +18,12 @@ class FeedForward:
         OptimizerString[0] = optimizer
         LossString[0] = loss
 
-    def train_model(self, input_data, verify_data, test_input, test_targets, batch_size=36, epochs=500,
+    def train_model(self, train_inputs, train_targets, test_inputs, test_targets, batch_size=36, epochs=500,
                     learning_rate=0.1, momentum=0.6, early_stop=False, verbose=True):
         self.spawn.convert_loss(LossString)
         # MomentEstimateVals.moment_estimate_1 = np.zeros((len(WeightVals.Weights), len(WeightVals.Weights[0])))
         # MomentEstimateVals.moment_estimate_2 = np.zeros((len(WeightVals.Weights), len(WeightVals.Weights[0])))
-        train(inputs=input_data, targets=verify_data, test_inputs=test_input, test_targets=test_targets, epochs=epochs,
+        train(inputs=train_inputs, targets=train_targets, test_inputs=test_inputs, test_targets=test_targets, epochs=epochs,
               learning_rate=learning_rate, momentum=momentum,
               activation_list=ActivationList, activation_derv_list=ActivationDerivativeList, loss_function=Loss,
               verbose=verbose, batch_size=batch_size, dropout_rate=DropoutList, l1_penalty=l1PenaltyList,
