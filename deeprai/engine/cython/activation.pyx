@@ -15,7 +15,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] linear(np.ndarray[np.float64_t, ndim=1] n
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] linear_derivative(np.ndarray[np.float64_t, ndim=1] x):
-    return 1
+    return np.ones_like(1)
 #tanh
 @cython.boundscheck(False)
 @cython.wraparound(False)

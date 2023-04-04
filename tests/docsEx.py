@@ -9,11 +9,11 @@ network = model.FeedForward()
 
 network.add_dense(2)
 
-network.add_dense(5, activation='linear')
+network.add_dense(50, dropout=0.1)
 
-network.add_dense(1, activation='linear')
+network.add_dense(1)
 
-network.train_model(input_data=inputs, verify_data=expected, epochs=20)
+network.train_model(train_inputs=inputs, train_targets=expected, test_inputs=inputs, test_targets=expected, epochs=100)
 
-output = network.run(np.array([.3,.1]))
-print(output)
+network.graph(metric="acc")
+network.graph()

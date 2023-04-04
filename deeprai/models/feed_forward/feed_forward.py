@@ -23,8 +23,8 @@ class FeedForward:
         self.spawn.convert_loss(LossString)
         # MomentEstimateVals.moment_estimate_1 = np.zeros((len(WeightVals.Weights), len(WeightVals.Weights[0])))
         # MomentEstimateVals.moment_estimate_2 = np.zeros((len(WeightVals.Weights), len(WeightVals.Weights[0])))
-        train(inputs=train_inputs, targets=train_targets, test_inputs=test_inputs, test_targets=test_targets, epochs=epochs,
-              learning_rate=learning_rate, momentum=momentum,
+        train(inputs=train_inputs, targets=train_targets, test_inputs=test_inputs, test_targets=test_targets,
+              epochs=epochs, learning_rate=learning_rate, momentum=momentum,
               activation_list=ActivationList, activation_derv_list=ActivationDerivativeList, loss_function=Loss,
               verbose=verbose, batch_size=batch_size, dropout_rate=DropoutList, l1_penalty=l1PenaltyList,
               l2_penalty=l2PenaltyList, early_stop=early_stop)
@@ -47,7 +47,7 @@ class FeedForward:
     :---------------+------------------+-----------------+------------------:
     | Parameters    | {parameters}{" " * (17 - len(str(parameters)))}| Layer Model     | {layer_model}{" "*(17-len(layer_model))}|
     :---------------+------------------+-----------------+------------------:
-    | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.10 BETA      |
+    | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.12 BETA      |
     '---------------'------------------'-----------------'------------------'
         """)
 
