@@ -1,7 +1,7 @@
 import ctypes
 
 # Load the C library containing the tensor operations
-tensor_functions = ctypes.cdll.LoadLibrary('./libtensor_functions.so')
+tensor_functions = ctypes.cdll.LoadLibrary('tensor.so')
 
 # Define the tensor class
 class tensor:
