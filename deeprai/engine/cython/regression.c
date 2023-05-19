@@ -3,16 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
-        ],
-        "include_dirs": [
-            "/usr/lib/python3/dist-packages/numpy/core/include"
-        ],
+        "depends": [],
         "name": "deeprai.engine.cython.regression",
         "sources": [
             "deeprai/engine/cython/regression.pyx"
@@ -33,7 +24,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 1
+#define CYTHON_FUTURE_DIVISION 0
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1959,8 +1950,8 @@ static PyObject *__pyx_n_s_mean;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_ones;
 static PyObject *__pyx_n_s_pi;
 static PyObject *__pyx_n_s_range;
@@ -2322,7 +2313,6 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_linear_regression
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_1linear_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10regression_linear_regression[] = "linear_regression(ndarray x_vals, ndarray y_vals)";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_1linear_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x_vals = 0;
   PyArrayObject *__pyx_v_y_vals = 0;
@@ -2471,7 +2461,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   PyObject *__pyx_v_ss_res = NULL;
   PyObject *__pyx_v_ss_tot = NULL;
   PyObject *__pyx_v_rsq = NULL;
-  long __pyx_7genexpr__pyx_v_i;
+  long __pyx_v_i;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_X;
   __Pyx_Buffer __pyx_pybuffer_X;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_beta;
@@ -3080,7 +3070,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
  *         ss_res = np.sum(residuals ** 2)
  *         ss_tot = np.sum((y_vals - np.mean(y_vals)) ** 2)             # <<<<<<<<<<<<<<
  *         rsq = 1.0 - ss_res / ss_tot
- * 
+ *         # Update the best degree and R-squared if necessary
  */
     __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -3136,8 +3126,8 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
  *         ss_res = np.sum(residuals ** 2)
  *         ss_tot = np.sum((y_vals - np.mean(y_vals)) ** 2)
  *         rsq = 1.0 - ss_res / ss_tot             # <<<<<<<<<<<<<<
- * 
  *         # Update the best degree and R-squared if necessary
+ *         if rsq > best_rsq:
  */
     __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_ss_res, __pyx_v_ss_tot); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -3147,43 +3137,43 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
     __Pyx_XDECREF_SET(__pyx_v_rsq, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "deeprai/engine/cython/regression.pyx":47
- * 
+    /* "deeprai/engine/cython/regression.pyx":46
+ *         rsq = 1.0 - ss_res / ss_tot
  *         # Update the best degree and R-squared if necessary
  *         if rsq > best_rsq:             # <<<<<<<<<<<<<<
  *             best_degree = degree
  *             best_rsq = rsq
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_best_rsq); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_best_rsq); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_v_rsq, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_5 = PyObject_RichCompare(__pyx_v_rsq, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     if (__pyx_t_18) {
 
-      /* "deeprai/engine/cython/regression.pyx":48
+      /* "deeprai/engine/cython/regression.pyx":47
  *         # Update the best degree and R-squared if necessary
  *         if rsq > best_rsq:
  *             best_degree = degree             # <<<<<<<<<<<<<<
  *             best_rsq = rsq
  * 
  */
-      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_degree); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_degree); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
       __pyx_v_best_degree = __pyx_t_14;
 
-      /* "deeprai/engine/cython/regression.pyx":49
+      /* "deeprai/engine/cython/regression.pyx":48
  *         if rsq > best_rsq:
  *             best_degree = degree
  *             best_rsq = rsq             # <<<<<<<<<<<<<<
  * 
  *     # Compute the OLS regression coefficients and return them
  */
-      __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_rsq); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
+      __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_rsq); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
       __pyx_v_best_rsq = __pyx_t_19;
 
-      /* "deeprai/engine/cython/regression.pyx":47
- * 
+      /* "deeprai/engine/cython/regression.pyx":46
+ *         rsq = 1.0 - ss_res / ss_tot
  *         # Update the best degree and R-squared if necessary
  *         if rsq > best_rsq:             # <<<<<<<<<<<<<<
  *             best_degree = degree
@@ -3201,27 +3191,27 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "deeprai/engine/cython/regression.pyx":52
+  /* "deeprai/engine/cython/regression.pyx":51
  * 
  *     # Compute the OLS regression coefficients and return them
  *     beta[:best_degree + 1] = np.linalg.inv(X[:, :best_degree + 1].T.dot(X[:, :best_degree + 1])).dot(             # <<<<<<<<<<<<<<
  *         X[:, :best_degree + 1].T.dot(y_vals))
  *     return [int(round(beta[i])) for i in range(best_degree + 1)][::-1]
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_linalg); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_linalg); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_inv); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_inv); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_12 = PySlice_New(Py_None, __pyx_t_2, Py_None); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_12 = PySlice_New(Py_None, __pyx_t_2, Py_None); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
@@ -3229,21 +3219,21 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __Pyx_GIVEREF(__pyx_t_12);
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_12);
   __pyx_t_12 = 0;
-  __pyx_t_12 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_T); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_T); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-  __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_13 = PySlice_New(Py_None, __pyx_t_2, Py_None); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_13 = PySlice_New(Py_None, __pyx_t_2, Py_None); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
@@ -3251,7 +3241,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __Pyx_GIVEREF(__pyx_t_13);
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_13);
   __pyx_t_13 = 0;
-  __pyx_t_13 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -3267,7 +3257,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __pyx_t_4 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_12, __pyx_t_2, __pyx_t_13) : __Pyx_PyObject_CallOneArg(__pyx_t_12, __pyx_t_13);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
   __pyx_t_12 = NULL;
@@ -3283,26 +3273,26 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __pyx_t_5 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_12, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_dot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_dot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "deeprai/engine/cython/regression.pyx":53
+  /* "deeprai/engine/cython/regression.pyx":52
  *     # Compute the OLS regression coefficients and return them
  *     beta[:best_degree + 1] = np.linalg.inv(X[:, :best_degree + 1].T.dot(X[:, :best_degree + 1])).dot(
  *         X[:, :best_degree + 1].T.dot(y_vals))             # <<<<<<<<<<<<<<
  *     return [int(round(beta[i])) for i in range(best_degree + 1)][::-1]
  * 
  */
-  __pyx_t_4 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_12 = PySlice_New(Py_None, __pyx_t_4, Py_None); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_12 = PySlice_New(Py_None, __pyx_t_4, Py_None); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
@@ -3310,13 +3300,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __Pyx_GIVEREF(__pyx_t_12);
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_12);
   __pyx_t_12 = 0;
-  __pyx_t_12 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_X), __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_T); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_T); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-  __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dot); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dot); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -3331,7 +3321,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   }
   __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_12, __pyx_t_4, ((PyObject *)__pyx_v_y_vals)) : __Pyx_PyObject_CallOneArg(__pyx_t_12, ((PyObject *)__pyx_v_y_vals));
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
   __pyx_t_12 = NULL;
@@ -3347,27 +3337,27 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
   __pyx_t_3 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_12, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/regression.pyx":52
+  /* "deeprai/engine/cython/regression.pyx":51
  * 
  *     # Compute the OLS regression coefficients and return them
  *     beta[:best_degree + 1] = np.linalg.inv(X[:, :best_degree + 1].T.dot(X[:, :best_degree + 1])).dot(             # <<<<<<<<<<<<<<
  *         X[:, :best_degree + 1].T.dot(y_vals))
  *     return [int(round(beta[i])) for i in range(best_degree + 1)][::-1]
  */
-  __pyx_t_1 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_long((__pyx_v_best_degree + 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PySlice_New(Py_None, __pyx_t_1, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_5 = PySlice_New(Py_None, __pyx_t_1, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_beta), __pyx_t_5, __pyx_t_3) < 0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_beta), __pyx_t_5, __pyx_t_3) < 0)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "deeprai/engine/cython/regression.pyx":54
+  /* "deeprai/engine/cython/regression.pyx":53
  *     beta[:best_degree + 1] = np.linalg.inv(X[:, :best_degree + 1].T.dot(X[:, :best_degree + 1])).dot(
  *         X[:, :best_degree + 1].T.dot(y_vals))
  *     return [int(round(beta[i])) for i in range(best_degree + 1)][::-1]             # <<<<<<<<<<<<<<
@@ -3375,36 +3365,34 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  { /* enter inner scope */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_20 = (__pyx_v_best_degree + 1);
-    __pyx_t_21 = __pyx_t_20;
-    for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
-      __pyx_7genexpr__pyx_v_i = __pyx_t_22;
-      __pyx_t_23 = __pyx_7genexpr__pyx_v_i;
-      __pyx_t_14 = -1;
-      if (__pyx_t_23 < 0) {
-        __pyx_t_23 += __pyx_pybuffernd_beta.diminfo[0].shape;
-        if (unlikely(__pyx_t_23 < 0)) __pyx_t_14 = 0;
-      } else if (unlikely(__pyx_t_23 >= __pyx_pybuffernd_beta.diminfo[0].shape)) __pyx_t_14 = 0;
-      if (unlikely(__pyx_t_14 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_14);
-        __PYX_ERR(0, 54, __pyx_L1_error)
-      }
-      __pyx_t_5 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_beta.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_beta.diminfo[0].strides))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_round, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 54, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_20 = (__pyx_v_best_degree + 1);
+  __pyx_t_21 = __pyx_t_20;
+  for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+    __pyx_v_i = __pyx_t_22;
+    __pyx_t_23 = __pyx_v_i;
+    __pyx_t_14 = -1;
+    if (__pyx_t_23 < 0) {
+      __pyx_t_23 += __pyx_pybuffernd_beta.diminfo[0].shape;
+      if (unlikely(__pyx_t_23 < 0)) __pyx_t_14 = 0;
+    } else if (unlikely(__pyx_t_23 >= __pyx_pybuffernd_beta.diminfo[0].shape)) __pyx_t_14 = 0;
+    if (unlikely(__pyx_t_14 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_14);
+      __PYX_ERR(0, 53, __pyx_L1_error)
     }
-  } /* exit inner scope */
-  __pyx_t_5 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_slice__2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_beta.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_beta.diminfo[0].strides))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_round, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 53, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __pyx_t_5 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_slice__2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_r = __pyx_t_5;
@@ -3463,7 +3451,6 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_poly_regression(P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_3poly_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10regression_2poly_regression[] = "poly_regression(ndarray x_vals, ndarray y_vals, int max_degree=10)";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_3poly_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x_vals = 0;
   PyArrayObject *__pyx_v_y_vals = 0;
@@ -3612,7 +3599,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_10regression_2poly_regression
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/regression.pyx":58
+/* "deeprai/engine/cython/regression.pyx":57
  * 
  * 
  * cpdef sine_regression(np.ndarray[np.float64_t, ndim=1] x_vals, np.ndarray[np.float64_t, ndim=1] y_vals):             # <<<<<<<<<<<<<<
@@ -3668,32 +3655,32 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_pybuffernd_y_vals.rcbuffer = &__pyx_pybuffer_y_vals;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_x_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_x_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_pybuffernd_x_vals.diminfo[0].strides = __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x_vals.diminfo[0].shape = __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_y_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_y_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_pybuffernd_y_vals.diminfo[0].strides = __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y_vals.diminfo[0].shape = __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/cython/regression.pyx":59
+  /* "deeprai/engine/cython/regression.pyx":58
  * 
  * cpdef sine_regression(np.ndarray[np.float64_t, ndim=1] x_vals, np.ndarray[np.float64_t, ndim=1] y_vals):
  *     cdef double pi = np.pi             # <<<<<<<<<<<<<<
  *     cdef double amp, freq, phase, offset, residual, sine_val
  *     cdef int n = x_vals.shape[0]
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_pi = __pyx_t_3;
 
-  /* "deeprai/engine/cython/regression.pyx":61
+  /* "deeprai/engine/cython/regression.pyx":60
  *     cdef double pi = np.pi
  *     cdef double amp, freq, phase, offset, residual, sine_val
  *     cdef int n = x_vals.shape[0]             # <<<<<<<<<<<<<<
@@ -3702,7 +3689,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_n = (__pyx_v_x_vals->dimensions[0]);
 
-  /* "deeprai/engine/cython/regression.pyx":65
+  /* "deeprai/engine/cython/regression.pyx":64
  * 
  *     # Define the sum variables
  *     cdef double sum_x = 0.0             # <<<<<<<<<<<<<<
@@ -3711,7 +3698,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_x = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":66
+  /* "deeprai/engine/cython/regression.pyx":65
  *     # Define the sum variables
  *     cdef double sum_x = 0.0
  *     cdef double sum_y = 0.0             # <<<<<<<<<<<<<<
@@ -3720,7 +3707,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_y = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":67
+  /* "deeprai/engine/cython/regression.pyx":66
  *     cdef double sum_x = 0.0
  *     cdef double sum_y = 0.0
  *     cdef double sum_x2 = 0.0             # <<<<<<<<<<<<<<
@@ -3729,7 +3716,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_x2 = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":68
+  /* "deeprai/engine/cython/regression.pyx":67
  *     cdef double sum_y = 0.0
  *     cdef double sum_x2 = 0.0
  *     cdef double sum_xy = 0.0             # <<<<<<<<<<<<<<
@@ -3738,7 +3725,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_xy = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":69
+  /* "deeprai/engine/cython/regression.pyx":68
  *     cdef double sum_x2 = 0.0
  *     cdef double sum_xy = 0.0
  *     cdef double sum_sin = 0.0             # <<<<<<<<<<<<<<
@@ -3747,7 +3734,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_sin = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":70
+  /* "deeprai/engine/cython/regression.pyx":69
  *     cdef double sum_xy = 0.0
  *     cdef double sum_sin = 0.0
  *     cdef double sum_cos = 0.0             # <<<<<<<<<<<<<<
@@ -3756,7 +3743,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
  */
   __pyx_v_sum_cos = 0.0;
 
-  /* "deeprai/engine/cython/regression.pyx":73
+  /* "deeprai/engine/cython/regression.pyx":72
  * 
  *     # Calculate the sums
  *     for i in range(n):             # <<<<<<<<<<<<<<
@@ -3768,7 +3755,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_i = __pyx_t_6;
 
-    /* "deeprai/engine/cython/regression.pyx":74
+    /* "deeprai/engine/cython/regression.pyx":73
  *     # Calculate the sums
  *     for i in range(n):
  *         sum_x += x_vals[i]             # <<<<<<<<<<<<<<
@@ -3783,11 +3770,11 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_7 >= __pyx_pybuffernd_x_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 74, __pyx_L1_error)
+      __PYX_ERR(0, 73, __pyx_L1_error)
     }
     __pyx_v_sum_x = (__pyx_v_sum_x + (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_x_vals.diminfo[0].strides)));
 
-    /* "deeprai/engine/cython/regression.pyx":75
+    /* "deeprai/engine/cython/regression.pyx":74
  *     for i in range(n):
  *         sum_x += x_vals[i]
  *         sum_y += y_vals[i]             # <<<<<<<<<<<<<<
@@ -3802,11 +3789,11 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_7 >= __pyx_pybuffernd_y_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 75, __pyx_L1_error)
+      __PYX_ERR(0, 74, __pyx_L1_error)
     }
     __pyx_v_sum_y = (__pyx_v_sum_y + (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_y_vals.diminfo[0].strides)));
 
-    /* "deeprai/engine/cython/regression.pyx":76
+    /* "deeprai/engine/cython/regression.pyx":75
  *         sum_x += x_vals[i]
  *         sum_y += y_vals[i]
  *         sum_x2 += x_vals[i]**2             # <<<<<<<<<<<<<<
@@ -3821,11 +3808,11 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_7 >= __pyx_pybuffernd_x_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 76, __pyx_L1_error)
+      __PYX_ERR(0, 75, __pyx_L1_error)
     }
     __pyx_v_sum_x2 = (__pyx_v_sum_x2 + pow((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_x_vals.diminfo[0].strides)), 2.0));
 
-    /* "deeprai/engine/cython/regression.pyx":77
+    /* "deeprai/engine/cython/regression.pyx":76
  *         sum_y += y_vals[i]
  *         sum_x2 += x_vals[i]**2
  *         sum_xy += x_vals[i] * y_vals[i]             # <<<<<<<<<<<<<<
@@ -3840,7 +3827,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_7 >= __pyx_pybuffernd_x_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 76, __pyx_L1_error)
     }
     __pyx_t_9 = __pyx_v_i;
     __pyx_t_8 = -1;
@@ -3850,22 +3837,22 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_9 >= __pyx_pybuffernd_y_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 76, __pyx_L1_error)
     }
     __pyx_v_sum_xy = (__pyx_v_sum_xy + ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_x_vals.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_y_vals.diminfo[0].strides))));
 
-    /* "deeprai/engine/cython/regression.pyx":78
+    /* "deeprai/engine/cython/regression.pyx":77
  *         sum_x2 += x_vals[i]**2
  *         sum_xy += x_vals[i] * y_vals[i]
  *         sum_sin += np.sin(x_vals[i])             # <<<<<<<<<<<<<<
  *         sum_cos += np.cos(x_vals[i])
  * 
  */
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_sum_sin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_sum_sin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_sin); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_sin); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __pyx_t_9 = __pyx_v_i;
@@ -3876,9 +3863,9 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_9 >= __pyx_pybuffernd_x_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 78, __pyx_L1_error)
+      __PYX_ERR(0, 77, __pyx_L1_error)
     }
-    __pyx_t_10 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_x_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_10 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_x_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __pyx_t_12 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_11))) {
@@ -3893,29 +3880,29 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     __pyx_t_1 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_12, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_10);
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_11 = PyNumber_InPlaceAdd(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_11 = PyNumber_InPlaceAdd(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_11); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_11); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_v_sum_sin = __pyx_t_3;
 
-    /* "deeprai/engine/cython/regression.pyx":79
+    /* "deeprai/engine/cython/regression.pyx":78
  *         sum_xy += x_vals[i] * y_vals[i]
  *         sum_sin += np.sin(x_vals[i])
  *         sum_cos += np.cos(x_vals[i])             # <<<<<<<<<<<<<<
  * 
  *     # Calculate the regression coefficients
  */
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_sum_cos); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_sum_cos); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_cos); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_cos); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_9 = __pyx_v_i;
@@ -3926,9 +3913,9 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     } else if (unlikely(__pyx_t_9 >= __pyx_pybuffernd_x_vals.diminfo[0].shape)) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      __PYX_ERR(0, 79, __pyx_L1_error)
+      __PYX_ERR(0, 78, __pyx_L1_error)
     }
-    __pyx_t_2 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_x_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_x_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_12 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_10))) {
@@ -3943,19 +3930,19 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
     __pyx_t_1 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_12, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_2);
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = PyNumber_InPlaceAdd(__pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_10 = PyNumber_InPlaceAdd(__pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_10); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 79, __pyx_L1_error)
+    __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_10); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __pyx_v_sum_cos = __pyx_t_3;
   }
 
-  /* "deeprai/engine/cython/regression.pyx":82
+  /* "deeprai/engine/cython/regression.pyx":81
  * 
  *     # Calculate the regression coefficients
  *     freq = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x**2)             # <<<<<<<<<<<<<<
@@ -3966,11 +3953,11 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_t_13 = ((__pyx_v_n * __pyx_v_sum_x2) - pow(__pyx_v_sum_x, 2.0));
   if (unlikely(__pyx_t_13 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 82, __pyx_L1_error)
+    __PYX_ERR(0, 81, __pyx_L1_error)
   }
   __pyx_v_freq = (__pyx_t_3 / __pyx_t_13);
 
-  /* "deeprai/engine/cython/regression.pyx":83
+  /* "deeprai/engine/cython/regression.pyx":82
  *     # Calculate the regression coefficients
  *     freq = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x**2)
  *     amp = (sum_y - freq * sum_x) / n             # <<<<<<<<<<<<<<
@@ -3980,11 +3967,11 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_t_13 = (__pyx_v_sum_y - (__pyx_v_freq * __pyx_v_sum_x));
   if (unlikely(__pyx_v_n == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 83, __pyx_L1_error)
+    __PYX_ERR(0, 82, __pyx_L1_error)
   }
-  __pyx_v_amp = (__pyx_t_13 / ((double)__pyx_v_n));
+  __pyx_v_amp = (__pyx_t_13 / __pyx_v_n);
 
-  /* "deeprai/engine/cython/regression.pyx":84
+  /* "deeprai/engine/cython/regression.pyx":83
  *     freq = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x**2)
  *     amp = (sum_y - freq * sum_x) / n
  *     offset = (sum_cos * sum_y - sum_sin * sum_xy) / (n * sum_cos**2 - sum_sin**2)             # <<<<<<<<<<<<<<
@@ -3995,28 +3982,28 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_t_3 = ((__pyx_v_n * pow(__pyx_v_sum_cos, 2.0)) - pow(__pyx_v_sum_sin, 2.0));
   if (unlikely(__pyx_t_3 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 84, __pyx_L1_error)
+    __PYX_ERR(0, 83, __pyx_L1_error)
   }
   __pyx_v_offset = (__pyx_t_13 / __pyx_t_3);
 
-  /* "deeprai/engine/cython/regression.pyx":85
+  /* "deeprai/engine/cython/regression.pyx":84
  *     amp = (sum_y - freq * sum_x) / n
  *     offset = (sum_cos * sum_y - sum_sin * sum_xy) / (n * sum_cos**2 - sum_sin**2)
  *     phase = np.arctan(-sum_sin / sum_cos)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arctan); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arctan); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (-__pyx_v_sum_sin);
   if (unlikely(__pyx_v_sum_cos == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 85, __pyx_L1_error)
+    __PYX_ERR(0, 84, __pyx_L1_error)
   }
-  __pyx_t_1 = PyFloat_FromDouble((__pyx_t_3 / __pyx_v_sum_cos)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_t_3 / __pyx_v_sum_cos)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_11))) {
@@ -4031,28 +4018,28 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_t_10 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_2, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 85, __pyx_L1_error)
+  if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_10); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_10); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __pyx_v_phase = __pyx_t_3;
 
-  /* "deeprai/engine/cython/regression.pyx":88
+  /* "deeprai/engine/cython/regression.pyx":87
  * 
  * 
  *     return amp, freq, phase, offset             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_amp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_amp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_freq); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_11 = PyFloat_FromDouble(__pyx_v_freq); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_phase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_phase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_offset); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_offset); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_12 = PyTuple_New(4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_12 = PyTuple_New(4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_GIVEREF(__pyx_t_10);
   PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10);
@@ -4070,7 +4057,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
   __pyx_t_12 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/regression.pyx":58
+  /* "deeprai/engine/cython/regression.pyx":57
  * 
  * 
  * cpdef sine_regression(np.ndarray[np.float64_t, ndim=1] x_vals, np.ndarray[np.float64_t, ndim=1] y_vals):             # <<<<<<<<<<<<<<
@@ -4106,7 +4093,6 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10regression_4sine_regression[] = "sine_regression(ndarray x_vals, ndarray y_vals)";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x_vals = 0;
   PyArrayObject *__pyx_v_y_vals = 0;
@@ -4139,11 +4125,11 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y_vals)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("sine_regression", 1, 2, 2, 1); __PYX_ERR(0, 58, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("sine_regression", 1, 2, 2, 1); __PYX_ERR(0, 57, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "sine_regression") < 0)) __PYX_ERR(0, 58, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "sine_regression") < 0)) __PYX_ERR(0, 57, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -4156,14 +4142,14 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("sine_regression", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 58, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("sine_regression", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 57, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.regression.sine_regression", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x_vals), __pyx_ptype_5numpy_ndarray, 1, "x_vals", 0))) __PYX_ERR(0, 58, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y_vals), __pyx_ptype_5numpy_ndarray, 1, "y_vals", 0))) __PYX_ERR(0, 58, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x_vals), __pyx_ptype_5numpy_ndarray, 1, "x_vals", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y_vals), __pyx_ptype_5numpy_ndarray, 1, "y_vals", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_10regression_4sine_regression(__pyx_self, __pyx_v_x_vals, __pyx_v_y_vals);
 
   /* function exit code */
@@ -4197,16 +4183,16 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_10regression_4sine_regression
   __pyx_pybuffernd_y_vals.rcbuffer = &__pyx_pybuffer_y_vals;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_x_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_x_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_pybuffernd_x_vals.diminfo[0].strides = __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x_vals.diminfo[0].shape = __pyx_pybuffernd_x_vals.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_y_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_y_vals, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_pybuffernd_y_vals.diminfo[0].strides = __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y_vals.diminfo[0].shape = __pyx_pybuffernd_y_vals.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(__pyx_v_x_vals, __pyx_v_y_vals, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_10regression_sine_regression(__pyx_v_x_vals, __pyx_v_y_vals, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5252,9 +5238,9 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
 }
 
 static PyMethodDef __pyx_methods[] = {
-  {"linear_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_1linear_regression, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10regression_linear_regression},
-  {"poly_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_3poly_regression, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10regression_2poly_regression},
-  {"sine_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10regression_4sine_regression},
+  {"linear_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_1linear_regression, METH_VARARGS|METH_KEYWORDS, 0},
+  {"poly_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_3poly_regression, METH_VARARGS|METH_KEYWORDS, 0},
+  {"sine_regression", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10regression_5sine_regression, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -5315,8 +5301,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
-  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
+  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
+  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_ones, __pyx_k_ones, sizeof(__pyx_k_ones), 0, 0, 1, 1},
   {&__pyx_n_s_pi, __pyx_k_pi, sizeof(__pyx_k_pi), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
@@ -5331,7 +5317,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 33, __pyx_L1_error)
-  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 53, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 944, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -5353,14 +5339,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
 
-  /* "deeprai/engine/cython/regression.pyx":54
+  /* "deeprai/engine/cython/regression.pyx":53
  *     beta[:best_degree + 1] = np.linalg.inv(X[:, :best_degree + 1].T.dot(X[:, :best_degree + 1])).dot(
  *         X[:, :best_degree + 1].T.dot(y_vals))
  *     return [int(round(beta[i])) for i in range(best_degree + 1)][::-1]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_slice__2 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_slice__2 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__2);
   __Pyx_GIVEREF(__pyx_slice__2);
 
@@ -5371,7 +5357,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
@@ -5382,7 +5368,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
   __Pyx_RefNannyFinishContext();
@@ -5724,12 +5710,12 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as np
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/regression.pyx":58
+  /* "deeprai/engine/cython/regression.pyx":57
  * 
  * 
  * cpdef sine_regression(np.ndarray[np.float64_t, ndim=1] x_vals, np.ndarray[np.float64_t, ndim=1] y_vals):             # <<<<<<<<<<<<<<

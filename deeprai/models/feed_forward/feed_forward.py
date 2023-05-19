@@ -30,8 +30,8 @@ class FeedForward:
               l2_penalty=l2PenaltyList, early_stop=early_stop)
 
     def run(self, inputs):
-        return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights, DropoutList)
-
+        DropoutList1=[0.,0.,0.,0.,0.]
+        return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights, DropoutList1)
     def specs(self):  # 19
         loss_table = {"categorical cross entropy": "Cross entropy",
                       "mean square error": "MSE",
@@ -47,7 +47,7 @@ class FeedForward:
     :---------------+------------------+-----------------+------------------:
     | Parameters    | {parameters}{" " * (17 - len(str(parameters)))}| Layer Model     | {layer_model}{" "*(17-len(layer_model))}|
     :---------------+------------------+-----------------+------------------:
-    | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.12 BETA      |
+    | Loss Function | {loss_table[LossString[0]]}{" " * (17 - len(loss_table[LossString[0]]))}| DeeprAI Version | 0.0.13 BETA      |
     '---------------'------------------'-----------------'------------------'
         """)
 

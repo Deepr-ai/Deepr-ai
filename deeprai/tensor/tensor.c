@@ -1,40 +1,50 @@
+#include <Python.h>
 #include <stdlib.h>
 
-// Function to create a tensor with the given shape
-float* create_tensor(int shape[], int num_dims) {
-    int num_elements = 1;
-    for (int i = 0; i < num_dims; i++) {
-        num_elements *= shape[i];
-    }
-    float* data = (float*) malloc(num_elements * sizeof(float));
-    return data;
+typedef struct {
+    double* data;
+    int size;
+} Tensor;
+
+Tensor* create_tensor(int size) {
+    Tensor* tensor = (Tensor*)malloc(sizeof(Tensor));
+    tensor->data = (double*)malloc(size * sizeof(double));
+    tensor->size = size;
+    return tensor;
 }
 
-// Function to get the value of the tensor at the given index
-float get_value(float* data, int shape[], int num_dims, int indices[]) {
-    int index = 0;
-    for (int i = 0; i < num_dims; i++) {
-        index = index * shape[i] + indices[i];
+void fill_tensor(Tensor* tensor, double* values) {
+    for (int i = 0; i < tensor->size; i++) {
+        tensor->data[i] = values[i];
     }
-    return data[index];
 }
 
-// Function to set the value of the tensor at the given index
-void set_value(float* data, int shape[], int num_dims, int indices[], float value) {
-    int index = 0;
-    for (int i = 0; i < num_dims; i++) {
-        index = index * shape[i] + indices[i];
+void print_tensor(Tensor* tensor) {
+    printf("Tensor [");
+    for (int i = 0; i < tensor->size; i++) {
+        printf("%f", tensor->data[i]);
+        if (i < tensor->size - 1) {
+            printf(", ");
+        }
     }
-    data[index] = value;
+    printf("]\n");
 }
 
-// Function to add two tensors element-wise
-void add_tensors(float* a_data, float* b_data, float* c_data, int shape[], int num_dims) {
-    int num_elements = 1;
-    for (int i = 0; i < num_dims; i++) {
-        num_elements *= shape[i];
-    }
-    for (int i = 0; i < num_elements; i++) {
-        c_data[i] = a_data[i] + b_data[i];
-    }
+void destroy_tensor(Tensor* tensor) {
+    free(tensor->data);
+    free(tensor);
+}
+
+// Define the tensor module
+static PyModuleDef tensor_module = {
+    PyModuleDef_HEAD_INIT,
+    "tensor",
+    "A module for tensor operations",
+    -1,
+    NULL, NULL, NULL, NULL, NULL
+};
+
+// Define the PyInit_tensor function
+PyMODINIT_FUNC PyInit_tensor(void) {
+    return PyModule_Create(&tensor_module);
 }

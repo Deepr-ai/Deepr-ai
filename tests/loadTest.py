@@ -1,21 +1,11 @@
+from deeprai import models as model
 import numpy as np
-from deeprai import models
-from keras.datasets import mnist
-(train_X, train_y), (test_X, test_y) = mnist.load_data()
-x = []
-y = []
-for i in range(1000):
-    x.append([item for sublist in train_X[i] for item in sublist])
-    y1 = [0,0,0,0,0,0,0,0,0,0,0]
-    y1[train_y[i]] = 1.0
-    y.append(y1)
-x1 = [[number / 1000 for number in sublist] for sublist in x]
-inputs = np.array(x1)
-expected = np.array(y)
 
-inputs = inputs.astype(np.float64)
-expected = expected.astype(np.float64)
+net = model.FeedForward()
+net.load("log10.deepr")
 
-models = models.FeedForward()
-models.load('sum3.deepr')
-models.train_model(input_data=inputs, verify_data=expected, batch_size=36, epochs=100)
+for i in range(1,1000):
+    out = net.run(np.array([i/100]))*100
+    exp = np.log10(i)
+    error = np.abs((out-exp)/exp)*100
+    print(f"    Log {i} | Neural Net Prediction:{np.round(out, 4)} | Expected: {np.round(exp, 4)} | Relative Error: {np.round(error, 3)}% \n")

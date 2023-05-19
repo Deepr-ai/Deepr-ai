@@ -42,7 +42,6 @@ cpdef poly_regression(np.ndarray[np.float64_t, ndim=1] x_vals, np.ndarray[np.flo
         ss_res = np.sum(residuals ** 2)
         ss_tot = np.sum((y_vals - np.mean(y_vals)) ** 2)
         rsq = 1.0 - ss_res / ss_tot
-
         # Update the best degree and R-squared if necessary
         if rsq > best_rsq:
             best_degree = degree

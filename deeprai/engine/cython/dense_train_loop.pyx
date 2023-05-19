@@ -5,7 +5,7 @@ from alive_progress import alive_bar
 from deeprai.engine.cython import activation as act
 from deeprai.engine.cython import loss as loss
 from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
-from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals, NetworkMetrics
+from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals, NetworkMetrics, LossString
 
 cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets,np.ndarray[np.float64_t, ndim=2] test_inputs,
             np.ndarray[np.float64_t, ndim=2] test_targets, int epochs,float learning_rate,
@@ -71,21 +71,21 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
             output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
             abs_error = np.abs(output - target)
             rel_error = np.divide(abs_error, target, where=target != 0)
-            mean_rel_error = np.mean(rel_error)*100
+            mean_rel_error = np.mean(rel_error) * 100
             error += mean_rel_error
             if early_stop:
-                cur_acc= np.abs(100-total_rel_error)
-                if cur_acc<past_acc:
+                cur_acc = np.abs(100 - total_rel_error)
+                if cur_acc < past_acc:
                     print("Stopping due to val loss..")
                     return
                 past_acc = cur_acc
-        total_rel_error = error/len(test_inputs)
-        accuracy = np.abs(100-total_rel_error)
-        cost = sum_error/(len(inputs))
+        total_rel_error = error / len(test_inputs)
+        accuracy = np.abs(100 - total_rel_error)
+        cost = sum_error / (len(inputs))
         NetworkMetrics[0].append(cost)
         NetworkMetrics[1].append(accuracy)
         NetworkMetrics[2].append(total_rel_error)
-        NetworkMetrics[3].append(epoch+1)
-        print(f"Epoch: {epoch+1} | Cost: {cost:4f} | Accuracy: {accuracy:.2f} | Relative Error: {total_rel_error:.3f}")
+        NetworkMetrics[3].append(epoch + 1)
+        print(
+            f"Epoch: {epoch + 1} | Cost: {cost:4f} | Accuracy: {accuracy:.2f} | Relative Error: {total_rel_error:.3f}")
     print("Training complete!")
-
