@@ -43,7 +43,7 @@ class Build:
         Loss[0] = (lambda o, t: self.LossMap[lossF[0]](o, t))
 
     def create_dense(self, size, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
-        # creats activation map
+        # creates activation map
         ActivationListString.append(activation)
         ActivationDerivativeListString.append(activation)
         DropoutList.append(float(dropout))

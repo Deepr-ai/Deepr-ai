@@ -32,6 +32,7 @@ class FeedForward:
     def run(self, inputs):
         DropoutList1=[0.,0.,0.,0.,0.]
         return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights, DropoutList1)
+
     def specs(self):  # 19
         loss_table = {"categorical cross entropy": "Cross entropy",
                       "mean square error": "MSE",
