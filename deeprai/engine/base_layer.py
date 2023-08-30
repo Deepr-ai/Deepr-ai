@@ -77,6 +77,21 @@ class MomentEstimate:
     def pop(self):
         self.Velocities = []
 
+class LocalNetValues:
+    def __init__(self):
+        self.VelocityVals = Velocity()
+        self.ActivationList = []
+        self.DropoutList = []
+        self.l1PenaltyList = []
+        self.l2PenaltyList = []
+        self.ActivationDerivativeList = []
+        self.ActivationListString = []
+        self.ActivationDerivativeListString = []
+        self.OptimizerString = ['gradient decent']
+        self.LossString = ['mean square error']
+        self. Loss = [[]]
+        self.Optimizer = []
+
 
 # GLOBAL NETWORK VALUES
 WeightVals = Weight()
@@ -85,6 +100,7 @@ LayerVals = Layer()
 NeuronVals = Neuron()
 DerivativeVals = Derivative()
 MomentEstimateVals = MomentEstimate()
+LocalValues = LocalNetValues()
 # LOCAL NETWORK VALUES
 VelocityVals = Velocity()
 ActivationList = []

@@ -25,7 +25,5 @@ network.train_model(train_inputs=inputs,
                     test_inputs=test_inputs,
                     test_targets=test_expected,
                     epochs=60)
-
-network.graph(metric="cost")
 network.specs()
 

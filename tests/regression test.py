@@ -11,7 +11,7 @@ import numpy as np
 
 # # Poly test
 x = np.arange(-24, 25, dtype=np.float64)
-y = x**3-x**2-2
+y = x**4-2*x
 network = models.PolyRegression()
 network.fit(x, y)
 print(network.run(3))
