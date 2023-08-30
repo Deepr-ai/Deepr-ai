@@ -1,5 +1,6 @@
 from deeprai.tensor.tensor import Tensor
-
-x = Tensor([1, 2, 3, 4, 5])  # prints 2
-x[2] = 8
-print(x[2])
+a = [[[0.0 for k in range(3)] for j in range(3)] for i in range(3)]
+x = Tensor(a)
+print(x.ndim)
+print(x.shape)
+print(x.to_list())
