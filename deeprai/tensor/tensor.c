@@ -35,6 +35,7 @@ static int Tensor_init(TensorObject *self, PyObject *args, PyObject *kwds) {
         self->data[i] = PyLong_AsLong(value);
     }
 
+
     return 0;
 }
 
@@ -43,16 +44,20 @@ static void Tensor_dealloc(TensorObject *self) {
     Py_TYPE(self)->tp_free((PyObject *) self);
 }
 
-// This function allows subscripting of the Tensor object
-static PyObject* Tensor_getitem(TensorObject *self, Py_ssize_t i) {
-    printf("Accessing index %zd of size %d\n", i, self->size);  // Debugging output
-
+static PyObject* Tensor_getitem(TensorObject *self, PyObject *key) {
+    if (!PyLong_Check(key)) {
+        PyErr_SetString(PyExc_TypeError, "Tensor indices must be integers");
+        return NULL;
+    }
+    Py_ssize_t i = PyLong_AsSsize_t(key);
+    if (i < 0) i += self->size;
     if (i < 0 || i >= self->size) {
         PyErr_SetString(PyExc_IndexError, "Tensor index out of range");
         return NULL;
     }
     return PyLong_FromLong(self->data[i]);
 }
+
 
 
 static PyMappingMethods Tensor_as_mapping = {
