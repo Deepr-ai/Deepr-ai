@@ -1,11 +1,14 @@
 from setuptools import setup, Extension
 
-tensor_module = Extension('tensor',
-                          sources=['tensor.c'])
+tensor = Extension('tensor',
+                         sources=['tensor.c'],
+                         include_dirs=['libs'])
 
-setup(
-    name='tensor',
-    version='1.0',
-    description='Tensor Module',
-    ext_modules=[tensor_module]
-)
+tensor_scalers = Extension('tensor_scalers',
+                           sources=['tensor_core/tensor_scalers/tensor_math.c'],
+                           include_dirs=['libs'])
+
+setup(name='TensorPackage',
+      version='1.0',
+      description='Tensor package',
+      ext_modules=[tensor, tensor_scalers])

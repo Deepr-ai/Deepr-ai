@@ -1,14 +1,10 @@
 #include <Python.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "libs/tensor_shared.h"
 
-typedef struct {
-    PyObject_HEAD
-    float *data;
-    int *shape;
-    int ndim;
-    int size;
-} TensorObject;
+
+
 
 static int get_dimensions(PyObject *list) {
     int dims = 0;
@@ -216,6 +212,8 @@ static PyObject* Tensor_get_shape(TensorObject *self, void *closure) {
     return shapeTuple;
 }
 
+PyObject* Tensor_add_scalar(TensorObject *self, PyObject *args);
+PyObject* py_Tensor_update_with_scalar(TensorObject *self, PyObject *args);
 
 static PyMethodDef Tensor_methods[] = {
     {"to_list", (PyCFunction)Tensor_to_list, METH_NOARGS, "Convert the tensor to a nested Python list"},
@@ -237,7 +235,7 @@ static PyMappingMethods Tensor_as_mapping = {
 };
 
 
-static PyTypeObject TensorType = {
+ PyTypeObject TensorType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_name = "tensor.Tensor",
     .tp_doc = "Tensor objects",

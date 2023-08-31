@@ -1,4 +1,6 @@
 from . import tensor as _tensor_module
+from . import TensorScaler as _tensor
+
 
 class Tensor:
     def __init__(self, data):
