@@ -1,4 +1,6 @@
 #include <Python.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../../libs/tensor_shared.h"
 
 // In-place update function
@@ -91,21 +93,21 @@ static PyMethodDef TensorScaler_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
-PyTypeObject TensorScalerType = {
+static PyTypeObject TensorScalerType = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "tensor_scalers.TensorScaler",
+    .tp_name = "tensor.tensor_scaler",
     .tp_doc = "Tensor scaler objects",
     .tp_methods = TensorScaler_methods,
 };
 
 static PyModuleDef tensorScalersModule = {
     PyModuleDef_HEAD_INIT,
-    .m_name = "tensor_scalers",
+    .m_name = "tensor_scaler",
     .m_doc = "Tensor scalers module",
     .m_size = -1,
 };
 
-PyMODINIT_FUNC PyInit_tensor_scalers(void) {
+PyMODINIT_FUNC PyInit_tensor_scaler(void) {
     PyObject *m;
 
     // If you have a new Python type in tensor_math.c
@@ -116,10 +118,8 @@ PyMODINIT_FUNC PyInit_tensor_scalers(void) {
     if (m == NULL)
         return NULL;
 
-    // If you have a new Python type in tensor_math.c
     Py_INCREF(&TensorScalerType);
-    PyModule_AddObject(m, "TensorScaler", (PyObject *)&TensorScalerType);
+    PyModule_AddObject(m, "tensor_scaler", (PyObject *)&TensorScalerType);
 
     return m;
-}
-
+};
