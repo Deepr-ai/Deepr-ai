@@ -3,16 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
-        ],
-        "include_dirs": [
-            "/usr/lib/python3/dist-packages/numpy/core/include"
-        ],
+        "depends": [],
         "name": "deeprai.engine.cython.dense_operations",
         "sources": [
             "deeprai/engine/cython/dense_operations.pyx"
@@ -33,7 +24,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 1
+#define CYTHON_FUTURE_DIVISION 0
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1557,11 +1548,11 @@ static PyObject* __Pyx_PyInt_SubtractCObj(PyObject *op1, PyObject *op2, long int
 
 /* PyFloatBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
-static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check);
+static PyObject* __Pyx_PyFloat_DivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check);
 #else
-#define __Pyx_PyFloat_TrueDivideCObj(op1, op2, floatval, inplace, zerodivision_check)\
-    (inplace ? PyNumber_InPlaceTrueDivide(op1, op2) : PyNumber_TrueDivide(op1, op2))
-#endif
+#define __Pyx_PyFloat_DivideCObj(op1, op2, floatval, inplace, zerodivision_check)\
+    ((inplace ? __Pyx_PyNumber_InPlaceDivide(op1, op2) : __Pyx_PyNumber_Divide(op1, op2)))
+    #endif
 
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
@@ -1963,8 +1954,8 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_neurons;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_ones_like;
 static PyObject *__pyx_n_s_random;
 static PyObject *__pyx_n_s_range;
@@ -2388,7 +2379,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       __pyx_t_18 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_t_9, 1, 0, 0); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 39, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_18);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = __Pyx_PyFloat_TrueDivideCObj(__pyx_float_1_0, __pyx_t_18, 1.0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyFloat_DivideCObj(__pyx_float_1_0, __pyx_t_18, 1.0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 39, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
 
@@ -2500,7 +2491,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_propagate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_16dense_operations_forward_propagate[] = "forward_propagate(ndarray inputs, list activation_list, list neurons, list weights, list dropout_rate) -> ndarray\n\nParameters:\n-----------\ninputs : np.ndarray\n    Input features to be propagated through the network\nactivation_list : list\n    List of activation functions to be applied to the output of each layer\nneurons : list\n    List of np.ndarray objects to store the output of each layer\nweights : list\n    List of weights for each layer\nl1_penalty : float\n    L1 penalty term (default 0.0)\nl2_penalty : float\n    L2 penalty term (default 0.0)\n\nReturns:\n-------\nnp.ndarray\n    The final output after forward propagation\n";
+static char __pyx_doc_7deeprai_6engine_6cython_16dense_operations_forward_propagate[] = "\nParameters:\n-----------\ninputs : np.ndarray\n    Input features to be propagated through the network\nactivation_list : list\n    List of activation functions to be applied to the output of each layer\nneurons : list\n    List of np.ndarray objects to store the output of each layer\nweights : list\n    List of weights for each layer\nl1_penalty : float\n    L1 penalty term (default 0.0)\nl2_penalty : float\n    L2 penalty term (default 0.0)\n\nReturns:\n-------\nnp.ndarray\n    The final output after forward propagation\n";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_propagate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_inputs = 0;
   PyObject *__pyx_v_activation_list = 0;
@@ -3426,7 +3417,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_p
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_3back_propagate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_16dense_operations_2back_propagate[] = "back_propagate(ndarray loss, list activation_derv_list, list neurons, list weights, list derv, list l1_penalty, list l2_penalty) -> ndarray\n\nParameters:\n-----------\nloss : np.ndarray\n    Loss to be backpropagated through the network\nactivation_derv_list : list\n    List of derivative functions of the activation functions\nneurons : list\n    List of np.ndarray objects storing the output of each layer\nweights : list\n    List of weights for each layer\nderv : list\n    List of np.ndarray objects to store the gradient of the weights\n\nReturns:\n-------\nnp.ndarray\n    The final gradient after backpropagation\n";
+static char __pyx_doc_7deeprai_6engine_6cython_16dense_operations_2back_propagate[] = "\nParameters:\n-----------\nloss : np.ndarray\n    Loss to be backpropagated through the network\nactivation_derv_list : list\n    List of derivative functions of the activation functions\nneurons : list\n    List of np.ndarray objects storing the output of each layer\nweights : list\n    List of weights for each layer\nderv : list\n    List of np.ndarray objects to store the gradient of the weights\n\nReturns:\n-------\nnp.ndarray\n    The final gradient after backpropagation\n";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_3back_propagate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_loss = 0;
   PyObject *__pyx_v_activation_derv_list = 0;
@@ -4689,8 +4680,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_neurons, __pyx_k_neurons, sizeof(__pyx_k_neurons), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
-  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
+  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
+  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_ones_like, __pyx_k_ones_like, sizeof(__pyx_k_ones_like), 0, 0, 1, 1},
   {&__pyx_n_s_random, __pyx_k_random, sizeof(__pyx_k_random), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
@@ -4723,7 +4714,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -4734,7 +4725,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
   __Pyx_RefNannyFinishContext();
@@ -5078,7 +5069,7 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as np
  * from deeprai.engine.cython import activation as act
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -5095,7 +5086,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_activation);
   __Pyx_GIVEREF(__pyx_n_s_activation);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_activation);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_deeprai_engine_cython, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_deeprai_engine_cython, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_activation); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
@@ -6499,23 +6490,23 @@ static PyObject* __Pyx_PyInt_SubtractCObj(PyObject *op1, PyObject *op2, CYTHON_U
 
 /* PyFloatBinop */
   #if !CYTHON_COMPILING_IN_PYPY
-#define __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(operand) if (unlikely(zerodivision_check && ((operand) == 0))) {\
+#define __Pyx_PyFloat_DivideCObj_ZeroDivisionError(operand) if (unlikely(zerodivision_check && ((operand) == 0))) {\
     PyErr_SetString(PyExc_ZeroDivisionError, "float division by zero");\
     return NULL;\
 }
-static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check) {
+static PyObject* __Pyx_PyFloat_DivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check) {
     const double a = floatval;
     double b, result;
     (void)inplace;
     (void)zerodivision_check;
     if (likely(PyFloat_CheckExact(op2))) {
         b = PyFloat_AS_DOUBLE(op2);
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
     } else
     #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_CheckExact(op2))) {
         b = (double) PyInt_AS_LONG(op2);
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
     } else
     #endif
     if (likely(PyLong_CheckExact(op2))) {
@@ -6523,7 +6514,7 @@ static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, doub
         const digit* digits = ((PyLongObject*)op2)->ob_digit;
         const Py_ssize_t size = Py_SIZE(op2);
         switch (size) {
-            case  0: __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(0) break;
+            case  0: __Pyx_PyFloat_DivideCObj_ZeroDivisionError(0) break;
             case -1: b = -(double) digits[0]; break;
             case  1: b = (double) digits[0]; break;
             case -2:
@@ -6565,12 +6556,12 @@ static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, doub
         #endif
             b = PyLong_AsDouble(op2);
             if (unlikely(b == -1.0 && PyErr_Occurred())) return NULL;
-            __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+            __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
         }
     } else {
-        return (inplace ? PyNumber_InPlaceTrueDivide : PyNumber_TrueDivide)(op1, op2);
+        return (inplace ? __Pyx_PyNumber_InPlaceDivide(op1, op2) : __Pyx_PyNumber_Divide(op1, op2));
     }
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
         PyFPE_START_PROTECT("divide", return NULL)
         result = a / b;
         PyFPE_END_PROTECT(result)

@@ -95,12 +95,12 @@ static PyMethodDef TensorScaler_methods[] = {
 
 static PyTypeObject TensorScalerType = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    .tp_name = "tensor.tensor_scaler",
+    .tp_name = "tensor_scaler.tensor_scaler",
     .tp_doc = "Tensor scaler objects",
     .tp_methods = TensorScaler_methods,
 };
 
-static PyModuleDef tensorScalersModule = {
+static PyModuleDef TensorScalerModule = {
     PyModuleDef_HEAD_INIT,
     .m_name = "tensor_scaler",
     .m_doc = "Tensor scalers module",
@@ -110,16 +110,14 @@ static PyModuleDef tensorScalersModule = {
 PyMODINIT_FUNC PyInit_tensor_scaler(void) {
     PyObject *m;
 
-    // If you have a new Python type in tensor_math.c
-    if (PyType_Ready(&TensorScalerType) < 0)
+    if (PyType_Ready(&TensorType) < 0)
         return NULL;
 
-    m = PyModule_Create(&tensorScalersModule);
+    m = PyModule_Create(&TensorScalerModule);
     if (m == NULL)
         return NULL;
 
     Py_INCREF(&TensorScalerType);
     PyModule_AddObject(m, "tensor_scaler", (PyObject *)&TensorScalerType);
-
     return m;
 };

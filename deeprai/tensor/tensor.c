@@ -179,7 +179,7 @@ static PyObject* tensor_to_list_recursive(TensorObject *self, int *indices, int 
             Py_DECREF(list);
             return NULL;
         }
-        PyList_SET_ITEM(list, i, sub_list);  // No need to DECREF sub_list, PyList_SET_ITEM steals a reference
+        PyList_SET_ITEM(list, i, sub_list);
     }
 
     return list;

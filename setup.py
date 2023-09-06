@@ -16,6 +16,7 @@
 #     Extension("deeprai.engine.cython.loss",["deeprai/engine/cython/loss.pyx"], include_dirs=[numpy.get_include()]),
 #     Extension("deeprai.engine.cython.optimizers", ["deeprai/engine/cython/optimizers.pyx"], include_dirs=[numpy.get_include()]),
 #     Extension("deeprai.engine.cython.regression", ["deeprai/engine/cython/regression.pyx"], include_dirs=[numpy.get_include()]),
+#     Extension("deeprai.engine.cython.embeddings.positional_embedding", ["deeprai/engine/cython/embeddings/positional_embedding.pyx"], include_dirs=[numpy.get_include()]),
 # ]
 #
 # compiler_directives = {"language_level": 3, "embedsignature": True}
@@ -59,3 +60,4 @@ setup(ext_modules=cythonize('deeprai/engine/cython/optimizers.pyx'), include_dir
 setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/regression.pyx'), include_dirs=[numpy.get_include()])
+setup(ext_modules=cythonize('deeprai/engine/cython/positional_embedding.pyx'), include_dirs=[numpy.get_include()])

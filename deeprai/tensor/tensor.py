@@ -1,5 +1,6 @@
 from . import tensor as _tensor_module
-from . import tensor_scaler
+# from tensor_core.tensor_scalers import tensor_scaler
+
 
 
 class Tensor:
