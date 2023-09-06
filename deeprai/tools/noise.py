@@ -23,8 +23,14 @@ class GaussianNoise:
 
     def compute(self):
         def add_gaussian_noise(image):
-            row, col, ch = image.shape
-            gauss = np.random.normal(self.mean, self.std, (row, col, ch))
+            if len(image.shape) == 1:
+                dims = (image.shape[0],)
+            elif len(image.shape) == 2:
+                dims = image.shape
+            else:
+                raise ValueError("Unsupported array shape")
+
+            gauss = np.random.normal(self.mean, self.std, dims)
             noisy = image + gauss
             return np.clip(noisy, 0, 255)
 
@@ -46,7 +52,7 @@ class GaussianNoise:
         for t in threads:
             t.join()
 
-        return results
+        return np.array(results)
 
 
 class SaltPepperNoise:
@@ -71,13 +77,27 @@ class SaltPepperNoise:
     def compute(self):
         def add_sp_noise(image):
             out = np.copy(image)
-            num_salt = np.ceil(self.amount * image.size * self.s_vs_p)
-            coords = [np.random.randint(0, i - 1, int(num_salt)) for i in image.shape]
-            out[coords[0], coords[1], :] = 1
 
-            num_pepper = np.ceil(self.amount * image.size * (1. - self.s_vs_p))
-            coords = [np.random.randint(0, i - 1, int(num_pepper)) for i in image.shape]
-            out[coords[0], coords[1], :] = 0
+            if len(image.shape) == 1:
+                coords_dims = [np.random.randint(0, i - 1, int(np.ceil(self.amount * image.size * self.s_vs_p))) for i
+                               in (image.size,)]
+            elif len(image.shape) == 2:
+                coords_dims = [np.random.randint(0, i - 1, int(np.ceil(self.amount * image.size * self.s_vs_p))) for i
+                               in image.shape]
+            else:
+                raise ValueError("Unsupported array shape")
+
+            out[tuple(coords_dims)] = 1
+
+            if len(image.shape) == 1:
+                coords_dims = [np.random.randint(0, i - 1, int(np.ceil(self.amount * image.size * (1. - self.s_vs_p))))
+                               for i in (image.size,)]
+            elif len(image.shape) == 2:
+                coords_dims = [np.random.randint(0, i - 1, int(np.ceil(self.amount * image.size * (1. - self.s_vs_p))))
+                               for i in image.shape]
+
+            out[tuple(coords_dims)] = 0
+
             return out
 
         return add_sp_noise
@@ -98,7 +118,7 @@ class SaltPepperNoise:
         for t in threads:
             t.join()
 
-        return results
+        return np.array(results)
 
 
 class SpeckleNoise:
@@ -114,8 +134,14 @@ class SpeckleNoise:
 
     def compute(self):
         def add_speckle_noise(image):
-            row, col, ch = image.shape
-            gauss = np.random.randn(row, col, ch)
+            if len(image.shape) == 1:
+                dims = (image.shape[0],)
+            elif len(image.shape) == 2:
+                dims = image.shape
+            else:
+                raise ValueError("Unsupported array shape")
+
+            gauss = np.random.randn(*dims)
             noisy = image + image * gauss
             return np.clip(noisy, 0, 255)
 
@@ -137,4 +163,4 @@ class SpeckleNoise:
         for t in threads:
             t.join()
 
-        return results
+        return np.array(results)

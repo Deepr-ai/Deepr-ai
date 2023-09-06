@@ -16,14 +16,14 @@
 #     Extension("deeprai.engine.cython.loss",["deeprai/engine/cython/loss.pyx"], include_dirs=[numpy.get_include()]),
 #     Extension("deeprai.engine.cython.optimizers", ["deeprai/engine/cython/optimizers.pyx"], include_dirs=[numpy.get_include()]),
 #     Extension("deeprai.engine.cython.regression", ["deeprai/engine/cython/regression.pyx"], include_dirs=[numpy.get_include()]),
-#     Extension("deeprai.engine.cython.embeddings.positional_embedding", ["deeprai/engine/cython/embeddings/positional_embedding.pyx"], include_dirs=[numpy.get_include()]),
+#     Extension("deeprai.engine.cython.positional_embedding", ["deeprai/engine/cython/positional_embedding.pyx"], include_dirs=[numpy.get_include()]),
 # ]
 #
 # compiler_directives = {"language_level": 3, "embedsignature": True}
 #
 # setup(
 #     name='DeeprAI',
-#     version='0.0.12',
+#     version='0.0.14',
 #     author='Kieran Carter',
 #     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
 #     long_description=long_description,
