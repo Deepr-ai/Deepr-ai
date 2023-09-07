@@ -17,7 +17,7 @@ class GaussianNoise:
     ```
     """
 
-    def __init__(self, mean=0, std=1):
+    def __init__(self, mean=0, std=0.06):
         self.mean = mean
         self.std = std
 
