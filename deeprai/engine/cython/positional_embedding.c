@@ -3,16 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
-        ],
-        "include_dirs": [
-            "/usr/lib/python3/dist-packages/numpy/core/include"
-        ],
+        "depends": [],
         "name": "deeprai.engine.cython.positional_embedding",
         "sources": [
             "deeprai/engine/cython/positional_embedding.pyx"
@@ -33,7 +24,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 1
+#define CYTHON_FUTURE_DIVISION 0
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1497,6 +1488,13 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
 /* ExtTypeTest.proto */
 static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
 
+/* DivInt[long].proto */
+static CYTHON_INLINE long __Pyx_div_long(long, long);
+
+/* UnaryNegOverflows.proto */
+#define UNARY_NEG_WOULD_OVERFLOW(x)\
+        (((x) < 0) & ((unsigned long)(x) == 0-(unsigned long)(x)))
+
 /* BufferIndexError.proto */
 static void __Pyx_RaiseBufferIndexError(int axis);
 
@@ -1648,6 +1646,9 @@ typedef struct {
 #if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
 #define __Pyx_HAS_GCC_DIAGNOSTIC
 #endif
+
+/* IntPow.proto */
+static CYTHON_INLINE long __Pyx_pow_long(long, long);
 
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
@@ -1849,8 +1850,8 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_sin;
 static PyObject *__pyx_n_s_test;
@@ -1860,7 +1861,7 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 /* Late includes */
 
-/* "deeprai/engine/cython/positional_embedding.pyx":5
+/* "deeprai/engine/cython/positional_embedding.pyx":4
  * cimport numpy as cnp
  * 
  * cpdef cnp.ndarray[cnp.float64_t, ndim = 2] apply_positional_embedding(cnp.ndarray[cnp.float64_t, ndim = 2] sequence):             # <<<<<<<<<<<<<<
@@ -1894,7 +1895,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   int __pyx_t_11;
   int __pyx_t_12;
   long __pyx_t_13;
-  double __pyx_t_14;
+  long __pyx_t_14;
   __pyx_t_5numpy_float64_t __pyx_t_15;
   Py_ssize_t __pyx_t_16;
   Py_ssize_t __pyx_t_17;
@@ -1919,11 +1920,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   __pyx_pybuffernd_sequence.rcbuffer = &__pyx_pybuffer_sequence;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_sequence.rcbuffer->pybuffer, (PyObject*)__pyx_v_sequence, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 5, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_sequence.rcbuffer->pybuffer, (PyObject*)__pyx_v_sequence, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 4, __pyx_L1_error)
   }
   __pyx_pybuffernd_sequence.diminfo[0].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_sequence.diminfo[0].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_sequence.diminfo[1].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_sequence.diminfo[1].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":16
+  /* "deeprai/engine/cython/positional_embedding.pyx":15
  *     """
  *     cdef int position, i
  *     cdef int seq_len = sequence.shape[0]             # <<<<<<<<<<<<<<
@@ -1932,7 +1933,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
  */
   __pyx_v_seq_len = (__pyx_v_sequence->dimensions[0]);
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":17
+  /* "deeprai/engine/cython/positional_embedding.pyx":16
  *     cdef int position, i
  *     cdef int seq_len = sequence.shape[0]
  *     cdef int embed_dim = sequence.shape[1]             # <<<<<<<<<<<<<<
@@ -1941,23 +1942,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
  */
   __pyx_v_embed_dim = (__pyx_v_sequence->dimensions[1]);
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":18
+  /* "deeprai/engine/cython/positional_embedding.pyx":17
  *     cdef int seq_len = sequence.shape[0]
  *     cdef int embed_dim = sequence.shape[1]
  *     cdef cnp.ndarray[cnp.float64_t, ndim = 2] position_embedding = np.zeros((seq_len, embed_dim))             # <<<<<<<<<<<<<<
  * 
  *     for position in range(seq_len):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_seq_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_seq_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_embed_dim); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_embed_dim); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
@@ -1978,16 +1979,16 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_position_embedding.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_position_embedding = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 18, __pyx_L1_error)
+      __PYX_ERR(0, 17, __pyx_L1_error)
     } else {__pyx_pybuffernd_position_embedding.diminfo[0].strides = __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_position_embedding.diminfo[0].shape = __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_position_embedding.diminfo[1].strides = __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_position_embedding.diminfo[1].shape = __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -1995,7 +1996,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   __pyx_v_position_embedding = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":20
+  /* "deeprai/engine/cython/positional_embedding.pyx":19
  *     cdef cnp.ndarray[cnp.float64_t, ndim = 2] position_embedding = np.zeros((seq_len, embed_dim))
  * 
  *     for position in range(seq_len):             # <<<<<<<<<<<<<<
@@ -2007,7 +2008,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
     __pyx_v_position = __pyx_t_9;
 
-    /* "deeprai/engine/cython/positional_embedding.pyx":21
+    /* "deeprai/engine/cython/positional_embedding.pyx":20
  * 
  *     for position in range(seq_len):
  *         for i in range(0, embed_dim, 2):             # <<<<<<<<<<<<<<
@@ -2019,29 +2020,37 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
     for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=2) {
       __pyx_v_i = __pyx_t_12;
 
-      /* "deeprai/engine/cython/positional_embedding.pyx":22
+      /* "deeprai/engine/cython/positional_embedding.pyx":21
  *     for position in range(seq_len):
  *         for i in range(0, embed_dim, 2):
  *             position_embedding[position, i] = np.sin(position / (10000 ** ((2 * i) / embed_dim)))             # <<<<<<<<<<<<<<
  *             if i + 1 < embed_dim:
  *                 position_embedding[position, i + 1] = np.cos(position / (10000 ** ((2 * i + 1) / embed_dim)))
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_13 = (2 * __pyx_v_i);
       if (unlikely(__pyx_v_embed_dim == 0)) {
-        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 22, __pyx_L1_error)
+        PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+        __PYX_ERR(0, 21, __pyx_L1_error)
       }
-      __pyx_t_14 = pow(10000.0, (((double)__pyx_t_13) / ((double)__pyx_v_embed_dim)));
+      else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_embed_dim == (int)-1)  && unlikely(UNARY_NEG_WOULD_OVERFLOW(__pyx_t_13))) {
+        PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
+        __PYX_ERR(0, 21, __pyx_L1_error)
+      }
+      __pyx_t_14 = __Pyx_pow_long(0x2710, __Pyx_div_long(__pyx_t_13, __pyx_v_embed_dim));
       if (unlikely(__pyx_t_14 == 0)) {
-        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 22, __pyx_L1_error)
+        PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+        __PYX_ERR(0, 21, __pyx_L1_error)
       }
-      __pyx_t_3 = PyFloat_FromDouble((((double)__pyx_v_position) / __pyx_t_14)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
+      else if (sizeof(long) == sizeof(long) && (!(((long)-1) > 0)) && unlikely(__pyx_t_14 == (long)-1)  && unlikely(UNARY_NEG_WOULD_OVERFLOW(__pyx_v_position))) {
+        PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
+        __PYX_ERR(0, 21, __pyx_L1_error)
+      }
+      __pyx_t_3 = __Pyx_PyInt_From_long(__Pyx_div_long(__pyx_v_position, __pyx_t_14)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -2056,10 +2065,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
       __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_4, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_15 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
+      __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_15 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_16 = __pyx_v_position;
       __pyx_t_17 = __pyx_v_i;
@@ -2074,11 +2083,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
       } else if (unlikely(__pyx_t_17 >= __pyx_pybuffernd_position_embedding.diminfo[1].shape)) __pyx_t_18 = 1;
       if (unlikely(__pyx_t_18 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_18);
-        __PYX_ERR(0, 22, __pyx_L1_error)
+        __PYX_ERR(0, 21, __pyx_L1_error)
       }
       *__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_position_embedding.diminfo[0].strides, __pyx_t_17, __pyx_pybuffernd_position_embedding.diminfo[1].strides) = __pyx_t_15;
 
-      /* "deeprai/engine/cython/positional_embedding.pyx":23
+      /* "deeprai/engine/cython/positional_embedding.pyx":22
  *         for i in range(0, embed_dim, 2):
  *             position_embedding[position, i] = np.sin(position / (10000 ** ((2 * i) / embed_dim)))
  *             if i + 1 < embed_dim:             # <<<<<<<<<<<<<<
@@ -2088,29 +2097,37 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
       __pyx_t_19 = (((__pyx_v_i + 1) < __pyx_v_embed_dim) != 0);
       if (__pyx_t_19) {
 
-        /* "deeprai/engine/cython/positional_embedding.pyx":24
+        /* "deeprai/engine/cython/positional_embedding.pyx":23
  *             position_embedding[position, i] = np.sin(position / (10000 ** ((2 * i) / embed_dim)))
  *             if i + 1 < embed_dim:
  *                 position_embedding[position, i + 1] = np.cos(position / (10000 ** ((2 * i + 1) / embed_dim)))             # <<<<<<<<<<<<<<
  * 
  *     sequence += position_embedding
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_cos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_cos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_13 = ((2 * __pyx_v_i) + 1);
+        __pyx_t_14 = ((2 * __pyx_v_i) + 1);
         if (unlikely(__pyx_v_embed_dim == 0)) {
-          PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 24, __pyx_L1_error)
+          PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+          __PYX_ERR(0, 23, __pyx_L1_error)
         }
-        __pyx_t_14 = pow(10000.0, (((double)__pyx_t_13) / ((double)__pyx_v_embed_dim)));
-        if (unlikely(__pyx_t_14 == 0)) {
-          PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 24, __pyx_L1_error)
+        else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_embed_dim == (int)-1)  && unlikely(UNARY_NEG_WOULD_OVERFLOW(__pyx_t_14))) {
+          PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
+          __PYX_ERR(0, 23, __pyx_L1_error)
         }
-        __pyx_t_5 = PyFloat_FromDouble((((double)__pyx_v_position) / __pyx_t_14)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_pow_long(0x2710, __Pyx_div_long(__pyx_t_14, __pyx_v_embed_dim));
+        if (unlikely(__pyx_t_13 == 0)) {
+          PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+          __PYX_ERR(0, 23, __pyx_L1_error)
+        }
+        else if (sizeof(long) == sizeof(long) && (!(((long)-1) > 0)) && unlikely(__pyx_t_13 == (long)-1)  && unlikely(UNARY_NEG_WOULD_OVERFLOW(__pyx_v_position))) {
+          PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
+          __PYX_ERR(0, 23, __pyx_L1_error)
+        }
+        __pyx_t_5 = __Pyx_PyInt_From_long(__Pyx_div_long(__pyx_v_position, __pyx_t_13)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -2125,10 +2142,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
         __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_15 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
+        __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_15 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_17 = __pyx_v_position;
         __pyx_t_16 = (__pyx_v_i + 1);
@@ -2143,11 +2160,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
         } else if (unlikely(__pyx_t_16 >= __pyx_pybuffernd_position_embedding.diminfo[1].shape)) __pyx_t_18 = 1;
         if (unlikely(__pyx_t_18 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_18);
-          __PYX_ERR(0, 24, __pyx_L1_error)
+          __PYX_ERR(0, 23, __pyx_L1_error)
         }
         *__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_position_embedding.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_position_embedding.diminfo[0].strides, __pyx_t_16, __pyx_pybuffernd_position_embedding.diminfo[1].strides) = __pyx_t_15;
 
-        /* "deeprai/engine/cython/positional_embedding.pyx":23
+        /* "deeprai/engine/cython/positional_embedding.pyx":22
  *         for i in range(0, embed_dim, 2):
  *             position_embedding[position, i] = np.sin(position / (10000 ** ((2 * i) / embed_dim)))
  *             if i + 1 < embed_dim:             # <<<<<<<<<<<<<<
@@ -2158,15 +2175,15 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
     }
   }
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":26
+  /* "deeprai/engine/cython/positional_embedding.pyx":25
  *                 position_embedding[position, i + 1] = np.cos(position / (10000 ** ((2 * i + 1) / embed_dim)))
  * 
  *     sequence += position_embedding             # <<<<<<<<<<<<<<
  *     return sequence
  */
-  __pyx_t_1 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_sequence), ((PyObject *)__pyx_v_position_embedding)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_sequence), ((PyObject *)__pyx_v_position_embedding)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 25, __pyx_L1_error)
   __pyx_t_20 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2183,13 +2200,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
       __pyx_t_21 = __pyx_t_22 = __pyx_t_23 = 0;
     }
     __pyx_pybuffernd_sequence.diminfo[0].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_sequence.diminfo[0].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_sequence.diminfo[1].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_sequence.diminfo[1].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[1];
-    if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+    if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 25, __pyx_L1_error)
   }
   __pyx_t_20 = 0;
   __Pyx_DECREF_SET(__pyx_v_sequence, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":27
+  /* "deeprai/engine/cython/positional_embedding.pyx":26
  * 
  *     sequence += position_embedding
  *     return sequence             # <<<<<<<<<<<<<<
@@ -2199,7 +2216,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
   __pyx_r = ((PyArrayObject *)__pyx_v_sequence);
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":5
+  /* "deeprai/engine/cython/positional_embedding.pyx":4
  * cimport numpy as cnp
  * 
  * cpdef cnp.ndarray[cnp.float64_t, ndim = 2] apply_positional_embedding(cnp.ndarray[cnp.float64_t, ndim = 2] sequence):             # <<<<<<<<<<<<<<
@@ -2237,7 +2254,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_20positional_embedding_ap
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_20positional_embedding_1apply_positional_embedding(PyObject *__pyx_self, PyObject *__pyx_v_sequence); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_20positional_embedding_apply_positional_embedding[] = "apply_positional_embedding(ndarray sequence) -> ndarray\n\n    Applies positional embedding to a given sequence.\n    \n    Args:\n        sequence: A 2D numpy array where the first dimension is sequence length and the second is embedding dimension.\n    \n    Returns:\n        A 2D numpy array with positional embeddings applied.\n    ";
+static char __pyx_doc_7deeprai_6engine_6cython_20positional_embedding_apply_positional_embedding[] = "\n    Applies positional embedding to a given sequence.\n    \n    Args:\n        sequence: A 2D numpy array where the first dimension is sequence length and the second is embedding dimension.\n    \n    Returns:\n        A 2D numpy array with positional embeddings applied.\n    ";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_20positional_embedding_1apply_positional_embedding(PyObject *__pyx_self, PyObject *__pyx_v_sequence) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2245,7 +2262,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_20positional_embedding_1apply
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("apply_positional_embedding (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sequence), __pyx_ptype_5numpy_ndarray, 1, "sequence", 0))) __PYX_ERR(0, 5, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sequence), __pyx_ptype_5numpy_ndarray, 1, "sequence", 0))) __PYX_ERR(0, 4, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_20positional_embedding_apply_positional_embedding(__pyx_self, ((PyArrayObject *)__pyx_v_sequence));
 
   /* function exit code */
@@ -2273,11 +2290,11 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_20positional_embedding_apply_
   __pyx_pybuffernd_sequence.rcbuffer = &__pyx_pybuffer_sequence;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_sequence.rcbuffer->pybuffer, (PyObject*)__pyx_v_sequence, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 5, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_sequence.rcbuffer->pybuffer, (PyObject*)__pyx_v_sequence, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 4, __pyx_L1_error)
   }
   __pyx_pybuffernd_sequence.diminfo[0].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_sequence.diminfo[0].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_sequence.diminfo[1].strides = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_sequence.diminfo[1].shape = __pyx_pybuffernd_sequence.rcbuffer->pybuffer.shape[1];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_20positional_embedding_apply_positional_embedding(__pyx_v_sequence, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_20positional_embedding_apply_positional_embedding(__pyx_v_sequence, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3375,8 +3392,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
-  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
+  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
+  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_sin, __pyx_k_sin, sizeof(__pyx_k_sin), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -3384,7 +3401,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 944, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3402,7 +3419,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -3413,7 +3430,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
   __Pyx_RefNannyFinishContext();
@@ -3748,15 +3765,15 @@ if (!__Pyx_RefNanny) {
 
   /* "deeprai/engine/cython/positional_embedding.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
- * 
  * cimport numpy as cnp
+ * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/positional_embedding.pyx":5
+  /* "deeprai/engine/cython/positional_embedding.pyx":4
  * cimport numpy as cnp
  * 
  * cpdef cnp.ndarray[cnp.float64_t, ndim = 2] apply_positional_embedding(cnp.ndarray[cnp.float64_t, ndim = 2] sequence):             # <<<<<<<<<<<<<<
@@ -4731,6 +4748,14 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     return 0;
 }
 
+/* DivInt[long] */
+  static CYTHON_INLINE long __Pyx_div_long(long a, long b) {
+    long q = a / b;
+    long r = a - q*b;
+    q -= ((r != 0) & ((r ^ b) < 0));
+    return q;
+}
+
 /* BufferIndexError */
   static void __Pyx_RaiseBufferIndexError(int axis) {
   PyErr_Format(PyExc_IndexError,
@@ -5498,6 +5523,33 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         }\
         return (target_type) value;\
     }
+
+/* IntPow */
+  static CYTHON_INLINE long __Pyx_pow_long(long b, long e) {
+    long t = b;
+    switch (e) {
+        case 3:
+            t *= b;
+        CYTHON_FALLTHROUGH;
+        case 2:
+            t *= b;
+        CYTHON_FALLTHROUGH;
+        case 1:
+            return t;
+        case 0:
+            return 1;
+    }
+    #if 1
+    if (unlikely(e<0)) return 0;
+    #endif
+    t = 1;
+    while (likely(e)) {
+        t *= (b * (e&1)) | ((~e)&1);
+        b *= b;
+        e >>= 1;
+    }
+    return t;
+}
 
 /* Declarations */
   #if CYTHON_CCOMPLEX

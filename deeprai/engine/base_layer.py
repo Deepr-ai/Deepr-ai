@@ -64,10 +64,13 @@ class Derivative:
 
 class Velocity:
     def __init__(self):
-        self.Velocities = None
+        self.Velocities = []
 
     def pop(self):
         self.Velocities = []
+
+    def add(self, val):
+        self.Velocities.append(val)
 
 class MomentEstimate:
     def __init__(self):
@@ -76,6 +79,29 @@ class MomentEstimate:
 
     def pop(self):
         self.Velocities = []
+
+
+class FirstMoment:
+    def __init__(self):
+        self.Moments = []
+
+    def pop(self):
+        self.Moments = []
+
+    def add(self, val):
+        self.Moments.append(val)
+
+
+class SecondMoment:
+    def __init__(self):
+        self.Moments = []
+
+    def pop(self):
+        self.Moments = []
+
+    def add(self, val):
+        self.Moments.append(val)
+
 
 class LocalNetValues:
     def __init__(self):
@@ -101,6 +127,8 @@ NeuronVals = Neuron()
 DerivativeVals = Derivative()
 MomentEstimateVals = MomentEstimate()
 LocalValues = LocalNetValues()
+FirstMomentVals = FirstMoment()
+SecondMomentVals = SecondMoment()
 # LOCAL NETWORK VALUES
 VelocityVals = Velocity()
 ActivationList = []

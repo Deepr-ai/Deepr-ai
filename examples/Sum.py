@@ -14,7 +14,7 @@ network.add_dense(2)
 
 network.add_dense(5, activation='linear')
 
-network.add_dense(1, activation='linear')
+network.add_dense(1, activation='sigmoid')
 
 # Training the model
 network.train_model(train_inputs=inputs,train_targets=expected,test_inputs=inputs,test_targets=expected,epochs=20)

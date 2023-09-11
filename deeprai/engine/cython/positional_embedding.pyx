@@ -1,5 +1,4 @@
 import numpy as np
-
 cimport numpy as cnp
 
 cpdef cnp.ndarray[cnp.float64_t, ndim = 2] apply_positional_embedding(cnp.ndarray[cnp.float64_t, ndim = 2] sequence):

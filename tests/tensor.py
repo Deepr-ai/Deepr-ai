@@ -3,7 +3,7 @@ from deeprai.tools.noise import GaussianNoise
 from deeprai.tools.toolkit import normalize
 from Datasets.MNIST import mnist as db
 
-speckle_noise = GaussianNoise(std=0.06)
+speckle_noise = GaussianNoise(std=.07)
 
 arr = db.load_x(1)
 noisy_arr = normalize(speckle_noise.noise(arr))
