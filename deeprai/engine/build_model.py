@@ -1,7 +1,7 @@
 from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, \
     NeuronVals, \
     DerivativeVals, ActivationListString, ActivationDerivativeListString, Loss, DropoutList, l1PenaltyList, \
-    l2PenaltyList
+    l2PenaltyList, DistanceIndex
 import deeprai.engine.cython.activation as act
 from deeprai.engine.cython import optimizers as opt
 from deeprai.engine.cython import loss as lossFunc
@@ -21,6 +21,9 @@ class Build:
         self.LossMap = {'mean square error': lossFunc.mean_square_error,
                         "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}
+
+        self.DistanceMap = {"euclidean distance": 0, "manhattan distance": 1, "minkowski distance": 2, "hamming "
+                                                                                                       "distance": 3}
 
     def create_kernel(self, amount, shape, max_size):
         self.NetworkQueue.append("kernel")
@@ -66,6 +69,9 @@ class Build:
             del l2PenaltyList[0]
             del l1PenaltyList[0]
             # input neuron
+
+    def translate_distance(self, distance):
+        DistanceIndex = self.DistanceMap[distance]
 
     def create_flat(self):
         pass

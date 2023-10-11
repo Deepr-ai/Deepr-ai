@@ -50,6 +50,10 @@ class FeedForward(FeedForward):
         self.bias = []
 
 
+class KNN:
+    def __init__(self):
+        pass
+
 class LinearRegression(LinearRegression):
     def __int__(self):
         super().__init__()

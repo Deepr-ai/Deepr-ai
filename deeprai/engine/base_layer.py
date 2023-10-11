@@ -142,6 +142,7 @@ OptimizerString = ['gradient decent']
 LossString = ['mean square error']
 Loss = [[]]
 Optimizer = []
+DistanceIndex = 0
 
 # cost, acc, rel_error, epoch
 NetworkMetrics=[[], [], [], []]

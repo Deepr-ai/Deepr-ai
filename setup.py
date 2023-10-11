@@ -61,3 +61,5 @@ setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'), inclu
 setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/regression.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/positional_embedding.pyx'), include_dirs=[numpy.get_include()])
+setup(ext_modules=cythonize('deeprai/engine/cython/knn.pyx'), include_dirs=[numpy.get_include()])
+setup(ext_modules=cythonize('deeprai/engine/cython/knn_distance.pyx'), include_dirs=[numpy.get_include()])
