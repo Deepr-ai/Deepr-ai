@@ -22,9 +22,6 @@ class Build:
                         "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}
 
-        self.DistanceMap = {"euclidean distance": 0, "manhattan distance": 1, "minkowski distance": 2, "hamming "
-                                                                                                       "distance": 3}
-
     def create_kernel(self, amount, shape, max_size):
         self.NetworkQueue.append("kernel")
         local_kernels = []
@@ -71,7 +68,14 @@ class Build:
             # input neuron
 
     def translate_distance(self, distance):
-        DistanceIndex = self.DistanceMap[distance]
+        DistanceMap = {
+            "euclidean distance": 0,
+            "manhattan distance": 1,
+            "minkowski distance": 2,
+            "hamming distance": 3
+        }
+        # Directly modify the external DistanceIndex variable
+        DistanceIndex[0] = DistanceMap[distance]
 
     def create_flat(self):
         pass

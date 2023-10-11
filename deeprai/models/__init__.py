@@ -4,6 +4,7 @@ from deeprai.models.convolutional.convolutional import Convolutional
 from deeprai.models.regression.linear_regression import LinearRegression
 from deeprai.models.regression.sine_regression import SineRegression
 from deeprai.models.regression.poly_regression import PolyRegression
+from deeprai.models.KNN.KNN import KNN
 from deeprai.tools.file_manager.save import Save
 from deeprai.tools.file_manager.load import Load
 
@@ -50,9 +51,9 @@ class FeedForward(FeedForward):
         self.bias = []
 
 
-class KNN:
-    def __init__(self):
-        pass
+class KNN(KNN):
+    def __int__(self):
+        super().__init__()
 
 class LinearRegression(LinearRegression):
     def __int__(self):

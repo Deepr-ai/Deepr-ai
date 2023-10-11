@@ -62,3 +62,35 @@ class FeedForward:
         else:
             print(f"Invalid metric: {metric}")
 
+
+    #auto compleate
+
+    def tanh(self):
+        return "tanh"
+
+    def relu(self):
+        return "relu"
+
+    def leaky_relu(self):
+        return "leaky relu"
+
+    def sigmoid(self):
+        return "sigmoid"
+
+    def linear(self):
+        return "linear"
+
+    def softmax(self):
+        return "softmax"
+
+    def gradient_descent(self):
+        return "gradient decent"
+
+    def mean_square_error(self):
+        return "mean square error"
+
+    def categorical_cross_entropy(self):
+        return "categorical cross entropy"
+
+    def mean_absolute_error(self):
+        return "mean absolute error"
