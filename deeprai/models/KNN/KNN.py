@@ -23,19 +23,14 @@ class KNN():
     def classify(self, query_point):
         return knn(X_train=self.x_vals, y_train=self.y_vales, query_point=query_point, distance_metric=DistanceIndex[0], p=self.p, k=self.k)
 
-    def classify_probability(self, query_point):
-        k_nearest_labels = knn(X_train=self.x_vals, y_train=self.y_vales, query_point=query_point, distance_metric=DistanceIndex[0], p=self.p, k=self.k, return_labels=True)
-        unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)
-        probability_class_1 = counts[unique_labels == 1] / self.k if 1 in unique_labels else 0
-        return probability_class_1
 
     def instant_classifier(self, x_vals, y_vals, query_point, p=3, k=2):
         y_vals = y_vals.astype(np.int32)
         return knn(x_vals, y_vals, query_point, distance_metric=int(DistanceIndex[0]), p=p, k=k)
 
-    def classify_probability(self, query_point):
+    def classify_probability(self, query_point, expected_val):
         neighbors = self.classify_neighbors(query_point)
-        positive_neighbors = sum([1 for index in neighbors if self.y_vales[index] == 1])
+        positive_neighbors = sum([expected_val for index in neighbors if self.y_vales[index] == expected_val])
         probability = (positive_neighbors / len(neighbors)) * 100
         return probability
 
