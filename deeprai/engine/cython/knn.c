@@ -1949,6 +1949,8 @@ static const char __pyx_k_sorted_indices[] = "sorted_indices";
 static const char __pyx_k_distance_metric[] = "distance_metric";
 static const char __pyx_k_hamming_distance[] = "hamming_distance";
 static const char __pyx_k_k_nearest_labels[] = "k_nearest_labels";
+static const char __pyx_k_return_neighbors[] = "return_neighbors";
+static const char __pyx_k_k_nearest_indices[] = "k_nearest_indices";
 static const char __pyx_k_Invalid_value_of_k[] = "Invalid value of k: ";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_distance_functions[] = "distance_functions";
@@ -1984,6 +1986,7 @@ static PyObject *__pyx_n_s_hamming_distance;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_k;
+static PyObject *__pyx_n_s_k_nearest_indices;
 static PyObject *__pyx_n_s_k_nearest_labels;
 static PyObject *__pyx_n_s_knn;
 static PyObject *__pyx_n_s_main;
@@ -1998,13 +2001,14 @@ static PyObject *__pyx_n_s_p;
 static PyObject *__pyx_n_s_query_point;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_return_counts;
+static PyObject *__pyx_n_s_return_neighbors;
 static PyObject *__pyx_n_s_sorted_indices;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_unique;
 static PyObject *__pyx_n_s_unique_labels;
 static PyObject *__pyx_n_s_y_train;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X_train, PyArrayObject *__pyx_v_y_train, PyArrayObject *__pyx_v_query_point, int __pyx_v_k, int __pyx_v_distance_metric, int __pyx_v_p); /* proto */
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X_train, PyArrayObject *__pyx_v_y_train, PyArrayObject *__pyx_v_query_point, int __pyx_v_k, int __pyx_v_distance_metric, int __pyx_v_p, int __pyx_v_return_neighbors); /* proto */
 static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
@@ -2015,7 +2019,7 @@ static PyObject *__pyx_codeobj__5;
  * from deeprai.engine.cython.knn_distance import euclidean_distance, manhattan_distance, minkowski_distance, hamming_distance
  * 
  * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,             # <<<<<<<<<<<<<<
- *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3):
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):
  *     cdef np.ndarray[np.float64_t, ndim=1] distances
  */
 
@@ -2029,6 +2033,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
   int __pyx_v_k;
   int __pyx_v_distance_metric;
   int __pyx_v_p;
+  int __pyx_v_return_neighbors;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2036,12 +2041,14 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("knn (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_X_train,&__pyx_n_s_y_train,&__pyx_n_s_query_point,&__pyx_n_s_k,&__pyx_n_s_distance_metric,&__pyx_n_s_p,0};
-    PyObject* values[6] = {0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_X_train,&__pyx_n_s_y_train,&__pyx_n_s_query_point,&__pyx_n_s_k,&__pyx_n_s_distance_metric,&__pyx_n_s_p,&__pyx_n_s_return_neighbors,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2066,13 +2073,13 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y_train)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 6, 1); __PYX_ERR(0, 5, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 7, 1); __PYX_ERR(0, 5, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_query_point)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 6, 2); __PYX_ERR(0, 5, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 7, 2); __PYX_ERR(0, 5, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
@@ -2092,12 +2099,20 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
           PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_p);
           if (value) { values[5] = value; kw_args--; }
         }
+        CYTHON_FALLTHROUGH;
+        case  6:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_return_neighbors);
+          if (value) { values[6] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "knn") < 0)) __PYX_ERR(0, 5, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2129,10 +2144,23 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
     } else {
       __pyx_v_p = ((int)3);
     }
+    if (values[6]) {
+      __pyx_v_return_neighbors = __Pyx_PyObject_IsTrue(values[6]); if (unlikely((__pyx_v_return_neighbors == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 6, __pyx_L3_error)
+    } else {
+
+      /* "deeprai/engine/cython/knn.pyx":6
+ * 
+ * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] distances
+ *     cdef np.ndarray[np.int64_t, ndim=1] sorted_indices
+ */
+      __pyx_v_return_neighbors = ((int)0);
+    }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 5, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("knn", 0, 3, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 5, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.knn.knn", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2141,7 +2169,15 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_X_train), __pyx_ptype_5numpy_ndarray, 1, "X_train", 0))) __PYX_ERR(0, 5, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y_train), __pyx_ptype_5numpy_ndarray, 1, "y_train", 0))) __PYX_ERR(0, 5, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_query_point), __pyx_ptype_5numpy_ndarray, 1, "query_point", 0))) __PYX_ERR(0, 6, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_3knn_knn(__pyx_self, __pyx_v_X_train, __pyx_v_y_train, __pyx_v_query_point, __pyx_v_k, __pyx_v_distance_metric, __pyx_v_p);
+  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_3knn_knn(__pyx_self, __pyx_v_X_train, __pyx_v_y_train, __pyx_v_query_point, __pyx_v_k, __pyx_v_distance_metric, __pyx_v_p, __pyx_v_return_neighbors);
+
+  /* "deeprai/engine/cython/knn.pyx":5
+ * from deeprai.engine.cython.knn_distance import euclidean_distance, manhattan_distance, minkowski_distance, hamming_distance
+ * 
+ * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,             # <<<<<<<<<<<<<<
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):
+ *     cdef np.ndarray[np.float64_t, ndim=1] distances
+ */
 
   /* function exit code */
   goto __pyx_L0;
@@ -2152,12 +2188,13 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_3knn_1knn(PyObject *__pyx_sel
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X_train, PyArrayObject *__pyx_v_y_train, PyArrayObject *__pyx_v_query_point, int __pyx_v_k, int __pyx_v_distance_metric, int __pyx_v_p) {
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X_train, PyArrayObject *__pyx_v_y_train, PyArrayObject *__pyx_v_query_point, int __pyx_v_k, int __pyx_v_distance_metric, int __pyx_v_p, int __pyx_v_return_neighbors) {
   PyArrayObject *__pyx_v_distances = 0;
   PyArrayObject *__pyx_v_sorted_indices = 0;
   PyArrayObject *__pyx_v_k_nearest_labels = 0;
   PyObject *__pyx_v_distance_functions = NULL;
   npy_intp __pyx_v_i;
+  PyObject *__pyx_v_k_nearest_indices = NULL;
   PyObject *__pyx_v_unique_labels = NULL;
   PyObject *__pyx_v_counts = NULL;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_X_train;
@@ -2596,8 +2633,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObje
  *             distances[i] = distance_functions[distance_metric](X_train[i], query_point)
  * 
  *     sorted_indices = np.argsort(distances)             # <<<<<<<<<<<<<<
- *     k_nearest_labels = y_train[sorted_indices[:k]]
- * 
+ *     k_nearest_indices = sorted_indices[:k]
+ *     k_nearest_labels = y_train[k_nearest_indices]
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -2645,9 +2682,9 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObje
   /* "deeprai/engine/cython/knn.pyx":24
  * 
  *     sorted_indices = np.argsort(distances)
- *     k_nearest_labels = y_train[sorted_indices[:k]]             # <<<<<<<<<<<<<<
+ *     k_nearest_indices = sorted_indices[:k]             # <<<<<<<<<<<<<<
+ *     k_nearest_labels = y_train[k_nearest_indices]
  * 
- *     # Majority voting
  */
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_k); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -2657,11 +2694,20 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObje
   __pyx_t_3 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_sorted_indices), __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y_train), __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 24, __pyx_L1_error)
-  __pyx_t_22 = ((PyArrayObject *)__pyx_t_6);
+  __pyx_v_k_nearest_indices = __pyx_t_3;
+  __pyx_t_3 = 0;
+
+  /* "deeprai/engine/cython/knn.pyx":25
+ *     sorted_indices = np.argsort(distances)
+ *     k_nearest_indices = sorted_indices[:k]
+ *     k_nearest_labels = y_train[k_nearest_indices]             # <<<<<<<<<<<<<<
+ * 
+ *     if return_neighbors:
+ */
+  __pyx_t_3 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_y_train), __pyx_v_k_nearest_indices); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_22 = ((PyArrayObject *)__pyx_t_3);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_k_nearest_labels.rcbuffer->pybuffer);
@@ -2677,125 +2723,158 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObje
       __pyx_t_12 = __pyx_t_13 = __pyx_t_14 = 0;
     }
     __pyx_pybuffernd_k_nearest_labels.diminfo[0].strides = __pyx_pybuffernd_k_nearest_labels.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_k_nearest_labels.diminfo[0].shape = __pyx_pybuffernd_k_nearest_labels.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 24, __pyx_L1_error)
+    if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 25, __pyx_L1_error)
   }
   __pyx_t_22 = 0;
-  __pyx_v_k_nearest_labels = ((PyArrayObject *)__pyx_t_6);
-  __pyx_t_6 = 0;
+  __pyx_v_k_nearest_labels = ((PyArrayObject *)__pyx_t_3);
+  __pyx_t_3 = 0;
 
   /* "deeprai/engine/cython/knn.pyx":27
+ *     k_nearest_labels = y_train[k_nearest_indices]
  * 
- *     # Majority voting
- *     unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)             # <<<<<<<<<<<<<<
- *     return unique_labels[np.argmax(counts)]
+ *     if return_neighbors:             # <<<<<<<<<<<<<<
+ *         return k_nearest_indices
+ *     else:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_unique); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_INCREF(((PyObject *)__pyx_v_k_nearest_labels));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_k_nearest_labels));
-  PyTuple_SET_ITEM(__pyx_t_6, 0, ((PyObject *)__pyx_v_k_nearest_labels));
-  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_return_counts, Py_True) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, __pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_18);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if ((likely(PyTuple_CheckExact(__pyx_t_18))) || (PyList_CheckExact(__pyx_t_18))) {
-    PyObject* sequence = __pyx_t_18;
-    Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
-    if (unlikely(size != 2)) {
-      if (size > 2) __Pyx_RaiseTooManyValuesError(2);
-      else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 27, __pyx_L1_error)
-    }
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    if (likely(PyTuple_CheckExact(sequence))) {
-      __pyx_t_9 = PyTuple_GET_ITEM(sequence, 0); 
-      __pyx_t_6 = PyTuple_GET_ITEM(sequence, 1); 
-    } else {
-      __pyx_t_9 = PyList_GET_ITEM(sequence, 0); 
-      __pyx_t_6 = PyList_GET_ITEM(sequence, 1); 
-    }
-    __Pyx_INCREF(__pyx_t_9);
-    __Pyx_INCREF(__pyx_t_6);
-    #else
-    __pyx_t_9 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 27, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 27, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    #endif
-    __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
-  } else {
-    Py_ssize_t index = -1;
-    __pyx_t_3 = PyObject_GetIter(__pyx_t_18); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
-    __pyx_t_23 = Py_TYPE(__pyx_t_3)->tp_iternext;
-    index = 0; __pyx_t_9 = __pyx_t_23(__pyx_t_3); if (unlikely(!__pyx_t_9)) goto __pyx_L9_unpacking_failed;
-    __Pyx_GOTREF(__pyx_t_9);
-    index = 1; __pyx_t_6 = __pyx_t_23(__pyx_t_3); if (unlikely(!__pyx_t_6)) goto __pyx_L9_unpacking_failed;
-    __Pyx_GOTREF(__pyx_t_6);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_23(__pyx_t_3), 2) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
-    __pyx_t_23 = NULL;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    goto __pyx_L10_unpacking_done;
-    __pyx_L9_unpacking_failed:;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_23 = NULL;
-    if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 27, __pyx_L1_error)
-    __pyx_L10_unpacking_done:;
-  }
-  __pyx_v_unique_labels = __pyx_t_9;
-  __pyx_t_9 = 0;
-  __pyx_v_counts = __pyx_t_6;
-  __pyx_t_6 = 0;
+  __pyx_t_1 = (__pyx_v_return_neighbors != 0);
+  if (__pyx_t_1) {
 
-  /* "deeprai/engine/cython/knn.pyx":28
- *     # Majority voting
- *     unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)
- *     return unique_labels[np.argmax(counts)]             # <<<<<<<<<<<<<<
+    /* "deeprai/engine/cython/knn.pyx":28
+ * 
+ *     if return_neighbors:
+ *         return k_nearest_indices             # <<<<<<<<<<<<<<
+ *     else:
+ *         # Majority voting
  */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_argmax); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
-    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_9);
-    if (likely(__pyx_t_6)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
-      __Pyx_INCREF(__pyx_t_6);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_9, function);
-    }
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_v_k_nearest_indices);
+    __pyx_r = __pyx_v_k_nearest_indices;
+    goto __pyx_L0;
+
+    /* "deeprai/engine/cython/knn.pyx":27
+ *     k_nearest_labels = y_train[k_nearest_indices]
+ * 
+ *     if return_neighbors:             # <<<<<<<<<<<<<<
+ *         return k_nearest_indices
+ *     else:
+ */
   }
-  __pyx_t_18 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_6, __pyx_v_counts) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_counts);
-  __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_18);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_GetItem(__pyx_v_unique_labels, __pyx_t_18); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
-  __pyx_r = __pyx_t_9;
-  __pyx_t_9 = 0;
-  goto __pyx_L0;
+
+  /* "deeprai/engine/cython/knn.pyx":31
+ *     else:
+ *         # Majority voting
+ *         unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)             # <<<<<<<<<<<<<<
+ *         return unique_labels[np.argmax(counts)]
+ */
+  /*else*/ {
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_unique); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_INCREF(((PyObject *)__pyx_v_k_nearest_labels));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_k_nearest_labels));
+    PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_v_k_nearest_labels));
+    __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_return_counts, Py_True) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, __pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_18);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    if ((likely(PyTuple_CheckExact(__pyx_t_18))) || (PyList_CheckExact(__pyx_t_18))) {
+      PyObject* sequence = __pyx_t_18;
+      Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
+      if (unlikely(size != 2)) {
+        if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+        else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+        __PYX_ERR(0, 31, __pyx_L1_error)
+      }
+      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+      if (likely(PyTuple_CheckExact(sequence))) {
+        __pyx_t_9 = PyTuple_GET_ITEM(sequence, 0); 
+        __pyx_t_3 = PyTuple_GET_ITEM(sequence, 1); 
+      } else {
+        __pyx_t_9 = PyList_GET_ITEM(sequence, 0); 
+        __pyx_t_3 = PyList_GET_ITEM(sequence, 1); 
+      }
+      __Pyx_INCREF(__pyx_t_9);
+      __Pyx_INCREF(__pyx_t_3);
+      #else
+      __pyx_t_9 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      #endif
+      __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
+    } else {
+      Py_ssize_t index = -1;
+      __pyx_t_6 = PyObject_GetIter(__pyx_t_18); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
+      __pyx_t_23 = Py_TYPE(__pyx_t_6)->tp_iternext;
+      index = 0; __pyx_t_9 = __pyx_t_23(__pyx_t_6); if (unlikely(!__pyx_t_9)) goto __pyx_L10_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_9);
+      index = 1; __pyx_t_3 = __pyx_t_23(__pyx_t_6); if (unlikely(!__pyx_t_3)) goto __pyx_L10_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_3);
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_23(__pyx_t_6), 2) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
+      __pyx_t_23 = NULL;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      goto __pyx_L11_unpacking_done;
+      __pyx_L10_unpacking_failed:;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_23 = NULL;
+      if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+      __PYX_ERR(0, 31, __pyx_L1_error)
+      __pyx_L11_unpacking_done:;
+    }
+    __pyx_v_unique_labels = __pyx_t_9;
+    __pyx_t_9 = 0;
+    __pyx_v_counts = __pyx_t_3;
+    __pyx_t_3 = 0;
+
+    /* "deeprai/engine/cython/knn.pyx":32
+ *         # Majority voting
+ *         unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)
+ *         return unique_labels[np.argmax(counts)]             # <<<<<<<<<<<<<<
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_argmax); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_9);
+      if (likely(__pyx_t_3)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
+        __Pyx_INCREF(__pyx_t_3);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_9, function);
+      }
+    }
+    __pyx_t_18 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_3, __pyx_v_counts) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_counts);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_18);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_9 = __Pyx_PyObject_GetItem(__pyx_v_unique_labels, __pyx_t_18); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
+    __pyx_r = __pyx_t_9;
+    __pyx_t_9 = 0;
+    goto __pyx_L0;
+  }
 
   /* "deeprai/engine/cython/knn.pyx":5
  * from deeprai.engine.cython.knn_distance import euclidean_distance, manhattan_distance, minkowski_distance, hamming_distance
  * 
  * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,             # <<<<<<<<<<<<<<
- *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3):
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):
  *     cdef np.ndarray[np.float64_t, ndim=1] distances
  */
 
@@ -2833,6 +2912,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_3knn_knn(CYTHON_UNUSED PyObje
   __Pyx_XDECREF((PyObject *)__pyx_v_sorted_indices);
   __Pyx_XDECREF((PyObject *)__pyx_v_k_nearest_labels);
   __Pyx_XDECREF(__pyx_v_distance_functions);
+  __Pyx_XDECREF(__pyx_v_k_nearest_indices);
   __Pyx_XDECREF(__pyx_v_unique_labels);
   __Pyx_XDECREF(__pyx_v_counts);
   __Pyx_XGIVEREF(__pyx_r);
@@ -3926,6 +4006,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_k, __pyx_k_k, sizeof(__pyx_k_k), 0, 0, 1, 1},
+  {&__pyx_n_s_k_nearest_indices, __pyx_k_k_nearest_indices, sizeof(__pyx_k_k_nearest_indices), 0, 0, 1, 1},
   {&__pyx_n_s_k_nearest_labels, __pyx_k_k_nearest_labels, sizeof(__pyx_k_k_nearest_labels), 0, 0, 1, 1},
   {&__pyx_n_s_knn, __pyx_k_knn, sizeof(__pyx_k_knn), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
@@ -3940,6 +4021,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_query_point, __pyx_k_query_point, sizeof(__pyx_k_query_point), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_return_counts, __pyx_k_return_counts, sizeof(__pyx_k_return_counts), 0, 0, 1, 1},
+  {&__pyx_n_s_return_neighbors, __pyx_k_return_neighbors, sizeof(__pyx_k_return_neighbors), 0, 0, 1, 1},
   {&__pyx_n_s_sorted_indices, __pyx_k_sorted_indices, sizeof(__pyx_k_sorted_indices), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_unique, __pyx_k_unique, sizeof(__pyx_k_unique), 0, 0, 1, 1},
@@ -3987,13 +4069,13 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * from deeprai.engine.cython.knn_distance import euclidean_distance, manhattan_distance, minkowski_distance, hamming_distance
  * 
  * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,             # <<<<<<<<<<<<<<
- *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3):
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):
  *     cdef np.ndarray[np.float64_t, ndim=1] distances
  */
-  __pyx_tuple__4 = PyTuple_Pack(13, __pyx_n_s_X_train, __pyx_n_s_y_train, __pyx_n_s_query_point, __pyx_n_s_k, __pyx_n_s_distance_metric, __pyx_n_s_p, __pyx_n_s_distances, __pyx_n_s_sorted_indices, __pyx_n_s_k_nearest_labels, __pyx_n_s_distance_functions, __pyx_n_s_i, __pyx_n_s_unique_labels, __pyx_n_s_counts); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(15, __pyx_n_s_X_train, __pyx_n_s_y_train, __pyx_n_s_query_point, __pyx_n_s_k, __pyx_n_s_distance_metric, __pyx_n_s_p, __pyx_n_s_return_neighbors, __pyx_n_s_distances, __pyx_n_s_sorted_indices, __pyx_n_s_k_nearest_labels, __pyx_n_s_distance_functions, __pyx_n_s_i, __pyx_n_s_k_nearest_indices, __pyx_n_s_unique_labels, __pyx_n_s_counts); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(6, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_deeprai_engine_cython_knn_pyx, __pyx_n_s_knn, 5, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(7, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_deeprai_engine_cython_knn_pyx, __pyx_n_s_knn, 5, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4381,7 +4463,7 @@ if (!__Pyx_RefNanny) {
  * from deeprai.engine.cython.knn_distance import euclidean_distance, manhattan_distance, minkowski_distance, hamming_distance
  * 
  * def knn(np.ndarray[np.float64_t, ndim=2] X_train, np.ndarray[np.int32_t, ndim=1] y_train,             # <<<<<<<<<<<<<<
- *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3):
+ *         np.ndarray[np.float64_t, ndim=1] query_point, int k=3, int distance_metric=0, int p=3, bint return_neighbors=False):
  *     cdef np.ndarray[np.float64_t, ndim=1] distances
  */
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7deeprai_6engine_6cython_3knn_1knn, NULL, __pyx_n_s_deeprai_engine_cython_knn); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)

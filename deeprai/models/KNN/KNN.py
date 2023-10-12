@@ -3,7 +3,6 @@ from deeprai.engine.base_layer import DistanceIndex
 from deeprai.engine.cython.knn import knn
 import numpy as np
 
-
 class KNN():
     def __init__(self):
         self.builder = Build()
@@ -17,16 +16,32 @@ class KNN():
 
     def store_vals(self, x_values, y_vales, p=3, k=2):
         self.x_vals = x_values
-        self.y_vales = y_vales
+        self.y_vales = y_vales.astype(np.int32)
         self.p = p
         self.k = k
 
     def classify(self, query_point):
-        return knn(self.x_vals, self.y_vales, query_point, DistanceIndex[0], self.p, self.k,)
+        return knn(X_train=self.x_vals, y_train=self.y_vales, query_point=query_point, distance_metric=DistanceIndex[0], p=self.p, k=self.k)
+
+    def classify_probability(self, query_point):
+        k_nearest_labels = knn(X_train=self.x_vals, y_train=self.y_vales, query_point=query_point, distance_metric=DistanceIndex[0], p=self.p, k=self.k, return_labels=True)
+        unique_labels, counts = np.unique(k_nearest_labels, return_counts=True)
+        probability_class_1 = counts[unique_labels == 1] / self.k if 1 in unique_labels else 0
+        return probability_class_1
 
     def instant_classifier(self, x_vals, y_vals, query_point, p=3, k=2):
-        y_vals = y_vals.astype(np.int32)  # Ensure y_vals is of type int32
+        y_vals = y_vals.astype(np.int32)
         return knn(x_vals, y_vals, query_point, distance_metric=int(DistanceIndex[0]), p=p, k=k)
+
+    def classify_probability(self, query_point):
+        neighbors = self.classify_neighbors(query_point)
+        positive_neighbors = sum([1 for index in neighbors if self.y_vales[index] == 1])
+        probability = (positive_neighbors / len(neighbors)) * 100
+        return probability
+
+    def classify_neighbors(self, query_point):
+        return knn(X_train=self.x_vals, y_train=self.y_vales, query_point=query_point, distance_metric=DistanceIndex[0],
+                   p=self.p, k=self.k, return_neighbors=True)
 
     # for auto complete
     def hamming_distance(self):
