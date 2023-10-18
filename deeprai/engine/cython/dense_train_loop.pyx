@@ -49,6 +49,16 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
         bias_v = [np.zeros_like(b) for b in BiasVals.Biases]
         t = 0  # Initialize timestep for Adam
 
+    elif optimizer_name == "adadelta":
+        weight_accumulated_grad = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_accumulated_grad = [np.zeros_like(b) for b in BiasVals.Biases]
+        weight_delta_accumulated = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_delta_accumulated = [np.zeros_like(b) for b in BiasVals.Biases]
+
+    elif optimizer_name == "adafactor":
+        weight_v = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_v = [np.zeros_like(b) for b in BiasVals.Biases]
+
     for epoch in range(epochs):
         sum_error = 0.0
 
@@ -63,7 +73,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
                     outputs = forward_propagate(single_input, activation_list, NeuronVals.Neurons, WeightVals.Weights,
                                                 BiasVals.Biases, use_bias, dropout_rate)
                     # Calculate error
-                    if loss_function[0] == "categorical cross entropy":
+                    if loss_function[0] == "cross entropy":
                         sum_error += categorical_cross_entropy(outputs, single_target)
                     elif loss_function[0] == "mean square error":
                         sum_error += mean_square_error(outputs, single_target)
@@ -105,6 +115,17 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
                         WeightVals.Weights, BiasVals.Biases, weight_m, weight_v, bias_m, bias_v = adam_update(
                             WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_m, weight_v,
                             bias_m, bias_v, learning_rate, t=t, use_bias=use_bias)
+
+                    elif optimizer_name == "adadelta":
+                        WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated = adadelta_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                            weight_accumulated_grad,
+                            bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated, use_bias=use_bias)
+
+                    elif optimizer_name == "adafactor":
+                        WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = adafactor_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                            weight_v, bias_v, learning_rate=learning_rate, use_bias=use_bias)
 
                     else:
                         raise ValueError(f"Unsupported optimizer: {optimizer_name}")

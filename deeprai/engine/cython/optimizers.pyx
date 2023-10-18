@@ -90,3 +90,68 @@ cpdef tuple adagrad_update(list weights, list biases, list weight_gradients, lis
 
     return weights, biases, weight_accumulated_grad, bias_accumulated_grad
 
+
+cpdef tuple adadelta_update(list weights, list biases, list weight_gradients, list bias_gradients,
+                            list weight_accumulated_grad, list bias_accumulated_grad,
+                            list weight_delta_accumulated, list bias_delta_accumulated,
+                            float rho=0.95, float epsilon=1e-6, bint use_bias=True):
+    cdef int i
+    cdef int num_layers = len(weights)
+    cdef np.ndarray[np.float64_t, ndim=2] weight_update
+    cdef np.ndarray[np.float64_t, ndim=1] bias_update
+
+    for i in range(num_layers):
+        # Update accumulated gradient
+        weight_accumulated_grad[i] = rho * weight_accumulated_grad[i] + (1 - rho) * (weight_gradients[i] ** 2)
+
+        # Compute the model update
+        weight_update = -(np.sqrt(weight_delta_accumulated[i] + epsilon) /
+                          np.sqrt(weight_accumulated_grad[i] + epsilon)) * weight_gradients[i]
+        weights[i] += weight_update
+
+        # Update the accumulated updates
+        weight_delta_accumulated[i] = rho * weight_delta_accumulated[i] + (1 - rho) * (weight_update ** 2)
+
+        if use_bias:
+            # Update accumulated gradient for bias
+            bias_accumulated_grad[i] = rho * bias_accumulated_grad[i] + (1 - rho) * (bias_gradients[i] ** 2)
+
+            # Compute the bias update
+            bias_update = -(np.sqrt(bias_delta_accumulated[i] + epsilon) /
+                            np.sqrt(bias_accumulated_grad[i] + epsilon)) * bias_gradients[i]
+            biases[i] += bias_update
+
+            # Update the accumulated updates for bias
+            bias_delta_accumulated[i] = rho * bias_delta_accumulated[i] + (1 - rho) * (bias_update ** 2)
+
+    return weights, biases, weight_accumulated_grad, bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated
+
+
+cpdef tuple adafactor_update(list weights, list biases, list weight_gradients, list bias_gradients,
+                             list weight_v, list bias_v, float learning_rate,
+                             float beta1=0.9, float epsilon=1e-6, bint use_bias=True):
+    cdef int i
+    cdef int num_layers = len(weights)
+    cdef np.ndarray[np.float64_t, ndim=2] weight_update
+    cdef np.ndarray[np.float64_t, ndim=1] bias_update
+
+
+    for i in range(num_layers):
+        # Update the moving average for squared gradients (v)
+        weight_v[i] = beta1 * weight_v[i] + (1 - beta1) * (weight_gradients[i] ** 2)
+
+        # Compute weight update based on the square root of the v
+        weight_update = -learning_rate * weight_gradients[i] / (np.sqrt(weight_v[i]) + epsilon)
+        weights[i] += weight_update
+
+        if use_bias:
+            # Update the moving average for squared bias gradients (v)
+            bias_v[i] = beta1 * bias_v[i] + (1 - beta1) * (bias_gradients[i] ** 2)
+
+            # Compute bias update
+            bias_update = -learning_rate * bias_gradients[i] / (np.sqrt(bias_v[i]) + epsilon)
+            biases[i] += bias_update
+
+    return weights, biases, weight_v, bias_v
+
+
