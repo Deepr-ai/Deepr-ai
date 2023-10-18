@@ -15,7 +15,8 @@ cpdef np.ndarray[np.float64_t, ndim=1] linear(np.ndarray[np.float64_t, ndim=1] n
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] linear_derivative(np.ndarray[np.float64_t, ndim=1] x):
-    return np.ones_like(1)
+    return np.ones_like(x)
+
 #tanh
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -32,26 +33,25 @@ cpdef np.ndarray[np.float64_t, ndim=1] tanh_derivative(np.ndarray[np.float64_t, 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] relu(np.ndarray[np.float64_t, ndim=1] n):
-    return np.maximum(n, 0)
+    return np.maximum(0, n)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] relu_derivative(np.ndarray[np.float64_t, ndim=1] x):
-    cdef np.ndarray[np.float64_t, ndim=1] dy_dx = np.where(x > 0, 1, 0).astype(np.float64)
-    return dy_dx
+    return np.where(x > 0, 1.0, 0.0)
+
 
 #leaky relu
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu(np.ndarray[np.float64_t, ndim=1] n, double alpha=0.01):
-    return np.where(n >= 0, n, alpha * n)
+cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu(np.ndarray[np.float64_t, ndim=1] n, float alpha=0.01):
+    return np.where(n > 0, n, alpha * n)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu_derivative(np.ndarray[np.float64_t, ndim=1] x, alpha=0.01):
-    cdef np.ndarray[np.float64_t, ndim=1] dy_dx = np.where(x > 0, 1, alpha)
-    return dy_dx
+cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu_derivative(np.ndarray[np.float64_t, ndim=1] x, float alpha=0.01):
+    return np.where(x > 0, 1.0, alpha)
 
 #Softmax
 @cython.boundscheck(False)

@@ -1,7 +1,7 @@
 from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, \
-    NeuronVals, \
+    NeuronVals, BiasVals, \
     DerivativeVals, ActivationListString, ActivationDerivativeListString, Loss, DropoutList, l1PenaltyList, \
-    l2PenaltyList, DistanceIndex
+    l2PenaltyList, DistanceIndex, OptimizerString, Optimizer, BiasDerivativeVals
 import deeprai.engine.cython.activation as act
 from deeprai.engine.cython import optimizers as opt
 from deeprai.engine.cython import loss as lossFunc
@@ -17,7 +17,11 @@ class Build:
                                         "leaky relu": act.leaky_relu_derivative,
                                         "sigmoid": act.sigmoid_derivative, "linear": act.linear_derivative,
                                         "softmax": act.softmax_derivative}
-        self.OptimizerMap = {"gradient decent": opt.gradient_descent}
+        self.OptimizerMap = {
+            "gradient_descent": opt.gradient_descent_update,
+            "momentum": opt.momentum_update,
+            "adam": opt.adam_update
+        }
         self.LossMap = {'mean square error': lossFunc.mean_square_error,
                         "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}
@@ -42,7 +46,10 @@ class Build:
     def convert_loss(self, lossF):
         Loss[0] = (lambda o, t: self.LossMap[lossF[0]](o, t))
 
-    def create_dense(self, size, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
+    def convert_optimizer(self, OptF):
+        Optimizer[0] = (lambda *args, **kwargs: self.OptimizerMap[OptF[0]](*args, **kwargs))
+
+    def create_dense(self, size, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0, use_bias=True):
         # creates activation map
         ActivationListString.append(activation)
         ActivationDerivativeListString.append(activation)
@@ -55,6 +62,10 @@ class Build:
         # works backwards to generate weight values
         layers = LayerVals.Layers
         NeuronVals.add(np.zeros(size))
+        if use_bias:
+            BiasVals.add(np.random.randn(size))  # Random biases for each neuron in the layer
+            BiasDerivativeVals.add(np.zeros(size))
+
         try:
             layers.append(size)
             WeightVals.add(np.random.rand(layers[-2], layers[-1]) * np.sqrt(2 / (layers[-2] + layers[-1])))
@@ -65,7 +76,8 @@ class Build:
             del DropoutList[0]
             del l2PenaltyList[0]
             del l1PenaltyList[0]
-            # input neuron
+            if use_bias:
+                del BiasVals.Biases[0]  # Remove bias for the input layer
 
     def translate_distance(self, distance):
         DistanceMap = {

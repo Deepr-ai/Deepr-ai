@@ -1,61 +1,121 @@
 import numpy as np
 cimport numpy as np
-from deeprai.engine.cython import optimizers as opti
 from alive_progress import alive_bar
-from deeprai.engine.cython import activation as act
-from deeprai.engine.cython import loss as loss
-from deeprai.engine.cython.dense_operations import back_propagate, forward_propagate
-from deeprai.engine.base_layer import DerivativeVals, WeightVals, NeuronVals, NetworkMetrics, LossString
 
-cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets,
+from deeprai.engine.base_layer import NeuronVals, WeightVals, BiasVals, NetworkMetrics
+from optimizers import *
+from dense_operations import forward_propagate, back_propagate
+from loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
+
+
+cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
+            np.ndarray[np.float64_t, ndim=2] targets,
             np.ndarray[np.float64_t, ndim=2] test_inputs,
-            np.ndarray[np.float64_t, ndim=2] test_targets, int epochs, float learning_rate,
-            float momentum, list activation_list, list activation_derv_list, list loss_function, list dropout_rate,
-            list l2_penalty, list l1_penalty, bint early_stop, bint verbose, int batch_size):
-    cdef int start, end, num_batches
-    cdef float sum_error, error, total_rel_error, mean_rel_error, cur_acc
-    cdef np.ndarray[np.float64_t, ndim=2] batch_inputs, batch_targets
-    cdef np.ndarray[np.float64_t, ndim=1] output, abs_error, rel_error
-    cdef float past_acc = .0
-    num_batches = len(inputs) // batch_size
-    cdef list neurons = NeuronVals.Neurons
-    cdef list weights = WeightVals.Weights
-    cdef list derv = DerivativeVals.Derivatives
-    cdef int test_inputs_len = len(test_inputs)
-    cdef int inputs_len = len(inputs)
+            np.ndarray[np.float64_t, ndim=2] test_targets,
+            int epochs,
+            float learning_rate,
+            float momentum,
+            list activation_list,
+            list activation_derv_list,
+            list loss_function,
+            list dropout_rate,
+            list l2_penalty,
+            list l1_penalty,
+            bint use_bias,
+            bint verbose,
+            int batch_size,
+            str optimizer_name):
 
-    print("Starting Training...")
+    cdef int inputs_len = inputs.shape[0]
+    cdef int test_inputs_len = test_inputs.shape[0]
+    cdef int num_batches = inputs_len // batch_size
+
+    if optimizer_name == "momentum":
+        weight_velocity = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_velocity = [np.zeros_like(b) for b in BiasVals.Biases]
+
+    elif optimizer_name == "adagrad":
+        weight_accumulated_grad = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_accumulated_grad = [np.zeros_like(b) for b in BiasVals.Biases]
+
+    elif optimizer_name == "rmsprop":
+        weight_v = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_v = [np.zeros_like(b) for b in BiasVals.Biases]
+
+    elif optimizer_name == "adam":
+        weight_m = [np.zeros_like(w) for w in WeightVals.Weights]
+        weight_v = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_m = [np.zeros_like(b) for b in BiasVals.Biases]
+        bias_v = [np.zeros_like(b) for b in BiasVals.Biases]
+        t = 0  # Initialize timestep for Adam
+
     for epoch in range(epochs):
+        sum_error = 0.0
+
         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
-            sum_error = 0
-            for batch in range(num_batches):
-                start = batch * batch_size
-                end = start + batch_size
-                batch_inputs = inputs[start:end]
-                batch_targets = targets[start:end]
+            for batch_start in range(0, inputs_len, batch_size):
+                batch_end = min(batch_start + batch_size, inputs_len)
+                batch_inputs = inputs[batch_start:batch_end]
+                batch_targets = targets[batch_start:batch_end]
 
-                # Initialize batch errors to zero
-                batch_errors = np.zeros(batch_size)
+                for single_input, single_target in zip(batch_inputs, batch_targets):
+                    # Forward Propagation
+                    outputs = forward_propagate(single_input, activation_list, NeuronVals.Neurons, WeightVals.Weights,
+                                                BiasVals.Biases, use_bias, dropout_rate)
+                    # Calculate error
+                    if loss_function[0] == "categorical cross entropy":
+                        sum_error += categorical_cross_entropy(outputs, single_target)
+                    elif loss_function[0] == "mean square error":
+                        sum_error += mean_square_error(outputs, single_target)
+                    elif loss_function[0] == "mean absolute error":
+                        sum_error += mean_absolute_error(outputs, single_target)
+                    else:
+                        raise ValueError(f"Unsupported loss type: {loss_function}")
+                    weight_gradients, bias_gradients = back_propagate(outputs, single_target, activation_derv_list,
+                                                                      NeuronVals.Neurons, WeightVals.Weights,
+                                                                      l1_penalty,
+                                                                      l2_penalty, use_bias, loss_function[0])
 
-                for i, (input, target) in enumerate(zip(batch_inputs, batch_targets)):
-                    output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
-                    back_propagate(target - output, activation_derv_list, neurons, weights, derv, l1_penalty,
-                                   l2_penalty)
-                    opti.gradient_descent(learning_rate)
+                    # Update Weights and Biases
+                    if optimizer_name == "gradient descent":
+                        WeightVals.Weights, BiasVals.Biases = gradient_descent_update(WeightVals.Weights,
+                                                                                      BiasVals.Biases, weight_gradients,
+                                                                                      bias_gradients, learning_rate,
+                                                                                      use_bias)
+                    elif optimizer_name == "momentum":
+                        WeightVals.Weights, BiasVals.Biases, weight_velocity, bias_velocity = momentum_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_velocity,
+                            bias_velocity, learning_rate, momentum, use_bias)
 
-                    # Accumulate errors for each input in the batch
-                    batch_errors[i] = loss_function[0](output, target)
+                    elif optimizer_name == "adagrad":
+                        WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad = adagrad_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                            weight_accumulated_grad, bias_accumulated_grad, learning_rate, epsilon, use_bias)
 
-                # Calculate the sum error for the batch
-                sum_error += np.sum(batch_errors)
+                    elif optimizer_name == "rmsprop":
+                        #Temp values .17 for kwargs
+                        beta = 0.9
+                        epsilon = 1e-7
+                        WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = rmsprop_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_v, bias_v,
+                            learning_rate, beta, epsilon, use_bias)
 
-                bar()
+                    elif optimizer_name == "adam":
+                        t += 1
+                        WeightVals.Weights, BiasVals.Biases, weight_m, weight_v, bias_m, bias_v = adam_update(
+                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_m, weight_v,
+                            bias_m, bias_v, learning_rate, t=t, use_bias=use_bias)
+
+                    else:
+                        raise ValueError(f"Unsupported optimizer: {optimizer_name}")
+
+                bar()  # update the progress bar after batch
         error = 0
         abs_errors = np.zeros(test_inputs_len)
         rel_errors = np.zeros(test_inputs_len)
 
-        for i, (input, target) in zip(range(test_inputs_len), zip(test_inputs, test_targets)):
-            output = forward_propagate(input, activation_list, neurons, weights, dropout_rate)
+        for i, (input_val, target) in enumerate(zip(test_inputs, test_targets)):
+            output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)
             abs_error = np.abs(output - target)
             rel_error = np.divide(abs_error, target, where=target != 0)
 
@@ -65,17 +125,10 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
         mean_rel_error = np.mean(rel_errors)
         total_rel_error = np.sum(rel_errors) / test_inputs_len
         accuracy = np.abs(100 - total_rel_error)
-        cost = sum_error / inputs_len
-        NetworkMetrics[0].append(cost)
+        NetworkMetrics[0].append(sum_error / inputs_len)
         NetworkMetrics[1].append(accuracy)
         NetworkMetrics[2].append(total_rel_error)
         NetworkMetrics[3].append(epoch + 1)
-        print(
-            f"Epoch: {epoch + 1} | Cost: {cost:4f} | Accuracy: {accuracy:.2f} | Relative Error: {total_rel_error:.3f}")
-        if early_stop:
-            cur_acc = np.abs(100 - total_rel_error)
-            if cur_acc < past_acc:
-                print("Stopping due to val loss..")
-                return
-            past_acc = cur_acc
-    print("Training complete!")
+
+        if verbose:
+            print(f"Epoch: {epoch + 1} | Cost: {sum_error / inputs_len:.4f} | Accuracy: {accuracy:.2f}% | Relative Error: {total_rel_error:.3f}%")

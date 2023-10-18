@@ -26,7 +26,7 @@
 #
 # setup(
 #     name='DeeprAI',
-#     version='0.0.15',
+#     version='0.0.16',
 #     author='Kieran Carter',
 #     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
 #     long_description=long_description,
@@ -50,7 +50,7 @@
 #     exclude_package_data={'deeprai.engine.cython': ['*.c']},
 #     ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
 # )
-#
+
 
 # For compiling from scratch
 from distutils.core import setup

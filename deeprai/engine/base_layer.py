@@ -21,10 +21,13 @@ class Kernel:
 
 class Bias:
     def __init__(self):
-        self.Biases = np.array([])
+        self.Biases = []
 
     def pop(self):
-        self.Biases = np.array([])
+        self.Biases = []
+
+    def add(self, val):
+        self.Biases.append(val)
 
 
 class Weight:
@@ -59,6 +62,15 @@ class Derivative:
     def add(self, val):
         self.Derivatives.append(val)
 
+class BiasDerivative:
+    def __init__(self):
+        self.BiasDerivatives = []
+
+    def pop(self):
+        self.BiasDerivatives = []
+
+    def add(self, val):
+        self.BiasDerivatives.append(val)
 
 # Spacific use cases (note to self, add condition statements)
 
@@ -79,28 +91,6 @@ class MomentEstimate:
 
     def pop(self):
         self.Velocities = []
-
-
-class FirstMoment:
-    def __init__(self):
-        self.Moments = []
-
-    def pop(self):
-        self.Moments = []
-
-    def add(self, val):
-        self.Moments.append(val)
-
-
-class SecondMoment:
-    def __init__(self):
-        self.Moments = []
-
-    def pop(self):
-        self.Moments = []
-
-    def add(self, val):
-        self.Moments.append(val)
 
 
 class LocalNetValues:
@@ -124,11 +114,11 @@ WeightVals = Weight()
 KernelVals = Kernel()
 LayerVals = Layer()
 NeuronVals = Neuron()
+BiasVals = Bias()
 DerivativeVals = Derivative()
+BiasDerivativeVals = BiasDerivative()
 MomentEstimateVals = MomentEstimate()
 LocalValues = LocalNetValues()
-FirstMomentVals = FirstMoment()
-SecondMomentVals = SecondMoment()
 # LOCAL NETWORK VALUES
 VelocityVals = Velocity()
 ActivationList = []
@@ -141,7 +131,7 @@ ActivationDerivativeListString = []
 OptimizerString = ['gradient decent']
 LossString = ['mean square error']
 Loss = [[]]
-Optimizer = []
+Optimizer = [[]]
 DistanceIndex = [0]
 
 # cost, acc, rel_error, epoch

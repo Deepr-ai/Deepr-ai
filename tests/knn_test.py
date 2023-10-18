@@ -43,7 +43,7 @@ class CollegeAdmissionPredictor:
 
     def predict_admission_probability(self, SAT_score, GPA):
         query_point = np.array([SAT_score, GPA])
-        return self.knn.classify_probability(query_point)
+        return self.knn.classify_probability(query_point, 1)
 
     def show_k_nearest_neighbors(self, SAT_score, GPA):
         query_point = np.array([SAT_score, GPA])

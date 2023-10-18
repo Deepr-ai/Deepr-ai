@@ -12,7 +12,7 @@ network = model.FeedForward()
 # Creating the dense layers
 network.add_dense(2)
 
-network.add_dense(5, activation='linear')
+network.add_dense(5, activation='tanh')
 
 network.add_dense(1, activation='sigmoid')
 
@@ -20,5 +20,5 @@ network.add_dense(1, activation='sigmoid')
 network.train_model(train_inputs=inputs,train_targets=expected,test_inputs=inputs,test_targets=expected,epochs=20)
 
 # Running an input through the network
-output = network.run(np.array([.3,.1]))
-print(output)
+# output = network.run(np.array([.3,.1]))
+# print(output)
