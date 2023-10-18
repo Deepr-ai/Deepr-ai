@@ -1,107 +1,82 @@
 import numpy as np
 from deeprai.engine.cython import activation as act
 import cython
-#PUBLIC FUNCTIONprint(models.run(x))clear
+from deeprai.engine.base_layer import NeuronVals
 cimport numpy as np
 from libc.stdlib cimport rand
 
 @cython.wraparound(False)
-cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list, list neurons,
-                                                         list weights, list dropout_rate):
-    """
-    Parameters:
-    -----------
-    inputs : np.ndarray
-        Input features to be propagated through the network
-    activation_list : list
-        List of activation functions to be applied to the output of each layer
-    neurons : list
-        List of np.ndarray objects to store the output of each layer
-    weights : list
-        List of weights for each layer
+cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,
+                                                         list activation_list, neurons, weights,
+                                                         biases, bint use_bias, list dropout_rate,
+                                                         bint training_mode=True):
+    cdef int num_layers = len(neurons)
+    cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs
+    cdef int i
 
-    Returns:
-    -------
-    np.ndarray
-        The final output after forward propagation
-    """
-    neurons[0] = inputs
-    # activation_list -> a list of lambda functions
-    cdef np.ndarray[np.float64_t, ndim = 1] layer_outputs
-    cdef int n_layers = len(weights)
-    cdef int last_layer_index = n_layers - 1
-    cdef float dropout
-    cdef float one_minus_dropout
-    cdef np.ndarray[np.float64_t, ndim = 1] neuron_layer
-    cdef np.ndarray[np.float64_t, ndim = 2] weight_layer
+    # Void previous neuron values
+    NeuronVals.Neurons = []
 
-    for layer in range(n_layers):
-        weight_layer = weights[layer]
-        layer_outputs = np.dot(neurons[layer], weight_layer)
-        neurons[layer+1] = activation_list[layer](layer_outputs)
-        if layer < last_layer_index:
-            dropout = dropout_rate[layer]
-            if dropout > 0:
-                one_minus_dropout = 1.0 - dropout
-                neurons[layer + 1] *= np.random.binomial([np.ones_like(neurons[layer + 1])], one_minus_dropout)[0] * (1.0 / one_minus_dropout)
-    return neurons[-1]
+    NeuronVals.Neurons.append(inputs)
 
+    for i in range(num_layers - 1):
+        if use_bias:
+            layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]
+        else:
+            layer_outputs = np.dot(layer_outputs, weights[i])
+
+        layer_outputs = activation_list[i](layer_outputs)
+        NeuronVals.Neurons.append(layer_outputs)
+        if training_mode and dropout_rate[i] > 0:
+            mask = np.random.binomial(1, 1 - dropout_rate[i], size=layer_outputs.shape[0])
+            layer_outputs *= mask
+
+    return layer_outputs
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef np.ndarray[np.float64_t, ndim=1] back_propagate(np.ndarray[np.float64_t, ndim=1] loss, list activation_derv_list,
-                                                      list neurons, list weights, list derv, list l1_penalty,
-                                                      list l2_penalty):
-    cdef int layer, num_layers = len(derv)
-    cdef np.ndarray[np.float64_t, ndim=1] delta
-    cdef np.ndarray[np.float64_t, ndim=2] delta_reshape, current_reshaped
+cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
+                          np.ndarray[np.float64_t, ndim=1] true_output,
+                          list activation_derv_list, neurons,
+                          weights, list l1_penalty,
+                          list l2_penalty, bint use_bias,
+                          str loss_type='mean square error'):
+    cdef int layer, num_layers = len(weights)
+    cdef np.ndarray[np.float64_t, ndim=1] loss, delta
+    cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
     cdef float l1, l2
-    cdef np.ndarray[np.float64_t, ndim=2] weights_layer
+    # Calculating the initial gradient of the loss
+    if loss_type == 'mean square error':
+        loss = 2 * (predicted_output - true_output)
+    elif loss_type == 'cross entropy':
+        loss = - (true_output / predicted_output) + (1 - true_output) / (1 - predicted_output)
+    elif loss_type == 'mean absolute error':
+        loss = np.sign(predicted_output - true_output)
+    else:
+        raise ValueError(f"Unsupported loss type: {loss_type}")
+
+    weight_gradients = []
+    bias_gradients = []
 
     for layer in range(num_layers - 1, -1, -1):
         delta = loss * activation_derv_list[layer](neurons[layer + 1])
+        # Calculating the gradient for weights
+        weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))
 
-        # Reshape without new memory allocation
-        delta_reshape = delta.reshape(delta.shape[0], -1).T
-        current_reshaped = neurons[layer].reshape(neurons[layer].shape[0], -1)
-
-        # In-place dot product to avoid new memory allocation
-        np.dot(current_reshaped, delta_reshape, out=derv[layer])
-
-        weights_layer = weights[layer]
         l1 = l1_penalty[layer]
         l2 = l2_penalty[layer]
-
         if l1 > 0:
-            np.add(derv[layer], l1 * np.sign(weights_layer), out=derv[layer])
+            weight_gradient += l1 * np.sign(weights[layer])
         if l2 > 0:
-            np.add(derv[layer], 2 * l2 * weights_layer, out=derv[layer])
+            weight_gradient += 2 * l2 * weights[layer]
 
-        loss = np.dot(delta, weights_layer.T)
+        # Storing the computed gradients
+        weight_gradients.insert(0, weight_gradient)
 
-#PRIVATE FUNCTION
-#note to self, add bies gradent
-# cdef np.ndarray[np.float64_t, ndim=1] cython_back_propagate(np.ndarray[np.float64_t, ndim=1] loss,  list activation_derv_list ):
-#     cdef np.ndarray[np.float64_t, ndim = 1] delta, delta_reshape, current_reshaped
-#     for layer in reversed(range(len(derv))):
-#         delta = loss * activation_derv_list[layer](neurons[layer+1])
-#         delta_reshape = delta.reshape(delta.shape[0], -1).T
-#         current_reshaped = neurons[layer].reshape(neurons[layer].shape[0], -1)
-#         derv[layer] = np.dot(current_reshaped, delta_reshape)
-#         loss = np.dot(delta, weights[layer].T)
-#
-#
-# cdef np.ndarray[np.float64_t, ndim=1] cython_forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs, list activation_list):
-#     neurons[0] = inputs
-#     # activation_list -> a list of lambda functions
-#     cdef np.ndarray[np.float64_t, ndim = 1] layer_outputs
-#     for layer, weight in enumerate(weights):
-#         layer_outputs = np.dot(neurons[layer], weight)
-#         neurons[layer+1] = activation_list[layer](layer_outputs)
-#     return neurons[-1]
+        if use_bias:
+            bias_gradients.insert(0, np.sum(delta, axis=0))
 
-
-
-
-
+        # Updating the loss term for the next layer in the backward pass
+        loss = np.dot(delta, weights[layer].T)
+    return weight_gradients, bias_gradients
 
