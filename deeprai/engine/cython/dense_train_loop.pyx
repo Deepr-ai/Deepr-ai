@@ -63,7 +63,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
     for epoch in range(epochs):
         sum_error = 0.0
 
-        with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+        with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
             for batch_start in range(0, inputs_len, batch_size):
                 batch_end = min(batch_start + batch_size, inputs_len)
                 batch_inputs = inputs[batch_start:batch_end]

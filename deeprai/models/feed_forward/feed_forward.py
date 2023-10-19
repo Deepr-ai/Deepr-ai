@@ -1,10 +1,11 @@
 from deeprai.engine.base_layer import WeightVals, Optimizer, ActivationList, ActivationDerivativeList, LossString, \
-    OptimizerString, NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList, LayerVals, BiasVals
+    OptimizerString, NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList, LayerVals, BiasVals, NetworkMetrics
 import deeprai.engine.build_model as builder
 from deeprai.engine.cython.dense_train_loop import train as train
 from deeprai.engine.cython.dense_operations import forward_propagate
 from deeprai.tools.graphing import neural_net_metrics
 import numpy as np
+
 
 class FeedForward:
     def __init__(self):
@@ -54,7 +55,7 @@ class FeedForward:
             return np.array(results)
         else:
             return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights,
-                                           BiasVals.Biases, self.use_bias, DropoutList, training_mode=False)
+                                     BiasVals.Biases, self.use_bias, DropoutList, training_mode=False)
 
     def specs(self):
         loss_table = {
@@ -87,8 +88,10 @@ class FeedForward:
         print(f"\033[1mDeeprAI Version:\033[0m 1.0.2")
         print(divider)
 
-    def graph(self, metric="cost"):
-        if metric == "cost":
+    def graph(self, metric="cost-acc"):
+        if metric == "cost-acc":
+            self.graph_engine.graph_cost_and_accuracy()
+        elif metric == "cost":
             self.graph_engine.graph_cost()
         elif metric == "acc" or metric == "accuracy":
             self.graph_engine.graph_accuracy()
@@ -97,8 +100,12 @@ class FeedForward:
         else:
             print(f"Invalid metric: {metric}")
 
+    @staticmethod
+    def report():
+        return NetworkMetrics
 
-    #auto compleate
+        # auto compleate
+
     tanh = "tanh"
     relu = "relu"
     leaky_relu = "leaky relu"
@@ -120,4 +127,3 @@ class FeedForward:
     adam = "adam"
     adadelta = "adadelta"
     adafactor = "adafactor"
-

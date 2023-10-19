@@ -22,10 +22,11 @@ network.add_dense(10, activation=network.sigmoid)
 
 network.config(loss=network.cross_entropy, optimizer=network.adam)
 
-network.specs()
 # Training the model
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
-                    batch_size=130, epochs=3)
+                    batch_size=130, epochs=10)
+
+network.graph()
 
 

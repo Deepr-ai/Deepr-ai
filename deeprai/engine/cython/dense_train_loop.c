@@ -3930,7 +3930,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
  *     for epoch in range(epochs):
  *         sum_error = 0.0             # <<<<<<<<<<<<<<
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
  */
     __Pyx_INCREF(__pyx_float_0_0);
     __Pyx_XDECREF_SET(__pyx_v_sum_error, __pyx_float_0_0);
@@ -3938,14 +3938,14 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
     /* "deeprai/engine/cython/dense_train_loop.pyx":66
  *         sum_error = 0.0
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
  *             for batch_start in range(0, inputs_len, batch_size):
  *                 batch_end = min(batch_start + batch_size, inputs_len)
  */
     /*with:*/ {
       __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_alive_bar); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_num_batches); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_long((__pyx_v_num_batches + 1)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
@@ -4007,7 +4007,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
 
             /* "deeprai/engine/cython/dense_train_loop.pyx":67
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
  *             for batch_start in range(0, inputs_len, batch_size):             # <<<<<<<<<<<<<<
  *                 batch_end = min(batch_start + batch_size, inputs_len)
  *                 batch_inputs = inputs[batch_start:batch_end]
@@ -4074,7 +4074,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
               __pyx_t_9 = 0;
 
               /* "deeprai/engine/cython/dense_train_loop.pyx":68
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
  *             for batch_start in range(0, inputs_len, batch_size):
  *                 batch_end = min(batch_start + batch_size, inputs_len)             # <<<<<<<<<<<<<<
  *                 batch_inputs = inputs[batch_start:batch_end]
@@ -6387,7 +6387,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
 
               /* "deeprai/engine/cython/dense_train_loop.pyx":67
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
  *             for batch_start in range(0, inputs_len, batch_size):             # <<<<<<<<<<<<<<
  *                 batch_end = min(batch_start + batch_size, inputs_len)
  *                 batch_inputs = inputs[batch_start:batch_end]
@@ -6398,7 +6398,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_train_loop_train(PyArr
             /* "deeprai/engine/cython/dense_train_loop.pyx":66
  *         sum_error = 0.0
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
  *             for batch_start in range(0, inputs_len, batch_size):
  *                 batch_end = min(batch_start + batch_size, inputs_len)
  */
@@ -8773,7 +8773,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "deeprai/engine/cython/dense_train_loop.pyx":66
  *         sum_error = 0.0
  * 
- *         with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
+ *         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:             # <<<<<<<<<<<<<<
  *             for batch_start in range(0, inputs_len, batch_size):
  *                 batch_end = min(batch_start + batch_size, inputs_len)
  */
