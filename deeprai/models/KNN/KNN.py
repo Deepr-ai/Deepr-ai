@@ -39,14 +39,7 @@ class KNN():
                    p=self.p, k=self.k, return_neighbors=True)
 
     # for auto complete
-    def hamming_distance(self):
-        return "hamming distance"
-
-    def minkowski_distance(self):
-        return "minkowski distance"
-
-    def manhattan_distance(self):
-        return "manhattan distance"
-
-    def euclidean_distance(self):
-        return "euclidean distance"
+    hamming_distance = "hamming distance"
+    minkowski_distance = "minkowski distance"
+    manhattan_distance = "manhattan distance"
+    euclidean_distance = "euclidean distance"

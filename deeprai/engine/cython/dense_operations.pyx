@@ -14,19 +14,25 @@ cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t
     cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs
     cdef int i
 
-    # Void previous neuron values
+    # Clear previous neuron values
     NeuronVals.Neurons = []
-
     NeuronVals.Neurons.append(inputs)
 
+    # Propagate through each layer in the network
     for i in range(num_layers - 1):
+        # Calculate the weighted sum
         if use_bias:
             layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]
         else:
             layer_outputs = np.dot(layer_outputs, weights[i])
 
+        # Apply the activation function
         layer_outputs = activation_list[i](layer_outputs)
+
+        # Store the output for each neuron
         NeuronVals.Neurons.append(layer_outputs)
+
+        # Apply dropout regularization if in training mode
         if training_mode and dropout_rate[i] > 0:
             mask = np.random.binomial(1, 1 - dropout_rate[i], size=layer_outputs.shape[0])
             layer_outputs *= mask
@@ -45,7 +51,8 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     cdef np.ndarray[np.float64_t, ndim=1] loss, delta
     cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
     cdef float l1, l2
-    # Calculating the initial gradient of the loss
+
+    # Calculate the gradient of the loss function with respect to its inputs
     if loss_type == 'mean square error':
         loss = 2 * (predicted_output - true_output)
     elif loss_type == 'cross entropy':
@@ -58,11 +65,15 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     weight_gradients = []
     bias_gradients = []
 
+    # Iterate backward through each layer to compute the gradient
     for layer in range(num_layers - 1, -1, -1):
+        # Compute the delta (error term) for the layer
         delta = loss * activation_derv_list[layer](neurons[layer + 1])
-        # Calculating the gradient for weights
+
+        # Calculate the gradient for the weights using the outer product of the previous layer's output and delta
         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))
 
+        # Apply L1 and L2 regularization to the gradients
         l1 = l1_penalty[layer]
         l2 = l2_penalty[layer]
         if l1 > 0:
@@ -70,13 +81,13 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
         if l2 > 0:
             weight_gradient += 2 * l2 * weights[layer]
 
-        # Storing the computed gradients
+        # Store the computed gradients
         weight_gradients.insert(0, weight_gradient)
 
+        # If biases are used, compute and store their gradients
         if use_bias:
             bias_gradients.insert(0, np.sum(delta, axis=0))
 
-        # Updating the loss term for the next layer in the backward pass
+        # Compute the gradient of the loss with respect to the output of the previous layer
         loss = np.dot(delta, weights[layer].T)
     return weight_gradients, bias_gradients
-

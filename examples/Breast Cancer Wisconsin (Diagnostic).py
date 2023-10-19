@@ -11,10 +11,10 @@ y = breast_cancer_wisconsin_diagnostic.data.targets
 Data_X = np.array(X).astype(np.float64)
 Data_Y = np.where(np.array(y) == 'M', [0, 1], [1, 0]).astype(np.float64)
 
-# Model ~ 90% acc
+# Model ~ 92% acc
 model = FeedForward()
 model.add_dense(30)
-model.add_dense(10, activation=model.tanh())
+model.add_dense(50, activation=model.tanh())
 model.add_dense(2)
-model.config(optimizer=model.adagrad())
-model.train_model(Data_X, Data_Y, Data_X, Data_Y, 20, 100)
+model.config(optimizer=model.adam())
+model.train_model(Data_X, Data_Y, Data_X, Data_Y, 10, 100, learning_rate=0.001)

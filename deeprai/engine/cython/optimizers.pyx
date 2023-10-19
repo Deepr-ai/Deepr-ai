@@ -154,4 +154,3 @@ cpdef tuple adafactor_update(list weights, list biases, list weight_gradients, l
 
     return weights, biases, weight_v, bias_v
 
-

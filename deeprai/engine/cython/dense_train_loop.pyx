@@ -3,9 +3,10 @@ cimport numpy as np
 from alive_progress import alive_bar
 
 from deeprai.engine.base_layer import NeuronVals, WeightVals, BiasVals, NetworkMetrics
-from optimizers import *
-from dense_operations import forward_propagate, back_propagate
-from loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
+from deeprai.engine.cython.dense_operations import forward_propagate, back_propagate
+from deeprai.engine.cython.optimizers import gradient_descent_update, momentum_update, adagrad_update, rmsprop_update, \
+    adam_update, adadelta_update, adafactor_update
+from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
 
 
 cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
@@ -103,7 +104,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
                             weight_accumulated_grad, bias_accumulated_grad, learning_rate, epsilon, use_bias)
 
                     elif optimizer_name == "rmsprop":
-                        #Temp values .17 for kwargs
+                        #Temp values .18 for kwargs
                         beta = 0.9
                         epsilon = 1e-7
                         WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = rmsprop_update(
