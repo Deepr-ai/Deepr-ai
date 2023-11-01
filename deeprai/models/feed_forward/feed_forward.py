@@ -102,7 +102,9 @@ class FeedForward:
 
     @staticmethod
     def report():
-        return NetworkMetrics
+        return {"cost": NetworkMetrics[0],
+                "accuracy": NetworkMetrics[1],
+                "error": NetworkMetrics[2]}
 
         # auto compleate
 

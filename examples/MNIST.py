@@ -2,7 +2,7 @@ from deeprai import models
 # Importing deeprai-datasets lib, only available on linux
 from Datasets.MNIST import mnist as db
 from deeprai.tools.noise import GaussianNoise
-
+X = []
 # Loading in inputs
 inputs = db.load_x(5000)
 expected = db.load_y(5000)
@@ -20,13 +20,11 @@ network.add_dense(784)
 network.add_dense(60, activation=network.relu)
 network.add_dense(10, activation=network.sigmoid)
 
-network.config(loss=network.cross_entropy, optimizer=network.adam)
+network.config(loss=network.mean_square_error, optimizer=network.adam)
 
 # Training the model
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
                     batch_size=130, epochs=10)
 
-network.graph()
-
-
+print(network.report())
