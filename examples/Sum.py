@@ -18,7 +18,7 @@ network.add_dense(5, activation='tanh')
 
 network.add_dense(1, activation='linear')
 
-network.config(optimizer=network.adam())
+network.config(optimizer=network.adam)
 # Training the model
 network.train_model(train_inputs=inputs,train_targets=expected,test_inputs=inputs,test_targets=expected,epochs=20, learning_rate=0.001)
 

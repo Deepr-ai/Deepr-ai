@@ -53,11 +53,15 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
     cdef float l1, l2
 
+    # Clipping values for stability in division and logarithm
+    cdef float epsilon = 1e-7
+    cdef clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
+
     # Calculate the gradient of the loss function with respect to its inputs
     if loss_type == 'mean square error':
         loss = 2 * (predicted_output - true_output)
     elif loss_type == 'cross entropy':
-        loss = - (true_output / predicted_output) + (1 - true_output) / (1 - predicted_output)
+        loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
     elif loss_type == 'mean absolute error':
         loss = np.sign(predicted_output - true_output)
     else:

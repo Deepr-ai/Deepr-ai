@@ -28,7 +28,7 @@ class FeedForward:
         self.act_names = []
 
         self.__checkpoint_dir_loc = None
-        self.__checkpoint_int = None
+        self.__checkpoint_int = 1
 
     def add_dense(self, neurons, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         self.act_names.append(activation)

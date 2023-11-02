@@ -122,25 +122,34 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                         Save(f"{checkpoint_dir_location}/checkpoint_epoch_{epoch}.deepr")
 
                 bar()  # update the progress bar after batch
-        error = 0
+        test_inputs_len = len(test_inputs)
+        sum_error = 0  # Initialize sum of errors
+
+        # New snippet for error and accuracy calculation
         abs_errors = np.zeros(test_inputs_len)
         rel_errors = np.zeros(test_inputs_len)
 
         for i, (input_val, target) in enumerate(zip(test_inputs, test_targets)):
-            output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)
+            output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights,
+                                       BiasVals.Biases, use_bias, dropout_rate)
             abs_error = np.abs(output - target)
             rel_error = np.divide(abs_error, target, where=target != 0)
 
             abs_errors[i] = np.sum(abs_error)
             rel_errors[i] = np.mean(rel_error) * 100
+            sum_error += np.sum(abs_error)  # Added line for sum of errors
 
         mean_rel_error = np.mean(rel_errors)
         total_rel_error = np.sum(rel_errors) / test_inputs_len
         accuracy = np.abs(100 - total_rel_error)
-        NetworkMetrics[0].append(sum_error / inputs_len)
+
+        # Assuming NetworkMetrics is a pre-defined list for collecting metrics
+        NetworkMetrics[0].append(sum_error / test_inputs_len)
         NetworkMetrics[1].append(accuracy)
         NetworkMetrics[2].append(total_rel_error)
         NetworkMetrics[3].append(epoch + 1)
 
         if verbose:
-            print(f"Epoch: {epoch + 1} | Cost: {sum_error / inputs_len:.4f} | Accuracy: {accuracy:.2f}% | Relative Error: {total_rel_error:.3f}%")
+            print(
+                f"Epoch: {epoch + 1} | Cost: {sum_error / test_inputs_len:.4f} | Accuracy: {accuracy:.2f}% | Relative Error: {total_rel_error:.3f}%")
+
