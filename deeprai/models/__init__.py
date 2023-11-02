@@ -5,9 +5,6 @@ from deeprai.models.regression.linear_regression import LinearRegression
 from deeprai.models.regression.sine_regression import SineRegression
 from deeprai.models.regression.poly_regression import PolyRegression
 from deeprai.models.KNN.KNN import KNN
-from deeprai.tools.file_manager.save import Save
-from deeprai.tools.file_manager.load import Load
-
 
 class Convolutional(Convolutional):
     def __init__(self):
@@ -30,13 +27,6 @@ class FeedForward(FeedForward):
     def __init__(self):
         self.spawn = builder.Build()
         super().__init__()
-
-    def save(self, file_location):
-        file = Save(file_location)
-        file.save()
-
-    def load(self, file_location):
-        Load(file_location)
 
     def update_network(self):
         self.base_weights.update(self.weights)

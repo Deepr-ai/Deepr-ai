@@ -1,7 +1,10 @@
-colorama
-cython
+colorama~=0.4.6
+cython~=0.29.33
 deeprai-datasets
-matplotlib
-numpy
-pyndb
+matplotlib~=3.7.1
+numpy~=1.24.2
 alive_progress
+
+pyntree~=1.0.0
+setuptools~=65.5.1
+ucimlrepo~=0.0.2

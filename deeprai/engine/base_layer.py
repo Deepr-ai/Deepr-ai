@@ -1,7 +1,4 @@
 """Keeps track of the network's values"""
-import numpy as np
-
-
 class Layer:
     def __init__(self):
         # size of network for weight generation
@@ -9,14 +6,6 @@ class Layer:
 
     def pop(self):
         self.Layers = []
-
-
-class Kernel:
-    def __init__(self):
-        self.Kernels = np.array([])
-
-    def pop(self):
-        self.Kernels = np.array([])
 
 
 class Bias:
@@ -72,30 +61,8 @@ class BiasDerivative:
     def add(self, val):
         self.BiasDerivatives.append(val)
 
-# Spacific use cases (note to self, add condition statements)
-
-class Velocity:
-    def __init__(self):
-        self.Velocities = []
-
-    def pop(self):
-        self.Velocities = []
-
-    def add(self, val):
-        self.Velocities.append(val)
-
-class MomentEstimate:
-    def __init__(self):
-        self.moment_estimate_1 = []
-        self.moment_estimate_2 = []
-
-    def pop(self):
-        self.Velocities = []
-
-
 class LocalNetValues:
     def __init__(self):
-        self.VelocityVals = Velocity()
         self.ActivationList = []
         self.DropoutList = []
         self.l1PenaltyList = []
@@ -105,22 +72,17 @@ class LocalNetValues:
         self.ActivationDerivativeListString = []
         self.OptimizerString = ['gradient decent']
         self.LossString = ['mean square error']
-        self. Loss = [[]]
-        self.Optimizer = []
 
 
 # GLOBAL NETWORK VALUES
 WeightVals = Weight()
-KernelVals = Kernel()
 LayerVals = Layer()
 NeuronVals = Neuron()
 BiasVals = Bias()
 DerivativeVals = Derivative()
 BiasDerivativeVals = BiasDerivative()
-MomentEstimateVals = MomentEstimate()
 LocalValues = LocalNetValues()
 # LOCAL NETWORK VALUES
-VelocityVals = Velocity()
 ActivationList = []
 DropoutList = []
 l1PenaltyList = []

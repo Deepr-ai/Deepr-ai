@@ -3,7 +3,16 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
+        "depends": [
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
+        ],
+        "include_dirs": [
+            "/usr/lib/python3/dist-packages/numpy/core/include"
+        ],
         "name": "deeprai.engine.cython.optimizers",
         "sources": [
             "deeprai/engine/cython/optimizers.pyx"
@@ -24,7 +33,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 0
+#define CYTHON_FUTURE_DIVISION 1
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1993,8 +2002,8 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_rho;
 static PyObject *__pyx_n_s_sqrt;
@@ -2229,6 +2238,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_gradient_descent_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_gradient_descent_update[] = "gradient_descent_update(list weights, list biases, list weight_gradients, list bias_gradients, float learning_rate, bool use_bias) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -2656,6 +2666,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_momentum_update(P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_3momentum_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_2momentum_update[] = "momentum_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_velocity, list bias_velocity, float learning_rate, float beta, bool use_bias) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_3momentum_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -3400,6 +3411,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_adam_update(PyObj
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_5adam_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_4adam_update[] = "adam_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_m, list weight_v, list bias_m, list bias_v, float learning_rate, float beta1=0.9, float beta2=0.999, float epsilon=1e-7, int t=1, bool use_bias=True) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_5adam_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -4087,6 +4099,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_rmsprop_update(Py
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_7rmsprop_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_6rmsprop_update[] = "rmsprop_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_v, list bias_v, float learning_rate, float beta=0.9, float epsilon=1e-7, bool use_bias=True) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_7rmsprop_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -4724,6 +4737,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_adagrad_update(Py
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_9adagrad_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_8adagrad_update[] = "adagrad_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_accumulated_grad, list bias_accumulated_grad, float learning_rate, float epsilon=1e-7, bool use_bias=True) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_9adagrad_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -5624,6 +5638,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_adadelta_update(P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_11adadelta_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_10adadelta_update[] = "adadelta_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_accumulated_grad, list bias_accumulated_grad, list weight_delta_accumulated, list bias_delta_accumulated, float rho=0.95, float epsilon=1e-6, bool use_bias=True) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_11adadelta_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -6353,6 +6368,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_10optimizers_adafactor_update(
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_13adafactor_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7deeprai_6engine_6cython_10optimizers_12adafactor_update[] = "adafactor_update(list weights, list biases, list weight_gradients, list bias_gradients, list weight_v, list bias_v, float learning_rate, float beta1=0.9, float epsilon=1e-6, bool use_bias=True) -> tuple";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10optimizers_13adafactor_update(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_biases = 0;
@@ -7595,13 +7611,13 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
 }
 
 static PyMethodDef __pyx_methods[] = {
-  {"gradient_descent_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"momentum_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_3momentum_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"adam_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_5adam_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"rmsprop_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_7rmsprop_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"adagrad_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_9adagrad_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"adadelta_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_11adadelta_update, METH_VARARGS|METH_KEYWORDS, 0},
-  {"adafactor_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_13adafactor_update, METH_VARARGS|METH_KEYWORDS, 0},
+  {"gradient_descent_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_1gradient_descent_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_gradient_descent_update},
+  {"momentum_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_3momentum_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_2momentum_update},
+  {"adam_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_5adam_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_4adam_update},
+  {"rmsprop_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_7rmsprop_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_6rmsprop_update},
+  {"adagrad_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_9adagrad_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_8adagrad_update},
+  {"adadelta_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_11adadelta_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_10adadelta_update},
+  {"adafactor_update", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10optimizers_13adafactor_update, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10optimizers_12adafactor_update},
   {0, 0, 0, 0}
 };
 
@@ -7666,8 +7682,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
-  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
+  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
+  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_rho, __pyx_k_rho, sizeof(__pyx_k_rho), 0, 0, 1, 1},
   {&__pyx_n_s_sqrt, __pyx_k_sqrt, sizeof(__pyx_k_sqrt), 0, 0, 1, 1},
@@ -7702,7 +7718,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -7713,7 +7729,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
   __Pyx_RefNannyFinishContext();
@@ -8052,7 +8068,7 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as np
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;

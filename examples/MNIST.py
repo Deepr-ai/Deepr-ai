@@ -19,12 +19,17 @@ network = models.FeedForward()
 network.add_dense(784)
 network.add_dense(60, activation=network.relu)
 network.add_dense(10, activation=network.sigmoid)
-
 network.config(loss=network.mean_square_error, optimizer=network.adam)
-
+network.checkpoint(interval=2, dir_location="checkpoints")
 # Training the model
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
                     batch_size=130, epochs=10)
 
-print(network.report())
+# Evaluating the model
+stats = network.evaluate(test_x, test_y)
+print(f"Cost: {stats['cost']}")
+print(f"Accuracy: {stats['accuracy']}")
+
+# Saving the model
+# network.save("MNIST1")

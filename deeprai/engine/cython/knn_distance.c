@@ -3,7 +3,16 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
+        "depends": [
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
+            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
+        ],
+        "include_dirs": [
+            "/usr/lib/python3/dist-packages/numpy/core/include"
+        ],
         "name": "deeprai.engine.cython.knn_distance",
         "sources": [
             "deeprai/engine/cython/knn_distance.pyx"
@@ -24,7 +33,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 0
+#define CYTHON_FUTURE_DIVISION 1
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1796,8 +1805,8 @@ static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_p;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_test;
@@ -1829,7 +1838,8 @@ static PyObject *__pyx_codeobj__10;
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance = {"euclidean_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_7deeprai_6engine_6cython_12knn_distance_euclidean_distance[] = "euclidean_distance(ndarray x, ndarray y)";
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance = {"euclidean_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_12knn_distance_euclidean_distance};
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_1euclidean_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x = 0;
   PyArrayObject *__pyx_v_y = 0;
@@ -2074,7 +2084,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_12knn_distance_euclidean_dist
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance = {"manhattan_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_7deeprai_6engine_6cython_12knn_distance_2manhattan_distance[] = "manhattan_distance(ndarray x, ndarray y)";
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance = {"manhattan_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_12knn_distance_2manhattan_distance};
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_3manhattan_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x = 0;
   PyArrayObject *__pyx_v_y = 0;
@@ -2297,7 +2308,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_12knn_distance_2manhattan_dis
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance = {"minkowski_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_7deeprai_6engine_6cython_12knn_distance_4minkowski_distance[] = "minkowski_distance(ndarray x, ndarray y, int p=3)";
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance = {"minkowski_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_12knn_distance_4minkowski_distance};
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_5minkowski_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x = 0;
   PyArrayObject *__pyx_v_y = 0;
@@ -2496,7 +2508,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_12knn_distance_4minkowski_dis
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
     __PYX_ERR(0, 24, __pyx_L1_error)
   }
-  __pyx_t_7 = PyFloat_FromDouble(pow(__pyx_v_dist, (1.0 / __pyx_v_p))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(pow(__pyx_v_dist, (1.0 / ((double)__pyx_v_p)))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
@@ -2542,7 +2554,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_12knn_distance_4minkowski_dis
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_7hamming_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_7hamming_distance = {"hamming_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_7hamming_distance, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_7deeprai_6engine_6cython_12knn_distance_6hamming_distance[] = "hamming_distance(ndarray x, ndarray y)";
+static PyMethodDef __pyx_mdef_7deeprai_6engine_6cython_12knn_distance_7hamming_distance = {"hamming_distance", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_12knn_distance_7hamming_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_12knn_distance_6hamming_distance};
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_12knn_distance_7hamming_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x = 0;
   PyArrayObject *__pyx_v_y = 0;
@@ -3851,8 +3864,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
-  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
+  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
+  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
   {&__pyx_n_s_p, __pyx_k_p, sizeof(__pyx_k_p), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -3879,7 +3892,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -3890,7 +3903,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
@@ -4276,7 +4289,7 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as np
  * from libc.math cimport pow, sqrt
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;

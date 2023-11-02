@@ -1,4 +1,4 @@
-from deeprai.engine.base_layer import WeightVals, LayerVals, KernelVals, ActivationList, ActivationDerivativeList, \
+from deeprai.engine.base_layer import WeightVals, LayerVals, ActivationList, ActivationDerivativeList, \
     NeuronVals, BiasVals, \
     DerivativeVals, ActivationListString, ActivationDerivativeListString, Loss, DropoutList, l1PenaltyList, \
     l2PenaltyList, DistanceIndex, OptimizerString, Optimizer, BiasDerivativeVals

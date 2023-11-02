@@ -1,9 +1,10 @@
 import numpy as np
 from deeprai.engine.cython import activation as act
 import cython
-from deeprai.engine.base_layer import NeuronVals
+from deeprai.engine.base_layer import NeuronVals, WeightVals, BiasVals
 cimport numpy as np
 from libc.stdlib cimport rand
+from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
 
 @cython.wraparound(False)
 cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,
@@ -91,3 +92,42 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
         # Compute the gradient of the loss with respect to the output of the previous layer
         loss = np.dot(delta, weights[layer].T)
     return weight_gradients, bias_gradients
+
+cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,
+                    np.ndarray[np.float64_t, ndim=2] targets,
+                    list activation_list,
+                    bint use_bias,
+                    list dropout_rate,
+                    str loss_function_name):
+    cdef int inputs_len = inputs.shape[0]
+    cdef double sum_error = 0.0
+    cdef np.ndarray abs_errors = np.zeros(inputs_len)
+    cdef np.ndarray rel_errors = np.zeros(inputs_len)
+    cdef np.ndarray[np.float64_t, ndim=1] output
+
+    for i, (input_val, target) in enumerate(zip(inputs, targets)):
+        output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)
+
+        if loss_function_name == "cross entropy":
+            sum_error += categorical_cross_entropy(output, target)
+        elif loss_function_name == "mean square error":
+            sum_error += mean_square_error(output, target)
+        elif loss_function_name == "mean absolute error":
+            sum_error += mean_absolute_error(output, target)
+        else:
+            raise ValueError(f"Unsupported loss type: {loss_function_name}")
+
+        abs_error = np.abs(output - target)
+        rel_error = np.divide(abs_error, target, where=target != 0)
+        abs_errors[i] = np.sum(abs_error)
+        rel_errors[i] = np.mean(rel_error) * 100
+
+    mean_rel_error = np.mean(rel_errors)
+    total_rel_error = np.sum(rel_errors) / inputs_len
+    accuracy = np.abs(100 - total_rel_error)
+
+    return {
+        "cost": sum_error / inputs_len,
+        "accuracy": accuracy,
+        "relative_error": total_rel_error
+    }

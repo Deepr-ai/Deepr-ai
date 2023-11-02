@@ -7,25 +7,13 @@ from deeprai.engine.cython.dense_operations import forward_propagate, back_propa
 from deeprai.engine.cython.optimizers import gradient_descent_update, momentum_update, adagrad_update, rmsprop_update, \
     adam_update, adadelta_update, adafactor_update
 from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
+from deeprai.tools.file_manager.save import Save
 
-
-cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
-            np.ndarray[np.float64_t, ndim=2] targets,
-            np.ndarray[np.float64_t, ndim=2] test_inputs,
-            np.ndarray[np.float64_t, ndim=2] test_targets,
-            int epochs,
-            float learning_rate,
-            float momentum,
-            list activation_list,
-            list activation_derv_list,
-            list loss_function,
-            list dropout_rate,
-            list l2_penalty,
-            list l1_penalty,
-            bint use_bias,
-            bint verbose,
-            int batch_size,
-            str optimizer_name):
+cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, ndim=2] targets,
+            np.ndarray[np.float64_t, ndim=2] test_inputs, np.ndarray[np.float64_t, ndim=2] test_targets, int epochs,
+            float learning_rate, float momentum, list activation_list, list activation_derv_list, list loss_function,
+            list dropout_rate, list l2_penalty, list l1_penalty, bint use_bias, bint verbose, int batch_size, str optimizer_name,
+            int checkpoint_interval, str checkpoint_dir_location=None):
 
     cdef int inputs_len = inputs.shape[0]
     cdef int test_inputs_len = test_inputs.shape[0]
@@ -62,7 +50,6 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
 
     for epoch in range(epochs):
         sum_error = 0.0
-
         with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
             for batch_start in range(0, inputs_len, batch_size):
                 batch_end = min(batch_start + batch_size, inputs_len)
@@ -130,6 +117,9 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs,
 
                     else:
                         raise ValueError(f"Unsupported optimizer: {optimizer_name}")
+
+                    if epoch % checkpoint_interval == 0 and checkpoint_dir_location is not None:
+                        Save(f"{checkpoint_dir_location}/checkpoint_epoch_{epoch}.deepr")
 
                 bar()  # update the progress bar after batch
         error = 0

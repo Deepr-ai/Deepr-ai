@@ -1,9 +1,12 @@
-from deeprai.engine.base_layer import WeightVals, Optimizer, ActivationList, ActivationDerivativeList, LossString, \
-    OptimizerString, NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList, LayerVals, BiasVals, NetworkMetrics
+from deeprai.engine.base_layer import WeightVals, LocalValues, ActivationList, ActivationDerivativeList, LossString, \
+    NeuronVals, DropoutList, l1PenaltyList, l2PenaltyList, LayerVals, BiasVals, NetworkMetrics
 import deeprai.engine.build_model as builder
 from deeprai.engine.cython.dense_train_loop import train as train
-from deeprai.engine.cython.dense_operations import forward_propagate
+from deeprai.engine.cython.dense_operations import forward_propagate, evaluate
 from deeprai.tools.graphing import neural_net_metrics
+from deeprai.tools.file_manager.save import Save
+from deeprai.tools.file_manager.load import Load
+import os
 import numpy as np
 
 
@@ -24,6 +27,9 @@ class FeedForward:
         }
         self.act_names = []
 
+        self.__checkpoint_dir_loc = None
+        self.__checkpoint_int = None
+
     def add_dense(self, neurons, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         self.act_names.append(activation)
         self.spawn.create_dense(neurons, activation, dropout, l1_penalty, l2_penalty, self.use_bias)
@@ -35,14 +41,14 @@ class FeedForward:
 
     def train_model(self, train_inputs, train_targets, test_inputs, test_targets, batch_size=36, epochs=500,
                     learning_rate=None, momentum=0.6, verbose=True):
-
         learning_rate = self.learning_rate_dict[self.opt_name] if learning_rate == None else learning_rate
-
+        self.__save_state()
         train(inputs=train_inputs, targets=train_targets, test_inputs=test_inputs, test_targets=test_targets,
               epochs=epochs, learning_rate=learning_rate, momentum=momentum,
               activation_list=ActivationList, activation_derv_list=ActivationDerivativeList, loss_function=LossString,
               verbose=verbose, batch_size=batch_size, dropout_rate=DropoutList, l1_penalty=l1PenaltyList,
-              l2_penalty=l2PenaltyList, optimizer_name=self.opt_name, use_bias=self.use_bias)
+              l2_penalty=l2PenaltyList, optimizer_name=self.opt_name, use_bias=self.use_bias, checkpoint_interval=self.__checkpoint_int,
+              checkpoint_dir_location=self.__checkpoint_dir_loc)
 
     def run(self, inputs):
         inputs = np.array(inputs)
@@ -56,6 +62,12 @@ class FeedForward:
         else:
             return forward_propagate(inputs, ActivationList, NeuronVals.Neurons, WeightVals.Weights,
                                      BiasVals.Biases, self.use_bias, DropoutList, training_mode=False)
+
+    def evaluate(self, inputs, targets, loss=None):
+        # Support for custom loss not used in training
+        if loss is None:
+            loss = LossString[0]
+        return evaluate(inputs, targets, ActivationList, self.use_bias, DropoutList, loss)
 
     def specs(self):
         loss_table = {
@@ -85,7 +97,7 @@ class FeedForward:
         print(f"\033[1mLoss Function:\033[0m {loss_table[LossString[0]]}")
         print(f"\033[1mOptimizer:\033[0m {self.opt_name.capitalize()}")
         print(f"\033[1mBias Usage:\033[0m {'Yes' if self.use_bias else 'No'}")
-        print(f"\033[1mDeeprAI Version:\033[0m 1.0.2")
+        print(f"\033[1mDeeprAI Version:\033[0m 1.0.3")
         print(divider)
 
     def graph(self, metric="cost-acc"):
@@ -99,6 +111,43 @@ class FeedForward:
             self.graph_engine.graph_rel_error()
         else:
             print(f"Invalid metric: {metric}")
+
+    def save(self, file_location):
+        file = Save(file_location)
+        file.save()
+
+    def load(self, file_location):
+        Load(file_location)
+        self.__load_state()
+
+    def checkpoint(self, interval, dir_location):
+        # Check if the directory exists; if not, create it
+        if not os.path.exists(dir_location):
+            os.makedirs(dir_location)
+        self.__checkpoint_int = interval
+        self.__checkpoint_dir_loc = dir_location
+
+    def __save_state(self):
+        # Saves a copy of each value to save to a file
+        LocalValues.DropoutList = DropoutList
+        LocalValues.LossString = LossString
+        LocalValues.l2PenaltyList = l2PenaltyList
+        LocalValues.l1PenaltyList = l1PenaltyList
+        LocalValues.OptimizerString = self.opt_name
+        LocalValues.ActivationListString = self.act_names
+
+    def __load_state(self):
+        # Loads values to use a model
+        DropoutList.clear()
+        DropoutList.extend(LocalValues.DropoutList)
+        LossString.clear()
+        LossString.extend(LocalValues.LossString)
+        l2PenaltyList.clear()
+        l2PenaltyList.extend(LocalValues.l2PenaltyList)
+        l1PenaltyList.clear()
+        l1PenaltyList.extend(LocalValues.l1PenaltyList)
+        self.opt_name = LocalValues.OptimizerString
+        self.act_names = LocalValues.ActivationListString
 
     @staticmethod
     def report():
