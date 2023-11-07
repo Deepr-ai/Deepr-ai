@@ -20,15 +20,15 @@ network.config(loss=network.cross_entropy, optimizer=network.adam)
 # Training the model
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
-                    batch_size=130, epochs=10)
+                    batch_size=130, epochs=5)
 
 
 
 
 # Evaluating the model
-stats = network.evaluate(inputs[:2], expected[:2])
+stats = network.evaluate(test_x, test_y)
 print(f"Cost: {stats['cost']}")
 print(f"Accuracy: {stats['accuracy']}")
-#
+
 # # Saving the model
 # network.save("MNIST84k.deepr")

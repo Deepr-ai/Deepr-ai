@@ -1,4 +1,6 @@
 """Keeps track of the network's values"""
+
+
 class Layer:
     def __init__(self):
         # size of network for weight generation
@@ -30,6 +32,17 @@ class Weight:
         self.Weights.append(val)
 
 
+class Kernels:
+    def __init__(self):
+        self.Kernels = []
+
+    def pop(self):
+        self.Kernels = []
+
+    def add(self, val):
+        self.Kernels.append(val)
+
+
 class Neuron:
     def __init__(self):
         self.Neurons = []
@@ -51,6 +64,7 @@ class Derivative:
     def add(self, val):
         self.Derivatives.append(val)
 
+
 class BiasDerivative:
     def __init__(self):
         self.BiasDerivatives = []
@@ -60,6 +74,7 @@ class BiasDerivative:
 
     def add(self, val):
         self.BiasDerivatives.append(val)
+
 
 class LocalNetValues:
     def __init__(self):
@@ -72,6 +87,7 @@ class LocalNetValues:
         self.ActivationDerivativeListString = []
         self.OptimizerString = ['gradient decent']
         self.LossString = ['mean square error']
+        self.ConvList = []
 
 
 # GLOBAL NETWORK VALUES
@@ -82,6 +98,7 @@ BiasVals = Bias()
 DerivativeVals = Derivative()
 BiasDerivativeVals = BiasDerivative()
 LocalValues = LocalNetValues()
+KernelVals = Kernels()
 # LOCAL NETWORK VALUES
 ActivationList = []
 DropoutList = []
@@ -97,5 +114,5 @@ Optimizer = [[]]
 DistanceIndex = [0]
 
 # cost, acc, rel_error, epoch
-NetworkMetrics=[[], [], [], []]
+NetworkMetrics = [[], [], [], []]
 # Optimizer Values

@@ -5,12 +5,16 @@ from deeprai.engine.base_layer import WeightVals, LayerVals, ActivationList, Act
 import deeprai.engine.cython.activation as act
 from deeprai.engine.cython import optimizers as opt
 from deeprai.engine.cython import loss as lossFunc
+from deeprai.engine.cython.conv.conv_compute import *
+from deeprai.engine.cython.conv.pooling import *
+from deeprai.engine.cython.dense_operations import flatten
 import numpy as np
 
 
 class Build:
     def __init__(self):
-        self.NetworkQueue = []
+        self.ConvList = []
+        self.ConvListStr = []
         self.activationMap = {"tanh": act.tanh, "relu": act.relu, "leaky relu": act.leaky_relu,
                               "sigmoid": act.sigmoid, "linear": act.linear, "softmax": act.softmax}
         self.activationDerivativeMap = {"tanh": act.tanh_derivative, "relu": act.relu_derivative,
@@ -26,16 +30,25 @@ class Build:
                         "categorical cross entropy": lossFunc.categorical_cross_entropy,
                         "mean absolute error": lossFunc.mean_absolute_error}
 
-    def create_kernel(self, amount, shape, max_size):
-        self.NetworkQueue.append("kernel")
-        local_kernels = []
-        for val in range(amount):
-            kernel = np.random.randint(max_size, size=(shape[0], shape[1]))
-            local_kernels.append(kernel.tolist())
-        return local_kernels
+    def create_kernel(self, amount, shape, max_value=1):
+        kernels = [np.random.randint(0, max_value, size=shape) for _ in range(amount)]
+        return kernels
 
-    def create_pool(self):
-        pass
+    def create_pool(self, shape, stride, type):
+        if type == "max":
+            self.ConvList.append((max_pooling2d, (shape, stride)))
+            self.ConvListStr.append("max_pool")
+        elif type == "avr":
+            self.ConvList.append((average_pooling2d, (shape, stride)))
+            self.ConvListStr.append("avr_pool")
+
+    def create_flat(self):
+        self.ConvList.append((flatten, ()))
+        self.ConvListStr.append("flat")
+
+    def create_conv(self, stride, padding, use_bias, activation):
+        self.ConvList.append((convolve2d, (stride, padding, self.convert_activations(activation), use_bias)))
+        self.ConvListStr.append("conv")
 
     def convert_activations(self, activation):
         ActivationList.append(lambda n: self.activationMap[activation](n))
@@ -88,9 +101,3 @@ class Build:
         }
         # Directly modify the external DistanceIndex variable
         DistanceIndex[0] = DistanceMap[distance]
-
-    def create_flat(self):
-        pass
-
-    def create_merge(self):
-        pass

@@ -5,29 +5,30 @@ from deeprai.engine.base_layer import NeuronVals, WeightVals, BiasVals
 cimport numpy as np
 from libc.stdlib cimport rand
 from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
+from libc.stdlib cimport malloc, free
 
+@cython.boundscheck(False)
 @cython.wraparound(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,
                                                          list activation_list, neurons, weights,
                                                          biases, bint use_bias, list dropout_rate,
                                                          bint training_mode=True):
     cdef int num_layers = len(neurons)
     cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs
-    cdef int i
+    cdef int i, j
+    cdef double mask_value
 
     # Clear previous neuron values
     NeuronVals.Neurons = []
     NeuronVals.Neurons.append(inputs)
 
-    # Propagate through each layer in the network
     for i in range(num_layers - 1):
-        # Calculate the weighted sum
         if use_bias:
             layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]
         else:
             layer_outputs = np.dot(layer_outputs, weights[i])
 
-        # Apply the activation function
         layer_outputs = activation_list[i](layer_outputs)
 
         # Store the output for each neuron
@@ -35,13 +36,16 @@ cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t
 
         # Apply dropout regularization if in training mode
         if training_mode and dropout_rate[i] > 0:
-            mask = np.random.binomial(1, 1 - dropout_rate[i], size=layer_outputs.shape[0])
-            layer_outputs *= mask
+            mask_value = 1 - dropout_rate[i]
+            for j in range(layer_outputs.shape[0]):
+                if np.random.binomial(1, mask_value) == 0:
+                    layer_outputs[j] = 0.0
 
     return layer_outputs
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
+@cython.cdivision(True)
 cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
                           np.ndarray[np.float64_t, ndim=1] true_output,
                           list activation_derv_list, neurons,
@@ -49,15 +53,14 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
                           list l2_penalty, bint use_bias,
                           str loss_type='mean square error'):
     cdef int layer, num_layers = len(weights)
-    cdef np.ndarray[np.float64_t, ndim=1] loss, delta
+    cdef np.ndarray[np.float64_t, ndim=1] delta
     cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
     cdef float l1, l2
-
-    # Clipping values for stability in division and logarithm
     cdef float epsilon = 1e-7
-    cdef clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
+    cdef np.ndarray clipped_predictions
 
-    # Calculate the gradient of the loss function with respect to its inputs
+    clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
+    # Loss calculations can be optimized based on the loss type
     if loss_type == 'mean square error':
         loss = 2 * (predicted_output - true_output)
     elif loss_type == 'cross entropy':
@@ -70,15 +73,10 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     weight_gradients = []
     bias_gradients = []
 
-    # Iterate backward through each layer to compute the gradient
     for layer in range(num_layers - 1, -1, -1):
-        # Compute the delta (error term) for the layer
         delta = loss * activation_derv_list[layer](neurons[layer + 1])
-
-        # Calculate the gradient for the weights using the outer product of the previous layer's output and delta
         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))
 
-        # Apply L1 and L2 regularization to the gradients
         l1 = l1_penalty[layer]
         l2 = l2_penalty[layer]
         if l1 > 0:
@@ -86,16 +84,14 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
         if l2 > 0:
             weight_gradient += 2 * l2 * weights[layer]
 
-        # Store the computed gradients
         weight_gradients.insert(0, weight_gradient)
-
-        # If biases are used, compute and store their gradients
         if use_bias:
             bias_gradients.insert(0, np.sum(delta, axis=0))
 
-        # Compute the gradient of the loss with respect to the output of the previous layer
         loss = np.dot(delta, weights[layer].T)
+
     return weight_gradients, bias_gradients
+
 
 cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,
                     np.ndarray[np.float64_t, ndim=2] targets,
@@ -135,3 +131,34 @@ cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,
         "accuracy": accuracy,
         "relative_error": total_rel_error
     }
+
+# For CNN
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray[np.float64_t, ndim=2] input_2d):
+    # Flatten the 2D input to a 1D array
+    return input_2d.ravel()
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef tuple cnn_dense_backprop(np.ndarray[np.float64_t, ndim=1] delta,
+                           np.ndarray[np.float64_t, ndim=1] layer_output,
+                           np.ndarray[np.float64_t, ndim=2] weights,
+                           object activation_derv,
+                           bint use_bias):
+    cdef int num_neurons = layer_output.shape[0]
+    cdef np.ndarray[np.float64_t, ndim=1] activation_derv_values
+    cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
+    cdef np.ndarray[np.float64_t, ndim=1] bias_gradient = np.empty(0)
+
+    # Calculate derivative of activation function
+    activation_derv_values = activation_derv(layer_output)
+
+    # Calculate gradient for weights
+    weight_gradient = np.dot(layer_output.reshape(-1, 1), delta.reshape(1, -1)) * activation_derv_values[:, None]
+    if use_bias:
+        bias_gradient = delta * activation_derv_values
+
+    new_delta = np.dot(weights.T, delta) * activation_derv_values
+
+    return new_delta, weight_gradient, bias_gradient

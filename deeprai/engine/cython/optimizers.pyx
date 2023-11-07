@@ -31,28 +31,32 @@ cpdef tuple momentum_update(list weights, list biases, list weight_gradients, li
     return weights, biases, weight_velocity, bias_velocity
 
 
+import numpy as np
+cimport cython
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef tuple adam_update(list weights, list biases, list weight_gradients, list bias_gradients,
                         list weight_m, list weight_v, list bias_m, list bias_v,
                         float learning_rate, float beta1=0.9, float beta2=0.999,
                         float epsilon=1e-7, int t=1, bint use_bias=True):
     cdef int i
     cdef int num_layers = len(weights)
+    cdef float beta1_t = 1 - beta1 ** t
+    cdef float beta2_t = 1 - beta2 ** t
 
     for i in range(num_layers):
         weight_m[i] = beta1 * weight_m[i] + (1 - beta1) * weight_gradients[i]
-        weight_v[i] = beta2 * weight_v[i] + (1 - beta2) * (weight_gradients[i] ** 2)
-        weight_m_corrected = weight_m[i] / (1 - beta1 ** t)
-        weight_v_corrected = weight_v[i] / (1 - beta2 ** t)
-        weights[i] -= learning_rate * weight_m_corrected / (np.sqrt(weight_v_corrected) + epsilon)
+        weight_v[i] = beta2 * weight_v[i] + (1 - beta2) * np.square(weight_gradients[i])
+        weights[i] -= learning_rate * (weight_m[i] / beta1_t) / (np.sqrt(weight_v[i] / beta2_t) + epsilon)
 
         if use_bias:
             bias_m[i] = beta1 * bias_m[i] + (1 - beta1) * bias_gradients[i]
-            bias_v[i] = beta2 * bias_v[i] + (1 - beta2) * (bias_gradients[i] ** 2)
-            bias_m_corrected = bias_m[i] / (1 - beta1 ** t)
-            bias_v_corrected = bias_v[i] / (1 - beta2 ** t)
-            biases[i] -= learning_rate * bias_m_corrected / (np.sqrt(bias_v_corrected) + epsilon)
+            bias_v[i] = beta2 * bias_v[i] + (1 - beta2) * np.square(bias_gradients[i])
+            biases[i] -= learning_rate * (bias_m[i] / beta1_t) / (np.sqrt(bias_v[i] / beta2_t) + epsilon)
 
     return weights, biases, weight_m, weight_v, bias_m, bias_v
+
 
 
 cpdef tuple rmsprop_update(list weights, list biases, list weight_gradients, list bias_gradients,
