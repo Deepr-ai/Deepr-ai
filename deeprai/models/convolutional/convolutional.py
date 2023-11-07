@@ -33,7 +33,6 @@ class Convolutional:
 
     def add_conv(self, filters, kernal_size, stride=0, padding=0, actavation="relu"):
         KernelVals.append(self.spawn.create_kernel(filters, kernal_size))
-        self.spawn.cre
 
     def add_dense(self, neurons, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0):
         self.act_names.append(activation)

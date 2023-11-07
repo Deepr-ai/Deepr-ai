@@ -162,3 +162,40 @@ cpdef tuple cnn_dense_backprop(np.ndarray[np.float64_t, ndim=1] delta,
     new_delta = np.dot(weights.T, delta) * activation_derv_values
 
     return new_delta, weight_gradient, bias_gradient
+
+import numpy as np
+cimport numpy as np
+import cython
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,
+                                                               list activation_list, list neurons,
+                                                               list weights, list biases,
+                                                               bint use_bias, list dropout_rate,
+                                                               bint training_mode=True):
+    cdef int num_layers = len(neurons)
+    cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs
+    cdef int i, j
+    cdef double mask_value
+    # Loop over the dense layers only
+    for i in range(num_layers - 1):
+        # Matrix multiplication for the dense layer
+        if use_bias:
+            layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]
+        else:
+            layer_outputs = np.dot(layer_outputs, weights[i])
+
+        # Apply the activation function
+        layer_outputs = activation_list[i](layer_outputs)
+
+        # Apply dropout regularization if in training mode
+        if training_mode and dropout_rate[i] > 0:
+            mask_value = 1 - dropout_rate[i]
+            # Create a dropout mask and apply it
+            dropout_mask = np.random.binomial(1, mask_value, size=layer_outputs.shape)
+            layer_outputs *= dropout_mask
+
+    return layer_outputs
+

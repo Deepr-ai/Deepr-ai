@@ -7,10 +7,23 @@ cimport numpy as np
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef np.ndarray cnn_forward_prop(np.ndarray input, weights, biases, kernels, list operations):
+cpdef np.ndarray cnn_forward_prop(np.ndarray input, weights, biases, kernels, list operations, list operations_string):
     cdef np.ndarray layer_output = input
-    for op, args in operations:
-        layer_output = op(layer_output, *args)
+    for layer in range(len(operations)):
+        op = operations[0]
+        args = operations[1]
+        if operations_string[layer] == "conv":
+            layer_output = op(layer_output, *args)
+        elif operations_string[layer_output] == "dense":
+            pass
+        elif operations_string[layer_output] == "avr_pool":
+            pass
+        elif operations_string[layer_output] == "max_pool":
+            pass
+        elif operations_string[layer_output] == "flat":
+            pass
+        else:
+            raise Exception(f"Error in backend CNN Forward [incorrect action type '{operations_string[layer_output]}']: Report in a GitHub Issue.")
 
     return layer_output
 
@@ -60,10 +73,10 @@ cpdef tuple cnn_back_prop(np.ndarray[double, ndim=2] final_output,
 
         if step == "conv":
             delta, weight_gradient = conv_backprop(delta, layer_outputs[i], weights[i])
-        elif step == "pool_avr":
+        elif step == "avr_pool":
             delta = average_pool_backprop(delta, layer_outputs[i])
 
-        elif step == "pool_max":
+        elif step == "max_pool":
             delta = max_pool_backprop(delta, layer_outputs[i])
         elif step == "dense":
             delta, weight_gradient, bias_gradient = cnn_dense_backprop(delta, layer_outputs[i], weights[i],
