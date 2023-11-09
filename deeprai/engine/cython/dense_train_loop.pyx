@@ -50,76 +50,95 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
 
     for epoch in range(epochs):
         sum_error = 0.0
-        with alive_bar(num_batches + 1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+        with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
             for batch_start in range(0, inputs_len, batch_size):
                 batch_end = min(batch_start + batch_size, inputs_len)
                 batch_inputs = inputs[batch_start:batch_end]
                 batch_targets = targets[batch_start:batch_end]
 
+                weight_gradients_accumulated = None
+                bias_gradients_accumulated = None
+                batch_count = 0
+
                 for single_input, single_target in zip(batch_inputs, batch_targets):
                     # Forward Propagation
-                    outputs = forward_propagate(single_input, activation_list, NeuronVals.Neurons, WeightVals.Weights,
+                    output = forward_propagate(single_input, activation_list, NeuronVals.Neurons, WeightVals.Weights,
                                                 BiasVals.Biases, use_bias, dropout_rate)
                     # Calculate error
                     if loss_function[0] == "cross entropy":
-                        sum_error += categorical_cross_entropy(outputs, single_target)
+                        sum_error += categorical_cross_entropy(output, single_target)
                     elif loss_function[0] == "mean square error":
-                        sum_error += mean_square_error(outputs, single_target)
+                        sum_error += mean_square_error(output, single_target)
                     elif loss_function[0] == "mean absolute error":
-                        sum_error += mean_absolute_error(outputs, single_target)
+                        sum_error += mean_absolute_error(output, single_target)
                     else:
                         raise ValueError(f"Unsupported loss type: {loss_function}")
-                    weight_gradients, bias_gradients = back_propagate(outputs, single_target, activation_derv_list,
+                    weight_gradients, bias_gradients = back_propagate(output, single_target, activation_derv_list,
                                                                       NeuronVals.Neurons, WeightVals.Weights,
-                                                                      l1_penalty,
-                                                                      l2_penalty, use_bias, loss_function[0])
-
-                    # Update Weights and Biases
-                    if optimizer_name == "gradient descent":
-                        WeightVals.Weights, BiasVals.Biases = gradient_descent_update(WeightVals.Weights,
-                                                                                      BiasVals.Biases, weight_gradients,
-                                                                                      bias_gradients, learning_rate,
-                                                                                      use_bias)
-                    elif optimizer_name == "momentum":
-                        WeightVals.Weights, BiasVals.Biases, weight_velocity, bias_velocity = momentum_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_velocity,
-                            bias_velocity, learning_rate, momentum, use_bias)
-
-                    elif optimizer_name == "adagrad":
-                        WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad = adagrad_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
-                            weight_accumulated_grad, bias_accumulated_grad, learning_rate, epsilon, use_bias)
-
-                    elif optimizer_name == "rmsprop":
-                        #Temp values .18 for kwargs
-                        beta = 0.9
-                        epsilon = 1e-7
-                        WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = rmsprop_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_v, bias_v,
-                            learning_rate, beta, epsilon, use_bias)
-
-                    elif optimizer_name == "adam":
-                        t += 1
-                        WeightVals.Weights, BiasVals.Biases, weight_m, weight_v, bias_m, bias_v = adam_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_m, weight_v,
-                            bias_m, bias_v, learning_rate, t=t, use_bias=use_bias)
-
-                    elif optimizer_name == "adadelta":
-                        WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated = adadelta_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
-                            weight_accumulated_grad,
-                            bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated, use_bias=use_bias)
-
-                    elif optimizer_name == "adafactor":
-                        WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = adafactor_update(
-                            WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
-                            weight_v, bias_v, learning_rate=learning_rate, use_bias=use_bias)
-
+                                                                      l1_penalty, l2_penalty, use_bias,
+                                                                      loss_function[0])
+                    # Accumulate gradients
+                    if weight_gradients_accumulated is None:
+                        weight_gradients_accumulated = weight_gradients
+                        bias_gradients_accumulated = bias_gradients
                     else:
-                        raise ValueError(f"Unsupported optimizer: {optimizer_name}")
+                        for layer in range(len(weight_gradients)):
+                            weight_gradients_accumulated[layer] += weight_gradients[layer]
+                            bias_gradients_accumulated[layer] += bias_gradients[layer]
 
-                    if epoch % checkpoint_interval == 0 and checkpoint_dir_location is not None:
-                        Save(f"{checkpoint_dir_location}/checkpoint_epoch_{epoch}.deepr")
+                    batch_count += 1
+
+                # Average the accumulated gradients
+                for layer in range(len(weight_gradients_accumulated)):
+                    weight_gradients_accumulated[layer] /= batch_count
+                    bias_gradients_accumulated[layer] /= batch_count
+
+                # Update Weights and Biases
+                if optimizer_name == "gradient descent":
+                    WeightVals.Weights, BiasVals.Biases = gradient_descent_update(WeightVals.Weights,
+                                                                                  BiasVals.Biases, weight_gradients,
+                                                                                  bias_gradients, learning_rate,
+                                                                                  use_bias)
+                elif optimizer_name == "momentum":
+                    WeightVals.Weights, BiasVals.Biases, weight_velocity, bias_velocity = momentum_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_velocity,
+                        bias_velocity, learning_rate, momentum, use_bias)
+
+                elif optimizer_name == "adagrad":
+                    WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad = adagrad_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                        weight_accumulated_grad, bias_accumulated_grad, learning_rate, epsilon, use_bias)
+
+                elif optimizer_name == "rmsprop":
+                    #Temp values .18 for kwargs
+                    beta = 0.9
+                    epsilon = 1e-7
+                    WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = rmsprop_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients, weight_v, bias_v,
+                        learning_rate, beta, epsilon, use_bias)
+
+                elif optimizer_name == "adam":
+                    t += 1
+                    WeightVals.Weights, BiasVals.Biases, weight_m, weight_v, bias_m, bias_v = adam_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients_accumulated, bias_gradients_accumulated, weight_m, weight_v,
+                        bias_m, bias_v, learning_rate, t=t, use_bias=use_bias)
+
+                elif optimizer_name == "adadelta":
+                    WeightVals.Weights, BiasVals.Biases, weight_accumulated_grad, bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated = adadelta_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                        weight_accumulated_grad,
+                        bias_accumulated_grad, weight_delta_accumulated, bias_delta_accumulated, use_bias=use_bias)
+
+                elif optimizer_name == "adafactor":
+                    WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = adafactor_update(
+                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
+                        weight_v, bias_v, learning_rate=learning_rate, use_bias=use_bias)
+
+                else:
+                    raise ValueError(f"Unsupported optimizer: {optimizer_name}")
+
+                if epoch % checkpoint_interval == 0 and checkpoint_dir_location is not None:
+                    Save(f"{checkpoint_dir_location}/checkpoint_epoch_{epoch}.deepr")
 
                 bar()  # update the progress bar after batch
         test_inputs_len = len(test_inputs)
@@ -137,7 +156,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
 
             abs_errors[i] = np.sum(abs_error)
             rel_errors[i] = np.mean(rel_error) * 100
-            sum_error += np.sum(abs_error)  # Added line for sum of errors
+            sum_error += np.sum(abs_error)
 
         mean_rel_error = np.mean(rel_errors)
         total_rel_error = np.sum(rel_errors) / test_inputs_len

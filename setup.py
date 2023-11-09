@@ -69,3 +69,4 @@ setup(ext_modules=cythonize('deeprai/engine/cython/knn_distance.pyx'), include_d
 setup(ext_modules=cythonize('deeprai/engine/cython/conv/conv_compute.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/conv/pooling.pyx'), include_dirs=[numpy.get_include()])
 setup(ext_modules=cythonize('deeprai/engine/cython/conv/cnn_operations.pyx'), include_dirs=[numpy.get_include()])
+setup(ext_modules=cythonize('deeprai/engine/cython/conv/conv_train_loop.pyx'), include_dirs=[numpy.get_include()])

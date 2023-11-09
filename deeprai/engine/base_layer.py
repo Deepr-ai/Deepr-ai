@@ -20,6 +20,16 @@ class Bias:
     def add(self, val):
         self.Biases.append(val)
 
+class KernalBias:
+    def __init__(self):
+        self.KernalBias = []
+
+    def pop(self):
+        self.KernalBias = []
+
+    def add(self, val):
+        self.KernalBias.append(val)
+
 
 class Weight:
     def __init__(self):
@@ -99,6 +109,7 @@ DerivativeVals = Derivative()
 BiasDerivativeVals = BiasDerivative()
 LocalValues = LocalNetValues()
 KernelVals = Kernels()
+KernalBiasVals = KernalBias()
 # LOCAL NETWORK VALUES
 ActivationList = []
 DropoutList = []

@@ -1,18 +1,14 @@
 import numpy as np
 cimport numpy as np
+cimport cython
 
-
-cpdef tuple gradient_descent_update(list weights, list biases, list weight_gradients, list bias_gradients,
-                                    float learning_rate, bint use_bias):
+cpdef list gradient_descent_update(list params, list grads, float learning_rate):
     cdef int i
-    cdef int num_layers = len(weights)
+    cdef int num_params = len(params)
+    for i in range(num_params):
+        params[i] -= learning_rate * grads[i]
+    return params
 
-    for i in range(num_layers):
-        weights[i] -= learning_rate * weight_gradients[i]
-        if use_bias:
-            biases[i] -= learning_rate * bias_gradients[i]
-
-    return weights, biases
 
 
 cpdef tuple momentum_update(list weights, list biases, list weight_gradients, list bias_gradients,
@@ -29,10 +25,6 @@ cpdef tuple momentum_update(list weights, list biases, list weight_gradients, li
             biases[i] -= bias_velocity[i]
 
     return weights, biases, weight_velocity, bias_velocity
-
-
-import numpy as np
-cimport cython
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
