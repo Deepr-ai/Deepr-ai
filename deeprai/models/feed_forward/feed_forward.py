@@ -176,5 +176,4 @@ class FeedForward:
     rmsprop = "rmsprop"
     adagrad = "adagrad"
     adam = "adam"
-    adadelta = "adadelta"
     adafactor = "adafactor"

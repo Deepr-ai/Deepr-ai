@@ -40,7 +40,8 @@
 #         'alive_progress',
 #         'colorama',
 #         'cryptography',
-#         'matplotlib'
+#         'matplotlib',
+#         'scipy'
 #     ],
 #     classifiers=["Programming Language :: Python :: 3",
 #                  "Programming Language :: Cython",

@@ -1291,7 +1291,7 @@ struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_forward_propag
 struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_back_propagate;
 struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_cnn_forward_propagate;
 
-/* "deeprai/engine/cython/dense_operations.pyx":13
+/* "deeprai/engine/cython/dense_operations.pyx":14
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,             # <<<<<<<<<<<<<<
@@ -1303,7 +1303,7 @@ struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_forward_propag
   int training_mode;
 };
 
-/* "deeprai/engine/cython/dense_operations.pyx":49
+/* "deeprai/engine/cython/dense_operations.pyx":50
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,             # <<<<<<<<<<<<<<
@@ -1315,7 +1315,7 @@ struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_back_propagate
   PyObject *loss_type;
 };
 
-/* "deeprai/engine/cython/dense_operations.pyx":191
+/* "deeprai/engine/cython/dense_operations.pyx":176
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] input_data, weights,             # <<<<<<<<<<<<<<
@@ -1725,10 +1725,16 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
 #define __Pyx_PyObject_CallNoArg(func) __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL)
 #endif
 
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
+/* MatrixMultiply.proto */
+#if PY_VERSION_HEX >= 0x03050000
+  #define __Pyx_PyNumber_MatrixMultiply(x,y)         PyNumber_MatrixMultiply(x,y)
+  #define __Pyx_PyNumber_InPlaceMatrixMultiply(x,y)  PyNumber_InPlaceMatrixMultiply(x,y)
+#else
+#define __Pyx_PyNumber_MatrixMultiply(x,y)         __Pyx__PyNumber_MatrixMultiply(x, y, "@")
+static PyObject* __Pyx__PyNumber_MatrixMultiply(PyObject* x, PyObject* y, const char* op_name);
+static PyObject* __Pyx_PyNumber_InPlaceMatrixMultiply(PyObject* x, PyObject* y);
+#endif
 
-#define __Pyx_BufPtrStrided2d(type, buf, i0, s0, i1, s1) (type)((char*)buf + i0 * s0 + i1 * s1)
 /* GetTopmostException.proto */
 #if CYTHON_USE_EXC_INFO_STACK
 static _PyErr_StackItem * __Pyx_PyErr_GetTopmostException(PyThreadState *tstate);
@@ -2012,7 +2018,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
 static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propagate(PyArrayObject *, PyArrayObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, int, int __pyx_skip_dispatch, struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_back_propagate *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(PyArrayObject *, PyArrayObject *, PyObject *, int, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
 static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatten(PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
-static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(PyArrayObject *, PyArrayObject *, PyArrayObject *, PyObject *, int, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(PyArrayObject *, PyArrayObject *, PyArrayObject *, PyArrayObject *, double, double, PyObject *, int, int __pyx_skip_dispatch); /*proto*/
 static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_forward_propagate(PyArrayObject *, PyObject *, PyObject *, PyObject *, int, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_cnn_forward_propagate *__pyx_optional_args); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
@@ -2040,10 +2046,8 @@ static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mean[] = "mean";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_sign[] = "sign";
-static const char __pyx_k_size[] = "size";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_delta[] = "delta";
-static const char __pyx_k_dtype[] = "dtype";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_ravel[] = "ravel";
@@ -2053,14 +2057,16 @@ static const char __pyx_k_Biases[] = "Biases";
 static const char __pyx_k_append[] = "append";
 static const char __pyx_k_biases[] = "biases";
 static const char __pyx_k_divide[] = "divide";
-static const char __pyx_k_double[] = "double";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_inputs[] = "inputs";
+static const char __pyx_k_matmul[] = "__matmul__";
 static const char __pyx_k_random[] = "random";
 static const char __pyx_k_Neurons[] = "Neurons";
 static const char __pyx_k_Weights[] = "Weights";
+static const char __pyx_k_imatmul[] = "__imatmul__";
 static const char __pyx_k_neurons[] = "neurons";
 static const char __pyx_k_reshape[] = "reshape";
+static const char __pyx_k_rmatmul[] = "__rmatmul__";
 static const char __pyx_k_targets[] = "targets";
 static const char __pyx_k_weights[] = "weights";
 static const char __pyx_k_BiasVals[] = "BiasVals";
@@ -2136,10 +2142,9 @@ static PyObject *__pyx_n_s_deeprai_engine_cython_loss;
 static PyObject *__pyx_n_s_delta;
 static PyObject *__pyx_n_s_divide;
 static PyObject *__pyx_n_s_dot;
-static PyObject *__pyx_n_s_double;
 static PyObject *__pyx_n_s_dropout_rate;
-static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_enumerate;
+static PyObject *__pyx_n_s_imatmul;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_input_data;
 static PyObject *__pyx_n_s_inputs;
@@ -2149,6 +2154,7 @@ static PyObject *__pyx_n_s_layer_input;
 static PyObject *__pyx_n_s_loss_function_name;
 static PyObject *__pyx_n_s_loss_type;
 static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_s_matmul;
 static PyObject *__pyx_n_s_mean;
 static PyObject *__pyx_kp_s_mean_absolute_error;
 static PyObject *__pyx_n_s_mean_absolute_error_2;
@@ -2166,8 +2172,8 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_ravel;
 static PyObject *__pyx_n_s_relative_error;
 static PyObject *__pyx_n_s_reshape;
+static PyObject *__pyx_n_s_rmatmul;
 static PyObject *__pyx_n_s_sign;
-static PyObject *__pyx_n_s_size;
 static PyObject *__pyx_n_s_sum;
 static PyObject *__pyx_n_s_targets;
 static PyObject *__pyx_n_s_test;
@@ -2182,7 +2188,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_forward_pr
 static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_2back_propagate(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_predicted_output, PyArrayObject *__pyx_v_true_output, PyObject *__pyx_v_activation_derv_list, PyObject *__pyx_v_neurons, PyObject *__pyx_v_weights, PyObject *__pyx_v_l1_penalty, PyObject *__pyx_v_l2_penalty, int __pyx_v_use_bias, PyObject *__pyx_v_loss_type); /* proto */
 static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_4evaluate(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_inputs, PyArrayObject *__pyx_v_targets, PyObject *__pyx_v_activation_list, int __pyx_v_use_bias, PyObject *__pyx_v_dropout_rate, PyObject *__pyx_v_loss_function_name); /* proto */
 static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_6flatten(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_input); /* proto */
-static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias); /* proto */
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, PyArrayObject *__pyx_v_biases, double __pyx_v_l1_penalty, double __pyx_v_l2_penalty, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias); /* proto */
 static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_10cnn_forward_propagate(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_input_data, PyObject *__pyx_v_weights, PyObject *__pyx_v_biases, PyObject *__pyx_v_activation_func, int __pyx_v_use_bias, PyObject *__pyx_v_dropout_rate, int __pyx_v_training_mode); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
@@ -2196,7 +2202,7 @@ static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
 /* Late includes */
 
-/* "deeprai/engine/cython/dense_operations.pyx":13
+/* "deeprai/engine/cython/dense_operations.pyx":14
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,             # <<<<<<<<<<<<<<
@@ -2207,7 +2213,7 @@ static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_propagate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forward_propagate(PyArrayObject *__pyx_v_inputs, PyObject *__pyx_v_activation_list, PyObject *__pyx_v_neurons, PyObject *__pyx_v_weights, PyObject *__pyx_v_biases, int __pyx_v_use_bias, PyObject *__pyx_v_dropout_rate, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_7deeprai_6engine_6cython_16dense_operations_forward_propagate *__pyx_optional_args) {
 
-  /* "deeprai/engine/cython/dense_operations.pyx":16
+  /* "deeprai/engine/cython/dense_operations.pyx":17
  *                                                          list activation_list, neurons, weights,
  *                                                          biases, bint use_bias, list dropout_rate,
  *                                                          bint training_mode=True):             # <<<<<<<<<<<<<<
@@ -2267,21 +2273,21 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
   __pyx_pybuffernd_inputs.rcbuffer = &__pyx_pybuffer_inputs;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 14, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/cython/dense_operations.pyx":17
+  /* "deeprai/engine/cython/dense_operations.pyx":18
  *                                                          biases, bint use_bias, list dropout_rate,
  *                                                          bint training_mode=True):
  *     cdef int num_layers = len(neurons)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs
  *     cdef int i, j
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_neurons); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_neurons); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 18, __pyx_L1_error)
   __pyx_v_num_layers = __pyx_t_1;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":18
+  /* "deeprai/engine/cython/dense_operations.pyx":19
  *                                                          bint training_mode=True):
  *     cdef int num_layers = len(neurons)
  *     cdef np.ndarray[np.float64_t, ndim=1] layer_outputs = inputs             # <<<<<<<<<<<<<<
@@ -2292,44 +2298,44 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_v_inputs), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_layer_outputs = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 18, __pyx_L1_error)
+      __PYX_ERR(0, 19, __pyx_L1_error)
     } else {__pyx_pybuffernd_layer_outputs.diminfo[0].strides = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_outputs.diminfo[0].shape = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.shape[0];
     }
   }
   __Pyx_INCREF(((PyObject *)__pyx_v_inputs));
   __pyx_v_layer_outputs = ((PyArrayObject *)__pyx_v_inputs);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":23
+  /* "deeprai/engine/cython/dense_operations.pyx":24
  * 
  *     # Clear previous neuron values
  *     NeuronVals.Neurons = []             # <<<<<<<<<<<<<<
  *     NeuronVals.Neurons.append(inputs)
  * 
  */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_Neurons, __pyx_t_2) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_Neurons, __pyx_t_2) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":24
+  /* "deeprai/engine/cython/dense_operations.pyx":25
  *     # Clear previous neuron values
  *     NeuronVals.Neurons = []
  *     NeuronVals.Neurons.append(inputs)             # <<<<<<<<<<<<<<
  * 
  *     for i in range(num_layers - 1):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Append(__pyx_t_2, ((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Append(__pyx_t_2, ((PyObject *)__pyx_v_inputs)); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":26
+  /* "deeprai/engine/cython/dense_operations.pyx":27
  *     NeuronVals.Neurons.append(inputs)
  * 
  *     for i in range(num_layers - 1):             # <<<<<<<<<<<<<<
@@ -2341,7 +2347,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":27
+    /* "deeprai/engine/cython/dense_operations.pyx":28
  * 
  *     for i in range(num_layers - 1):
  *         if use_bias:             # <<<<<<<<<<<<<<
@@ -2351,19 +2357,19 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     __pyx_t_8 = (__pyx_v_use_bias != 0);
     if (__pyx_t_8) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":28
+      /* "deeprai/engine/cython/dense_operations.pyx":29
  *     for i in range(num_layers - 1):
  *         if use_bias:
  *             layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]             # <<<<<<<<<<<<<<
  *         else:
  *             layer_outputs = np.dot(layer_outputs, weights[i])
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_dot); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 28, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_dot); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_10 = NULL;
       __pyx_t_11 = 0;
@@ -2380,7 +2386,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, ((PyObject *)__pyx_v_layer_outputs), __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2389,14 +2395,14 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, ((PyObject *)__pyx_v_layer_outputs), __pyx_t_3};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else
       #endif
       {
-        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 29, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         if (__pyx_t_10) {
           __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -2407,18 +2413,18 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_12, 1+__pyx_t_11, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_biases, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 28, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_biases, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_12 = PyNumber_Add(__pyx_t_2, __pyx_t_9); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 28, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Add(__pyx_t_2, __pyx_t_9); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 28, __pyx_L1_error)
+      if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 29, __pyx_L1_error)
       __pyx_t_13 = ((PyArrayObject *)__pyx_t_12);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2435,13 +2441,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
           __pyx_t_14 = __pyx_t_15 = __pyx_t_16 = 0;
         }
         __pyx_pybuffernd_layer_outputs.diminfo[0].strides = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_outputs.diminfo[0].shape = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+        if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
       }
       __pyx_t_13 = 0;
       __Pyx_DECREF_SET(__pyx_v_layer_outputs, ((PyArrayObject *)__pyx_t_12));
       __pyx_t_12 = 0;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":27
+      /* "deeprai/engine/cython/dense_operations.pyx":28
  * 
  *     for i in range(num_layers - 1):
  *         if use_bias:             # <<<<<<<<<<<<<<
@@ -2451,7 +2457,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       goto __pyx_L5;
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":30
+    /* "deeprai/engine/cython/dense_operations.pyx":31
  *             layer_outputs = np.dot(layer_outputs, weights[i]) + biases[i]
  *         else:
  *             layer_outputs = np.dot(layer_outputs, weights[i])             # <<<<<<<<<<<<<<
@@ -2459,12 +2465,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
  *         layer_outputs = activation_list[i](layer_outputs)
  */
     /*else*/ {
-      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 30, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 30, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __pyx_t_3 = NULL;
       __pyx_t_11 = 0;
@@ -2481,7 +2487,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_2)) {
         PyObject *__pyx_temp[3] = {__pyx_t_3, ((PyObject *)__pyx_v_layer_outputs), __pyx_t_9};
-        __pyx_t_12 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 30, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 31, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -2490,14 +2496,14 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
         PyObject *__pyx_temp[3] = {__pyx_t_3, ((PyObject *)__pyx_v_layer_outputs), __pyx_t_9};
-        __pyx_t_12 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 30, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 31, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       } else
       #endif
       {
-        __pyx_t_10 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 30, __pyx_L1_error)
+        __pyx_t_10 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 31, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         if (__pyx_t_3) {
           __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -2508,12 +2514,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         __Pyx_GIVEREF(__pyx_t_9);
         PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_11, __pyx_t_9);
         __pyx_t_9 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_10, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 30, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_10, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 31, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 30, __pyx_L1_error)
+      if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 31, __pyx_L1_error)
       __pyx_t_13 = ((PyArrayObject *)__pyx_t_12);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2530,7 +2536,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
           __pyx_t_16 = __pyx_t_15 = __pyx_t_14 = 0;
         }
         __pyx_pybuffernd_layer_outputs.diminfo[0].strides = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_outputs.diminfo[0].shape = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
+        if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 31, __pyx_L1_error)
       }
       __pyx_t_13 = 0;
       __Pyx_DECREF_SET(__pyx_v_layer_outputs, ((PyArrayObject *)__pyx_t_12));
@@ -2538,7 +2544,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     }
     __pyx_L5:;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":32
+    /* "deeprai/engine/cython/dense_operations.pyx":33
  *             layer_outputs = np.dot(layer_outputs, weights[i])
  * 
  *         layer_outputs = activation_list[i](layer_outputs)             # <<<<<<<<<<<<<<
@@ -2547,7 +2553,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
  */
     if (unlikely(__pyx_v_activation_list == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 32, __pyx_L1_error)
+      __PYX_ERR(0, 33, __pyx_L1_error)
     }
     __Pyx_INCREF(PyList_GET_ITEM(__pyx_v_activation_list, __pyx_v_i));
     __pyx_t_2 = PyList_GET_ITEM(__pyx_v_activation_list, __pyx_v_i); __pyx_t_10 = NULL;
@@ -2562,10 +2568,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     }
     __pyx_t_12 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_10, ((PyObject *)__pyx_v_layer_outputs)) : __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_layer_outputs));
     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-    if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 32, __pyx_L1_error)
+    if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 33, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 32, __pyx_L1_error)
+    if (!(likely(((__pyx_t_12) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_12, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 33, __pyx_L1_error)
     __pyx_t_13 = ((PyArrayObject *)__pyx_t_12);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2582,28 +2588,28 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         __pyx_t_14 = __pyx_t_15 = __pyx_t_16 = 0;
       }
       __pyx_pybuffernd_layer_outputs.diminfo[0].strides = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_outputs.diminfo[0].shape = __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 32, __pyx_L1_error)
+      if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
     }
     __pyx_t_13 = 0;
     __Pyx_DECREF_SET(__pyx_v_layer_outputs, ((PyArrayObject *)__pyx_t_12));
     __pyx_t_12 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":35
+    /* "deeprai/engine/cython/dense_operations.pyx":36
  * 
  *         # Store the output for each neuron
  *         NeuronVals.Neurons.append(layer_outputs)             # <<<<<<<<<<<<<<
  * 
  *         # Apply dropout regularization if in training mode
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 35, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 36, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Append(__pyx_t_2, ((PyObject *)__pyx_v_layer_outputs)); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 35, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Append(__pyx_t_2, ((PyObject *)__pyx_v_layer_outputs)); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 36, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":38
+    /* "deeprai/engine/cython/dense_operations.pyx":39
  * 
  *         # Apply dropout regularization if in training mode
  *         if training_mode and dropout_rate[i] > 0:             # <<<<<<<<<<<<<<
@@ -2618,16 +2624,16 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     }
     if (unlikely(__pyx_v_dropout_rate == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 38, __pyx_L1_error)
+      __PYX_ERR(0, 39, __pyx_L1_error)
     }
-    __pyx_t_2 = PyObject_RichCompare(PyList_GET_ITEM(__pyx_v_dropout_rate, __pyx_v_i), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
-    __pyx_t_17 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_17 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(PyList_GET_ITEM(__pyx_v_dropout_rate, __pyx_v_i), __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_17 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_17 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_8 = __pyx_t_17;
     __pyx_L7_bool_binop_done:;
     if (__pyx_t_8) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":39
+      /* "deeprai/engine/cython/dense_operations.pyx":40
  *         # Apply dropout regularization if in training mode
  *         if training_mode and dropout_rate[i] > 0:
  *             mask_value = 1 - dropout_rate[i]             # <<<<<<<<<<<<<<
@@ -2636,15 +2642,15 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
  */
       if (unlikely(__pyx_v_dropout_rate == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 39, __pyx_L1_error)
+        __PYX_ERR(0, 40, __pyx_L1_error)
       }
-      __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, PyList_GET_ITEM(__pyx_v_dropout_rate, __pyx_v_i), 1, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, PyList_GET_ITEM(__pyx_v_dropout_rate, __pyx_v_i), 1, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_mask_value = __pyx_t_18;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":40
+      /* "deeprai/engine/cython/dense_operations.pyx":41
  *         if training_mode and dropout_rate[i] > 0:
  *             mask_value = 1 - dropout_rate[i]
  *             for j in range(layer_outputs.shape[0]):             # <<<<<<<<<<<<<<
@@ -2656,22 +2662,22 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_20; __pyx_t_11+=1) {
         __pyx_v_j = __pyx_t_11;
 
-        /* "deeprai/engine/cython/dense_operations.pyx":41
+        /* "deeprai/engine/cython/dense_operations.pyx":42
  *             mask_value = 1 - dropout_rate[i]
  *             for j in range(layer_outputs.shape[0]):
  *                 if np.random.binomial(1, mask_value) == 0:             # <<<<<<<<<<<<<<
  *                     layer_outputs[j] = 0.0
  * 
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_np); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_np); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_random); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_random); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_binomial); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_binomial); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __pyx_t_10 = PyFloat_FromDouble(__pyx_v_mask_value); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_10 = PyFloat_FromDouble(__pyx_v_mask_value); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         __pyx_t_9 = NULL;
         __pyx_t_21 = 0;
@@ -2688,7 +2694,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_12)) {
           PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_int_1, __pyx_t_10};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_21, 2+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_21, 2+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -2697,14 +2703,14 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_12)) {
           PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_int_1, __pyx_t_10};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_21, 2+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_21, 2+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         } else
         #endif
         {
-          __pyx_t_3 = PyTuple_New(2+__pyx_t_21); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_New(2+__pyx_t_21); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           if (__pyx_t_9) {
             __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -2715,19 +2721,19 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
           __Pyx_GIVEREF(__pyx_t_10);
           PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_21, __pyx_t_10);
           __pyx_t_10 = 0;
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         }
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyInt_EqObjC(__pyx_t_2, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyInt_EqObjC(__pyx_t_2, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         if (__pyx_t_8) {
 
-          /* "deeprai/engine/cython/dense_operations.pyx":42
+          /* "deeprai/engine/cython/dense_operations.pyx":43
  *             for j in range(layer_outputs.shape[0]):
  *                 if np.random.binomial(1, mask_value) == 0:
  *                     layer_outputs[j] = 0.0             # <<<<<<<<<<<<<<
@@ -2737,7 +2743,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
           __pyx_t_22 = __pyx_v_j;
           *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_layer_outputs.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_layer_outputs.diminfo[0].strides) = 0.0;
 
-          /* "deeprai/engine/cython/dense_operations.pyx":41
+          /* "deeprai/engine/cython/dense_operations.pyx":42
  *             mask_value = 1 - dropout_rate[i]
  *             for j in range(layer_outputs.shape[0]):
  *                 if np.random.binomial(1, mask_value) == 0:             # <<<<<<<<<<<<<<
@@ -2747,7 +2753,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
         }
       }
 
-      /* "deeprai/engine/cython/dense_operations.pyx":38
+      /* "deeprai/engine/cython/dense_operations.pyx":39
  * 
  *         # Apply dropout regularization if in training mode
  *         if training_mode and dropout_rate[i] > 0:             # <<<<<<<<<<<<<<
@@ -2757,7 +2763,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
     }
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":44
+  /* "deeprai/engine/cython/dense_operations.pyx":45
  *                     layer_outputs[j] = 0.0
  * 
  *     return layer_outputs             # <<<<<<<<<<<<<<
@@ -2769,7 +2775,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_forwar
   __pyx_r = ((PyArrayObject *)__pyx_v_layer_outputs);
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":13
+  /* "deeprai/engine/cython/dense_operations.pyx":14
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,             # <<<<<<<<<<<<<<
@@ -2856,37 +2862,37 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_p
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 1); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 1); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_neurons)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 2); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 2); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 3); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 3); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_biases)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 4); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 4); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 5); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 5); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dropout_rate)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 6); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, 6); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
@@ -2896,7 +2902,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "forward_propagate") < 0)) __PYX_ERR(0, 13, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "forward_propagate") < 0)) __PYX_ERR(0, 14, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2918,13 +2924,13 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_p
     __pyx_v_neurons = values[2];
     __pyx_v_weights = values[3];
     __pyx_v_biases = values[4];
-    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[5]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L3_error)
+    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[5]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 16, __pyx_L3_error)
     __pyx_v_dropout_rate = ((PyObject*)values[6]);
     if (values[7]) {
-      __pyx_v_training_mode = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_training_mode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 16, __pyx_L3_error)
+      __pyx_v_training_mode = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_training_mode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L3_error)
     } else {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":16
+      /* "deeprai/engine/cython/dense_operations.pyx":17
  *                                                          list activation_list, neurons, weights,
  *                                                          biases, bint use_bias, list dropout_rate,
  *                                                          bint training_mode=True):             # <<<<<<<<<<<<<<
@@ -2936,18 +2942,18 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_1forward_p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 13, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("forward_propagate", 0, 7, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 14, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.forward_propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 14, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 15, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 15, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 16, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_forward_propagate(__pyx_self, __pyx_v_inputs, __pyx_v_activation_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_biases, __pyx_v_use_bias, __pyx_v_dropout_rate, __pyx_v_training_mode);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":13
+  /* "deeprai/engine/cython/dense_operations.pyx":14
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t, ndim=1] inputs,             # <<<<<<<<<<<<<<
@@ -2981,13 +2987,13 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_forward_pr
   __pyx_pybuffernd_inputs.rcbuffer = &__pyx_pybuffer_inputs;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 14, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.training_mode = __pyx_v_training_mode;
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_forward_propagate(__pyx_v_inputs, __pyx_v_activation_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_biases, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, &__pyx_t_2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_forward_propagate(__pyx_v_inputs, __pyx_v_activation_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_biases, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, &__pyx_t_2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3013,7 +3019,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_forward_pr
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/dense_operations.pyx":49
+/* "deeprai/engine/cython/dense_operations.pyx":50
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,             # <<<<<<<<<<<<<<
@@ -3091,26 +3097,26 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   __pyx_pybuffernd_true_output.rcbuffer = &__pyx_pybuffer_true_output;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_predicted_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_predicted_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_predicted_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_predicted_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __pyx_pybuffernd_predicted_output.diminfo[0].strides = __pyx_pybuffernd_predicted_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_predicted_output.diminfo[0].shape = __pyx_pybuffernd_predicted_output.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_true_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_true_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_true_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_true_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __pyx_pybuffernd_true_output.diminfo[0].strides = __pyx_pybuffernd_true_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_true_output.diminfo[0].shape = __pyx_pybuffernd_true_output.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/cython/dense_operations.pyx":55
+  /* "deeprai/engine/cython/dense_operations.pyx":56
  *                           list l2_penalty, bint use_bias,
  *                           str loss_type='mean square error'):
  *     cdef int layer, num_layers = len(weights)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] delta
  *     cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_weights); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_weights); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 56, __pyx_L1_error)
   __pyx_v_num_layers = __pyx_t_1;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":59
+  /* "deeprai/engine/cython/dense_operations.pyx":60
  *     cdef np.ndarray[np.float64_t, ndim=2] weight_gradient
  *     cdef float l1, l2
  *     cdef float epsilon = 1e-7             # <<<<<<<<<<<<<<
@@ -3119,21 +3125,21 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
   __pyx_v_epsilon = 1e-7;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":62
+  /* "deeprai/engine/cython/dense_operations.pyx":63
  *     cdef np.ndarray clipped_predictions
  * 
  *     clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)             # <<<<<<<<<<<<<<
  *     # Loss calculations can be optimized based on the loss type
  *     if loss_type == 'mean square error':
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_clip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_clip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_epsilon); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_epsilon); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyFloat_FromDouble((1.0 - __pyx_v_epsilon)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((1.0 - __pyx_v_epsilon)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_6 = NULL;
   __pyx_t_7 = 0;
@@ -3150,7 +3156,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, ((PyObject *)__pyx_v_predicted_output), __pyx_t_3, __pyx_t_5};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3160,7 +3166,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, ((PyObject *)__pyx_v_predicted_output), __pyx_t_3, __pyx_t_5};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3168,7 +3174,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_6) {
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -3182,42 +3188,42 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_7, __pyx_t_5);
     __pyx_t_3 = 0;
     __pyx_t_5 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_v_clipped_predictions = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":64
+  /* "deeprai/engine/cython/dense_operations.pyx":65
  *     clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
  *     # Loss calculations can be optimized based on the loss type
  *     if loss_type == 'mean square error':             # <<<<<<<<<<<<<<
  *         loss = 2 * (predicted_output - true_output)
  *     elif loss_type == 'cross entropy':
  */
-  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_mean_square_error, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_mean_square_error, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
   __pyx_t_10 = (__pyx_t_9 != 0);
   if (__pyx_t_10) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":65
+    /* "deeprai/engine/cython/dense_operations.pyx":66
  *     # Loss calculations can be optimized based on the loss type
  *     if loss_type == 'mean square error':
  *         loss = 2 * (predicted_output - true_output)             # <<<<<<<<<<<<<<
  *     elif loss_type == 'cross entropy':
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
  */
-    __pyx_t_2 = PyNumber_Subtract(((PyObject *)__pyx_v_predicted_output), ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Subtract(((PyObject *)__pyx_v_predicted_output), ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = PyNumber_Multiply(__pyx_int_2, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Multiply(__pyx_int_2, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_loss = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":64
+    /* "deeprai/engine/cython/dense_operations.pyx":65
  *     clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
  *     # Loss calculations can be optimized based on the loss type
  *     if loss_type == 'mean square error':             # <<<<<<<<<<<<<<
@@ -3227,45 +3233,45 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     goto __pyx_L3;
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":66
+  /* "deeprai/engine/cython/dense_operations.pyx":67
  *     if loss_type == 'mean square error':
  *         loss = 2 * (predicted_output - true_output)
  *     elif loss_type == 'cross entropy':             # <<<<<<<<<<<<<<
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
  *     elif loss_type == 'mean absolute error':
  */
-  __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_cross_entropy, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_cross_entropy, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 67, __pyx_L1_error)
   __pyx_t_9 = (__pyx_t_10 != 0);
   if (__pyx_t_9) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":67
+    /* "deeprai/engine/cython/dense_operations.pyx":68
  *         loss = 2 * (predicted_output - true_output)
  *     elif loss_type == 'cross entropy':
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)             # <<<<<<<<<<<<<<
  *     elif loss_type == 'mean absolute error':
  *         loss = np.sign(predicted_output - true_output)
  */
-    __pyx_t_4 = __Pyx_PyNumber_Divide(((PyObject *)__pyx_v_true_output), ((PyObject *)__pyx_v_clipped_predictions)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyNumber_Divide(((PyObject *)__pyx_v_true_output), ((PyObject *)__pyx_v_clipped_predictions)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = PyNumber_Negative(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Negative(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_clipped_predictions)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Subtract(__pyx_int_1, ((PyObject *)__pyx_v_clipped_predictions)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_loss = __pyx_t_8;
     __pyx_t_8 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":66
+    /* "deeprai/engine/cython/dense_operations.pyx":67
  *     if loss_type == 'mean square error':
  *         loss = 2 * (predicted_output - true_output)
  *     elif loss_type == 'cross entropy':             # <<<<<<<<<<<<<<
@@ -3275,30 +3281,30 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     goto __pyx_L3;
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":68
+  /* "deeprai/engine/cython/dense_operations.pyx":69
  *     elif loss_type == 'cross entropy':
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
  *     elif loss_type == 'mean absolute error':             # <<<<<<<<<<<<<<
  *         loss = np.sign(predicted_output - true_output)
  *     else:
  */
-  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_mean_absolute_error, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_loss_type, __pyx_kp_s_mean_absolute_error, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 69, __pyx_L1_error)
   __pyx_t_10 = (__pyx_t_9 != 0);
   if (likely(__pyx_t_10)) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":69
+    /* "deeprai/engine/cython/dense_operations.pyx":70
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
  *     elif loss_type == 'mean absolute error':
  *         loss = np.sign(predicted_output - true_output)             # <<<<<<<<<<<<<<
  *     else:
  *         raise ValueError(f"Unsupported loss type: {loss_type}")
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_sign); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_sign); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Subtract(((PyObject *)__pyx_v_predicted_output), ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Subtract(((PyObject *)__pyx_v_predicted_output), ((PyObject *)__pyx_v_true_output)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_4 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -3313,13 +3319,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_8 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 69, __pyx_L1_error)
+    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_loss = __pyx_t_8;
     __pyx_t_8 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":68
+    /* "deeprai/engine/cython/dense_operations.pyx":69
  *     elif loss_type == 'cross entropy':
  *         loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
  *     elif loss_type == 'mean absolute error':             # <<<<<<<<<<<<<<
@@ -3329,7 +3335,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     goto __pyx_L3;
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":71
+  /* "deeprai/engine/cython/dense_operations.pyx":72
  *         loss = np.sign(predicted_output - true_output)
  *     else:
  *         raise ValueError(f"Unsupported loss type: {loss_type}")             # <<<<<<<<<<<<<<
@@ -3337,45 +3343,45 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  *     weight_gradients = []
  */
   /*else*/ {
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_loss_type, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_loss_type, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Unsupported_loss_type, __pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Unsupported_loss_type, __pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_8, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __PYX_ERR(0, 71, __pyx_L1_error)
+    __PYX_ERR(0, 72, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":73
+  /* "deeprai/engine/cython/dense_operations.pyx":74
  *         raise ValueError(f"Unsupported loss type: {loss_type}")
  * 
  *     weight_gradients = []             # <<<<<<<<<<<<<<
  *     bias_gradients = []
  * 
  */
-  __pyx_t_8 = PyList_New(0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_8 = PyList_New(0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_v_weight_gradients = ((PyObject*)__pyx_t_8);
   __pyx_t_8 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":74
+  /* "deeprai/engine/cython/dense_operations.pyx":75
  * 
  *     weight_gradients = []
  *     bias_gradients = []             # <<<<<<<<<<<<<<
  * 
  *     for layer in range(num_layers - 1, -1, -1):
  */
-  __pyx_t_8 = PyList_New(0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_8 = PyList_New(0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_v_bias_gradients = ((PyObject*)__pyx_t_8);
   __pyx_t_8 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":76
+  /* "deeprai/engine/cython/dense_operations.pyx":77
  *     bias_gradients = []
  * 
  *     for layer in range(num_layers - 1, -1, -1):             # <<<<<<<<<<<<<<
@@ -3385,7 +3391,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   for (__pyx_t_7 = (__pyx_v_num_layers - 1); __pyx_t_7 > -1; __pyx_t_7-=1) {
     __pyx_v_layer = __pyx_t_7;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":77
+    /* "deeprai/engine/cython/dense_operations.pyx":78
  * 
  *     for layer in range(num_layers - 1, -1, -1):
  *         delta = loss * activation_derv_list[layer](neurons[layer + 1])             # <<<<<<<<<<<<<<
@@ -3394,10 +3400,10 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     if (unlikely(__pyx_v_activation_derv_list == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 78, __pyx_L1_error)
     }
     __pyx_t_11 = (__pyx_v_layer + 1);
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_neurons, __pyx_t_11, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_neurons, __pyx_t_11, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(PyList_GET_ITEM(__pyx_v_activation_derv_list, __pyx_v_layer));
     __pyx_t_5 = PyList_GET_ITEM(__pyx_v_activation_derv_list, __pyx_v_layer); __pyx_t_4 = NULL;
@@ -3413,13 +3419,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_8 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_2);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 77, __pyx_L1_error)
+    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_v_loss, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_v_loss, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 77, __pyx_L1_error)
+    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 78, __pyx_L1_error)
     __pyx_t_12 = ((PyArrayObject *)__pyx_t_5);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -3436,35 +3442,35 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
         __pyx_t_14 = __pyx_t_15 = __pyx_t_16 = 0;
       }
       __pyx_pybuffernd_delta.diminfo[0].strides = __pyx_pybuffernd_delta.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_delta.diminfo[0].shape = __pyx_pybuffernd_delta.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 77, __pyx_L1_error)
+      if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 78, __pyx_L1_error)
     }
     __pyx_t_12 = 0;
     __Pyx_XDECREF_SET(__pyx_v_delta, ((PyArrayObject *)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":78
+    /* "deeprai/engine/cython/dense_operations.pyx":79
  *     for layer in range(num_layers - 1, -1, -1):
  *         delta = loss * activation_derv_list[layer](neurons[layer + 1])
  *         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))             # <<<<<<<<<<<<<<
  * 
  *         l1 = l1_penalty[layer]
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_neurons, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_neurons, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_reshape); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_reshape); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_reshape); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_reshape); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_4 = NULL;
@@ -3482,7 +3488,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_8, __pyx_t_3};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -3492,7 +3498,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_8, __pyx_t_3};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -3500,7 +3506,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     } else
     #endif
     {
-      __pyx_t_6 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       if (__pyx_t_4) {
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -3511,12 +3517,12 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
       PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_13, __pyx_t_3);
       __pyx_t_8 = 0;
       __pyx_t_3 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 78, __pyx_L1_error)
+    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 79, __pyx_L1_error)
     __pyx_t_17 = ((PyArrayObject *)__pyx_t_5);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -3533,13 +3539,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
         __pyx_t_16 = __pyx_t_15 = __pyx_t_14 = 0;
       }
       __pyx_pybuffernd_weight_gradient.diminfo[0].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weight_gradient.diminfo[0].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weight_gradient.diminfo[1].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weight_gradient.diminfo[1].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[1];
-      if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 78, __pyx_L1_error)
+      if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
     }
     __pyx_t_17 = 0;
     __Pyx_XDECREF_SET(__pyx_v_weight_gradient, ((PyArrayObject *)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":80
+    /* "deeprai/engine/cython/dense_operations.pyx":81
  *         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))
  * 
  *         l1 = l1_penalty[layer]             # <<<<<<<<<<<<<<
@@ -3548,12 +3554,12 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     if (unlikely(__pyx_v_l1_penalty == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 80, __pyx_L1_error)
+      __PYX_ERR(0, 81, __pyx_L1_error)
     }
-    __pyx_t_18 = __pyx_PyFloat_AsFloat(PyList_GET_ITEM(__pyx_v_l1_penalty, __pyx_v_layer)); if (unlikely((__pyx_t_18 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_18 = __pyx_PyFloat_AsFloat(PyList_GET_ITEM(__pyx_v_l1_penalty, __pyx_v_layer)); if (unlikely((__pyx_t_18 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
     __pyx_v_l1 = __pyx_t_18;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":81
+    /* "deeprai/engine/cython/dense_operations.pyx":82
  * 
  *         l1 = l1_penalty[layer]
  *         l2 = l2_penalty[layer]             # <<<<<<<<<<<<<<
@@ -3562,12 +3568,12 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     if (unlikely(__pyx_v_l2_penalty == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 81, __pyx_L1_error)
+      __PYX_ERR(0, 82, __pyx_L1_error)
     }
-    __pyx_t_18 = __pyx_PyFloat_AsFloat(PyList_GET_ITEM(__pyx_v_l2_penalty, __pyx_v_layer)); if (unlikely((__pyx_t_18 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_18 = __pyx_PyFloat_AsFloat(PyList_GET_ITEM(__pyx_v_l2_penalty, __pyx_v_layer)); if (unlikely((__pyx_t_18 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L1_error)
     __pyx_v_l2 = __pyx_t_18;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":82
+    /* "deeprai/engine/cython/dense_operations.pyx":83
  *         l1 = l1_penalty[layer]
  *         l2 = l2_penalty[layer]
  *         if l1 > 0:             # <<<<<<<<<<<<<<
@@ -3577,21 +3583,21 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_10 = ((__pyx_v_l1 > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":83
+      /* "deeprai/engine/cython/dense_operations.pyx":84
  *         l2 = l2_penalty[layer]
  *         if l1 > 0:
  *             weight_gradient += l1 * np.sign(weights[layer])             # <<<<<<<<<<<<<<
  *         if l2 > 0:
  *             weight_gradient += 2 * l2 * weights[layer]
  */
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_l1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_l1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_sign); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_sign); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_t_8 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -3606,17 +3612,17 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
       __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_6);
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_weight_gradient), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_weight_gradient), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 83, __pyx_L1_error)
+      if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 84, __pyx_L1_error)
       __pyx_t_17 = ((PyArrayObject *)__pyx_t_2);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -3633,13 +3639,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
           __pyx_t_14 = __pyx_t_15 = __pyx_t_16 = 0;
         }
         __pyx_pybuffernd_weight_gradient.diminfo[0].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weight_gradient.diminfo[0].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weight_gradient.diminfo[1].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weight_gradient.diminfo[1].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[1];
-        if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 83, __pyx_L1_error)
+        if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
       }
       __pyx_t_17 = 0;
       __Pyx_DECREF_SET(__pyx_v_weight_gradient, ((PyArrayObject *)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":82
+      /* "deeprai/engine/cython/dense_operations.pyx":83
  *         l1 = l1_penalty[layer]
  *         l2 = l2_penalty[layer]
  *         if l1 > 0:             # <<<<<<<<<<<<<<
@@ -3648,7 +3654,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":84
+    /* "deeprai/engine/cython/dense_operations.pyx":85
  *         if l1 > 0:
  *             weight_gradient += l1 * np.sign(weights[layer])
  *         if l2 > 0:             # <<<<<<<<<<<<<<
@@ -3658,25 +3664,25 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_10 = ((__pyx_v_l2 > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":85
+      /* "deeprai/engine/cython/dense_operations.pyx":86
  *             weight_gradient += l1 * np.sign(weights[layer])
  *         if l2 > 0:
  *             weight_gradient += 2 * l2 * weights[layer]             # <<<<<<<<<<<<<<
  * 
  *         weight_gradients.insert(0, weight_gradient)
  */
-      __pyx_t_2 = PyFloat_FromDouble((2.0 * __pyx_v_l2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_2 = PyFloat_FromDouble((2.0 * __pyx_v_l2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_weight_gradient), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_weight_gradient), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 85, __pyx_L1_error)
+      if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 86, __pyx_L1_error)
       __pyx_t_17 = ((PyArrayObject *)__pyx_t_3);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -3693,13 +3699,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
           __pyx_t_16 = __pyx_t_15 = __pyx_t_14 = 0;
         }
         __pyx_pybuffernd_weight_gradient.diminfo[0].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weight_gradient.diminfo[0].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weight_gradient.diminfo[1].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weight_gradient.diminfo[1].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[1];
-        if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
+        if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
       }
       __pyx_t_17 = 0;
       __Pyx_DECREF_SET(__pyx_v_weight_gradient, ((PyArrayObject *)__pyx_t_3));
       __pyx_t_3 = 0;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":84
+      /* "deeprai/engine/cython/dense_operations.pyx":85
  *         if l1 > 0:
  *             weight_gradient += l1 * np.sign(weights[layer])
  *         if l2 > 0:             # <<<<<<<<<<<<<<
@@ -3708,16 +3714,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":87
+    /* "deeprai/engine/cython/dense_operations.pyx":88
  *             weight_gradient += 2 * l2 * weights[layer]
  * 
  *         weight_gradients.insert(0, weight_gradient)             # <<<<<<<<<<<<<<
  *         if use_bias:
  *             bias_gradients.insert(0, np.sum(delta, axis=0))
  */
-    __pyx_t_19 = PyList_Insert(__pyx_v_weight_gradients, 0, ((PyObject *)__pyx_v_weight_gradient)); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_19 = PyList_Insert(__pyx_v_weight_gradients, 0, ((PyObject *)__pyx_v_weight_gradient)); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 88, __pyx_L1_error)
 
-    /* "deeprai/engine/cython/dense_operations.pyx":88
+    /* "deeprai/engine/cython/dense_operations.pyx":89
  * 
  *         weight_gradients.insert(0, weight_gradient)
  *         if use_bias:             # <<<<<<<<<<<<<<
@@ -3727,35 +3733,35 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_10 = (__pyx_v_use_bias != 0);
     if (__pyx_t_10) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":89
+      /* "deeprai/engine/cython/dense_operations.pyx":90
  *         weight_gradients.insert(0, weight_gradient)
  *         if use_bias:
  *             bias_gradients.insert(0, np.sum(delta, axis=0))             # <<<<<<<<<<<<<<
  * 
  *         loss = np.dot(delta, weights[layer].T)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sum); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sum); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(((PyObject *)__pyx_v_delta));
       __Pyx_GIVEREF(((PyObject *)__pyx_v_delta));
       PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_v_delta));
-      __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 89, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_19 = PyList_Insert(__pyx_v_bias_gradients, 0, __pyx_t_6); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_19 = PyList_Insert(__pyx_v_bias_gradients, 0, __pyx_t_6); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":88
+      /* "deeprai/engine/cython/dense_operations.pyx":89
  * 
  *         weight_gradients.insert(0, weight_gradient)
  *         if use_bias:             # <<<<<<<<<<<<<<
@@ -3764,21 +3770,21 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  */
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":91
+    /* "deeprai/engine/cython/dense_operations.pyx":92
  *             bias_gradients.insert(0, np.sum(delta, axis=0))
  * 
  *         loss = np.dot(delta, weights[layer].T)             # <<<<<<<<<<<<<<
  * 
  *     return weight_gradients, bias_gradients
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_weights, __pyx_v_layer, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_T); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_T); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
@@ -3796,7 +3802,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_delta), __pyx_t_5};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -3805,14 +3811,14 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_delta), __pyx_t_5};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       if (__pyx_t_2) {
         __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -3823,7 +3829,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_13, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -3832,7 +3838,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
     __pyx_t_6 = 0;
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":93
+  /* "deeprai/engine/cython/dense_operations.pyx":94
  *         loss = np.dot(delta, weights[layer].T)
  * 
  *     return weight_gradients, bias_gradients             # <<<<<<<<<<<<<<
@@ -3840,7 +3846,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_weight_gradients);
   __Pyx_GIVEREF(__pyx_v_weight_gradients);
@@ -3852,7 +3858,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propag
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":49
+  /* "deeprai/engine/cython/dense_operations.pyx":50
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,             # <<<<<<<<<<<<<<
@@ -3953,43 +3959,43 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_3back_prop
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_true_output)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 1); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 1); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_derv_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 2); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 2); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_neurons)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 3); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 3); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 4); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 4); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_l1_penalty)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 5); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 5); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_l2_penalty)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 6); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 6); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 7); __PYX_ERR(0, 49, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, 7); __PYX_ERR(0, 50, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
@@ -3999,7 +4005,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_3back_prop
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "back_propagate") < 0)) __PYX_ERR(0, 49, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "back_propagate") < 0)) __PYX_ERR(0, 50, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4024,23 +4030,23 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_3back_prop
     __pyx_v_weights = values[4];
     __pyx_v_l1_penalty = ((PyObject*)values[5]);
     __pyx_v_l2_penalty = ((PyObject*)values[6]);
-    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L3_error)
+    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L3_error)
     __pyx_v_loss_type = ((PyObject*)values[8]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 49, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("back_propagate", 0, 8, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 50, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.back_propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_predicted_output), __pyx_ptype_5numpy_ndarray, 1, "predicted_output", 0))) __PYX_ERR(0, 49, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_true_output), __pyx_ptype_5numpy_ndarray, 1, "true_output", 0))) __PYX_ERR(0, 50, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_derv_list), (&PyList_Type), 1, "activation_derv_list", 1))) __PYX_ERR(0, 51, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_l1_penalty), (&PyList_Type), 1, "l1_penalty", 1))) __PYX_ERR(0, 52, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_l2_penalty), (&PyList_Type), 1, "l2_penalty", 1))) __PYX_ERR(0, 53, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_type), (&PyString_Type), 1, "loss_type", 1))) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_predicted_output), __pyx_ptype_5numpy_ndarray, 1, "predicted_output", 0))) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_true_output), __pyx_ptype_5numpy_ndarray, 1, "true_output", 0))) __PYX_ERR(0, 51, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_derv_list), (&PyList_Type), 1, "activation_derv_list", 1))) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_l1_penalty), (&PyList_Type), 1, "l1_penalty", 1))) __PYX_ERR(0, 53, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_l2_penalty), (&PyList_Type), 1, "l2_penalty", 1))) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_type), (&PyString_Type), 1, "loss_type", 1))) __PYX_ERR(0, 55, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_2back_propagate(__pyx_self, __pyx_v_predicted_output, __pyx_v_true_output, __pyx_v_activation_derv_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_l1_penalty, __pyx_v_l2_penalty, __pyx_v_use_bias, __pyx_v_loss_type);
 
   /* function exit code */
@@ -4075,18 +4081,18 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_2back_prop
   __pyx_pybuffernd_true_output.rcbuffer = &__pyx_pybuffer_true_output;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_predicted_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_predicted_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_predicted_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_predicted_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __pyx_pybuffernd_predicted_output.diminfo[0].strides = __pyx_pybuffernd_predicted_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_predicted_output.diminfo[0].shape = __pyx_pybuffernd_predicted_output.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_true_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_true_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_true_output.rcbuffer->pybuffer, (PyObject*)__pyx_v_true_output, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __pyx_pybuffernd_true_output.diminfo[0].strides = __pyx_pybuffernd_true_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_true_output.diminfo[0].shape = __pyx_pybuffernd_true_output.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.loss_type = __pyx_v_loss_type;
-  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propagate(__pyx_v_predicted_output, __pyx_v_true_output, __pyx_v_activation_derv_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_l1_penalty, __pyx_v_l2_penalty, __pyx_v_use_bias, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_back_propagate(__pyx_v_predicted_output, __pyx_v_true_output, __pyx_v_activation_derv_list, __pyx_v_neurons, __pyx_v_weights, __pyx_v_l1_penalty, __pyx_v_l2_penalty, __pyx_v_use_bias, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4114,7 +4120,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_2back_prop
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/dense_operations.pyx":96
+/* "deeprai/engine/cython/dense_operations.pyx":97
  * 
  * 
  * cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,             # <<<<<<<<<<<<<<
@@ -4180,16 +4186,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __pyx_pybuffernd_targets.rcbuffer = &__pyx_pybuffer_targets;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 96, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 97, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_inputs.diminfo[1].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_inputs.diminfo[1].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 96, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 97, __pyx_L1_error)
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_targets.diminfo[1].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_targets.diminfo[1].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[1];
 
-  /* "deeprai/engine/cython/dense_operations.pyx":102
+  /* "deeprai/engine/cython/dense_operations.pyx":103
  *                     list dropout_rate,
  *                     str loss_function_name):
  *     cdef int inputs_len = inputs.shape[0]             # <<<<<<<<<<<<<<
@@ -4198,7 +4204,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
  */
   __pyx_v_inputs_len = (__pyx_v_inputs->dimensions[0]);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":103
+  /* "deeprai/engine/cython/dense_operations.pyx":104
  *                     str loss_function_name):
  *     cdef int inputs_len = inputs.shape[0]
  *     cdef double sum_error = 0.0             # <<<<<<<<<<<<<<
@@ -4207,19 +4213,19 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
  */
   __pyx_v_sum_error = 0.0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":104
+  /* "deeprai/engine/cython/dense_operations.pyx":105
  *     cdef int inputs_len = inputs.shape[0]
  *     cdef double sum_error = 0.0
  *     cdef np.ndarray abs_errors = np.zeros(inputs_len)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray rel_errors = np.zeros(inputs_len)
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4234,26 +4240,26 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 104, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 105, __pyx_L1_error)
   __pyx_v_abs_errors = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":105
+  /* "deeprai/engine/cython/dense_operations.pyx":106
  *     cdef double sum_error = 0.0
  *     cdef np.ndarray abs_errors = np.zeros(inputs_len)
  *     cdef np.ndarray rel_errors = np.zeros(inputs_len)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -4268,14 +4274,14 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 106, __pyx_L1_error)
   __pyx_v_rel_errors = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":108
+  /* "deeprai/engine/cython/dense_operations.pyx":109
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  * 
  *     for i, (input_val, target) in enumerate(zip(inputs, targets)):             # <<<<<<<<<<<<<<
@@ -4284,7 +4290,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
  */
   __Pyx_INCREF(__pyx_int_0);
   __pyx_t_1 = __pyx_int_0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_inputs));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_inputs));
@@ -4292,16 +4298,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __Pyx_INCREF(((PyObject *)__pyx_v_targets));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_targets));
   PyTuple_SET_ITEM(__pyx_t_2, 1, ((PyObject *)__pyx_v_targets));
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
     __pyx_t_2 = __pyx_t_3; __Pyx_INCREF(__pyx_t_2); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 109, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   for (;;) {
@@ -4309,17 +4315,17 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 108, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 109, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 108, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 109, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -4329,7 +4335,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 108, __pyx_L1_error)
+          else __PYX_ERR(0, 109, __pyx_L1_error)
         }
         break;
       }
@@ -4341,7 +4347,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 108, __pyx_L1_error)
+        __PYX_ERR(0, 109, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4354,15 +4360,15 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_t_7);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       #endif
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_9 = Py_TYPE(__pyx_t_8)->tp_iternext;
@@ -4370,7 +4376,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       __Pyx_GOTREF(__pyx_t_4);
       index = 1; __pyx_t_7 = __pyx_t_9(__pyx_t_8); if (unlikely(!__pyx_t_7)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_7);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 2) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 2) < 0) __PYX_ERR(0, 109, __pyx_L1_error)
       __pyx_t_9 = NULL;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       goto __pyx_L6_unpacking_done;
@@ -4378,7 +4384,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_9 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 108, __pyx_L1_error)
+      __PYX_ERR(0, 109, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_input_val, __pyx_t_4);
@@ -4387,36 +4393,36 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     __pyx_t_7 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":109
+    /* "deeprai/engine/cython/dense_operations.pyx":110
  * 
  *     for i, (input_val, target) in enumerate(zip(inputs, targets)):
  *         output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)             # <<<<<<<<<<<<<<
  * 
  *         if loss_function_name == "cross entropy":
  */
-    if (!(likely(((__pyx_v_input_val) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_input_val, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 109, __pyx_L1_error)
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+    if (!(likely(((__pyx_v_input_val) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_input_val, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 110, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_NeuronVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Neurons); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_WeightVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Weights); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Weights); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_BiasVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_BiasVals); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Biases); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Biases); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_forward_propagate(((PyArrayObject *)__pyx_v_input_val), __pyx_v_activation_list, __pyx_t_7, __pyx_t_4, __pyx_t_8, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __pyx_t_3 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_forward_propagate(((PyArrayObject *)__pyx_v_input_val), __pyx_v_activation_list, __pyx_t_7, __pyx_t_4, __pyx_t_8, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4436,32 +4442,32 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
         __pyx_t_11 = __pyx_t_12 = __pyx_t_13 = 0;
       }
       __pyx_pybuffernd_output.diminfo[0].strides = __pyx_pybuffernd_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_output.diminfo[0].shape = __pyx_pybuffernd_output.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 109, __pyx_L1_error)
+      if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
     }
     __Pyx_XDECREF_SET(__pyx_v_output, ((PyArrayObject *)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":111
+    /* "deeprai/engine/cython/dense_operations.pyx":112
  *         output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)
  * 
  *         if loss_function_name == "cross entropy":             # <<<<<<<<<<<<<<
  *             sum_error += categorical_cross_entropy(output, target)
  *         elif loss_function_name == "mean square error":
  */
-    __pyx_t_14 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_cross_entropy, Py_EQ)); if (unlikely(__pyx_t_14 < 0)) __PYX_ERR(0, 111, __pyx_L1_error)
+    __pyx_t_14 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_cross_entropy, Py_EQ)); if (unlikely(__pyx_t_14 < 0)) __PYX_ERR(0, 112, __pyx_L1_error)
     __pyx_t_15 = (__pyx_t_14 != 0);
     if (__pyx_t_15) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":112
+      /* "deeprai/engine/cython/dense_operations.pyx":113
  * 
  *         if loss_function_name == "cross entropy":
  *             sum_error += categorical_cross_entropy(output, target)             # <<<<<<<<<<<<<<
  *         elif loss_function_name == "mean square error":
  *             sum_error += mean_square_error(output, target)
  */
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_categorical_cross_entropy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_categorical_cross_entropy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_7 = NULL;
       __pyx_t_10 = 0;
@@ -4478,7 +4484,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 112, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
@@ -4486,13 +4492,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 112, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
       #endif
       {
-        __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 112, __pyx_L1_error)
+        __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         if (__pyx_t_7) {
           __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -4503,20 +4509,20 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
         __Pyx_INCREF(__pyx_v_target);
         __Pyx_GIVEREF(__pyx_v_target);
         PyTuple_SET_ITEM(__pyx_t_16, 1+__pyx_t_10, __pyx_v_target);
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_16, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 112, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_16, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_sum_error = __pyx_t_17;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":111
+      /* "deeprai/engine/cython/dense_operations.pyx":112
  *         output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights, BiasVals.Biases, use_bias, dropout_rate)
  * 
  *         if loss_function_name == "cross entropy":             # <<<<<<<<<<<<<<
@@ -4526,27 +4532,27 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       goto __pyx_L7;
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":113
+    /* "deeprai/engine/cython/dense_operations.pyx":114
  *         if loss_function_name == "cross entropy":
  *             sum_error += categorical_cross_entropy(output, target)
  *         elif loss_function_name == "mean square error":             # <<<<<<<<<<<<<<
  *             sum_error += mean_square_error(output, target)
  *         elif loss_function_name == "mean absolute error":
  */
-    __pyx_t_15 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_mean_square_error, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_15 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_mean_square_error, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) __PYX_ERR(0, 114, __pyx_L1_error)
     __pyx_t_14 = (__pyx_t_15 != 0);
     if (__pyx_t_14) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":114
+      /* "deeprai/engine/cython/dense_operations.pyx":115
  *             sum_error += categorical_cross_entropy(output, target)
  *         elif loss_function_name == "mean square error":
  *             sum_error += mean_square_error(output, target)             # <<<<<<<<<<<<<<
  *         elif loss_function_name == "mean absolute error":
  *             sum_error += mean_absolute_error(output, target)
  */
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 115, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mean_square_error_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mean_square_error_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_16 = NULL;
       __pyx_t_10 = 0;
@@ -4563,7 +4569,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[3] = {__pyx_t_16, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 115, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
@@ -4571,13 +4577,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[3] = {__pyx_t_16, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 115, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
       #endif
       {
-        __pyx_t_7 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         if (__pyx_t_16) {
           __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -4588,20 +4594,20 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
         __Pyx_INCREF(__pyx_v_target);
         __Pyx_GIVEREF(__pyx_v_target);
         PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_10, __pyx_v_target);
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 115, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 114, __pyx_L1_error)
+      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_v_sum_error = __pyx_t_17;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":113
+      /* "deeprai/engine/cython/dense_operations.pyx":114
  *         if loss_function_name == "cross entropy":
  *             sum_error += categorical_cross_entropy(output, target)
  *         elif loss_function_name == "mean square error":             # <<<<<<<<<<<<<<
@@ -4611,27 +4617,27 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       goto __pyx_L7;
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":115
+    /* "deeprai/engine/cython/dense_operations.pyx":116
  *         elif loss_function_name == "mean square error":
  *             sum_error += mean_square_error(output, target)
  *         elif loss_function_name == "mean absolute error":             # <<<<<<<<<<<<<<
  *             sum_error += mean_absolute_error(output, target)
  *         else:
  */
-    __pyx_t_14 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_mean_absolute_error, Py_EQ)); if (unlikely(__pyx_t_14 < 0)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_14 = (__Pyx_PyString_Equals(__pyx_v_loss_function_name, __pyx_kp_s_mean_absolute_error, Py_EQ)); if (unlikely(__pyx_t_14 < 0)) __PYX_ERR(0, 116, __pyx_L1_error)
     __pyx_t_15 = (__pyx_t_14 != 0);
     if (likely(__pyx_t_15)) {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":116
+      /* "deeprai/engine/cython/dense_operations.pyx":117
  *             sum_error += mean_square_error(output, target)
  *         elif loss_function_name == "mean absolute error":
  *             sum_error += mean_absolute_error(output, target)             # <<<<<<<<<<<<<<
  *         else:
  *             raise ValueError(f"Unsupported loss type: {loss_function_name}")
  */
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_sum_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_mean_absolute_error_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_mean_absolute_error_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_7 = NULL;
       __pyx_t_10 = 0;
@@ -4648,7 +4654,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 117, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
@@ -4656,13 +4662,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_output), __pyx_v_target};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 117, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
       #endif
       {
-        __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 116, __pyx_L1_error)
+        __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 117, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         if (__pyx_t_7) {
           __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -4673,20 +4679,20 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
         __Pyx_INCREF(__pyx_v_target);
         __Pyx_GIVEREF(__pyx_v_target);
         PyTuple_SET_ITEM(__pyx_t_16, 1+__pyx_t_10, __pyx_v_target);
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_16, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_16, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 117, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_sum_error = __pyx_t_17;
 
-      /* "deeprai/engine/cython/dense_operations.pyx":115
+      /* "deeprai/engine/cython/dense_operations.pyx":116
  *         elif loss_function_name == "mean square error":
  *             sum_error += mean_square_error(output, target)
  *         elif loss_function_name == "mean absolute error":             # <<<<<<<<<<<<<<
@@ -4696,7 +4702,7 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
       goto __pyx_L7;
     }
 
-    /* "deeprai/engine/cython/dense_operations.pyx":118
+    /* "deeprai/engine/cython/dense_operations.pyx":119
  *             sum_error += mean_absolute_error(output, target)
  *         else:
  *             raise ValueError(f"Unsupported loss type: {loss_function_name}")             # <<<<<<<<<<<<<<
@@ -4704,33 +4710,33 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
  *         abs_error = np.abs(output - target)
  */
     /*else*/ {
-      __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_loss_function_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_loss_function_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Unsupported_loss_type, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Unsupported_loss_type, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_Raise(__pyx_t_4, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __PYX_ERR(0, 118, __pyx_L1_error)
+      __PYX_ERR(0, 119, __pyx_L1_error)
     }
     __pyx_L7:;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":120
+    /* "deeprai/engine/cython/dense_operations.pyx":121
  *             raise ValueError(f"Unsupported loss type: {loss_function_name}")
  * 
  *         abs_error = np.abs(output - target)             # <<<<<<<<<<<<<<
  *         rel_error = np.divide(abs_error, target, where=target != 0)
  *         abs_errors[i] = np.sum(abs_error)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_abs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_abs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Subtract(((PyObject *)__pyx_v_output), __pyx_v_target); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Subtract(((PyObject *)__pyx_v_output), __pyx_v_target); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __pyx_t_16 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4745,25 +4751,25 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     __pyx_t_4 = (__pyx_t_16) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_16, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_8);
     __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF_SET(__pyx_v_abs_error, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":121
+    /* "deeprai/engine/cython/dense_operations.pyx":122
  * 
  *         abs_error = np.abs(output - target)
  *         rel_error = np.divide(abs_error, target, where=target != 0)             # <<<<<<<<<<<<<<
  *         abs_errors[i] = np.sum(abs_error)
  *         rel_errors[i] = np.mean(rel_error) * 100
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_divide); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_divide); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_abs_error);
     __Pyx_GIVEREF(__pyx_v_abs_error);
@@ -4771,13 +4777,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     __Pyx_INCREF(__pyx_v_target);
     __Pyx_GIVEREF(__pyx_v_target);
     PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_target);
-    __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_16 = __Pyx_PyInt_NeObjC(__pyx_v_target, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_16 = __Pyx_PyInt_NeObjC(__pyx_v_target, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
-    if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_where, __pyx_t_16) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_where, __pyx_t_16) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4785,16 +4791,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     __Pyx_XDECREF_SET(__pyx_v_rel_error, __pyx_t_16);
     __pyx_t_16 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":122
+    /* "deeprai/engine/cython/dense_operations.pyx":123
  *         abs_error = np.abs(output - target)
  *         rel_error = np.divide(abs_error, target, where=target != 0)
  *         abs_errors[i] = np.sum(abs_error)             # <<<<<<<<<<<<<<
  *         rel_errors[i] = np.mean(rel_error) * 100
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_sum); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_sum); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __pyx_t_8 = NULL;
@@ -4809,22 +4815,22 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     }
     __pyx_t_16 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_8, __pyx_v_abs_error) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_abs_error);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 122, __pyx_L1_error)
+    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_abs_errors), __pyx_v_i, __pyx_t_16) < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_abs_errors), __pyx_v_i, __pyx_t_16) < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":123
+    /* "deeprai/engine/cython/dense_operations.pyx":124
  *         rel_error = np.divide(abs_error, target, where=target != 0)
  *         abs_errors[i] = np.sum(abs_error)
  *         rel_errors[i] = np.mean(rel_error) * 100             # <<<<<<<<<<<<<<
  * 
  *     mean_rel_error = np.mean(rel_errors)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_mean); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_mean); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_4 = NULL;
@@ -4839,16 +4845,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
     }
     __pyx_t_16 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_v_rel_error) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_rel_error);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 123, __pyx_L1_error)
+    if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Multiply(__pyx_t_16, __pyx_int_100); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Multiply(__pyx_t_16, __pyx_int_100); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_rel_errors), __pyx_v_i, __pyx_t_8) < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_rel_errors), __pyx_v_i, __pyx_t_8) < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":108
+    /* "deeprai/engine/cython/dense_operations.pyx":109
  *     cdef np.ndarray[np.float64_t, ndim=1] output
  * 
  *     for i, (input_val, target) in enumerate(zip(inputs, targets)):             # <<<<<<<<<<<<<<
@@ -4859,16 +4865,16 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":125
+  /* "deeprai/engine/cython/dense_operations.pyx":126
  *         rel_errors[i] = np.mean(rel_error) * 100
  * 
  *     mean_rel_error = np.mean(rel_errors)             # <<<<<<<<<<<<<<
  *     total_rel_error = np.sum(rel_errors) / inputs_len
  *     accuracy = np.abs(100 - total_rel_error)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_mean); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_mean); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -4883,22 +4889,22 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, ((PyObject *)__pyx_v_rel_errors)) : __Pyx_PyObject_CallOneArg(__pyx_t_8, ((PyObject *)__pyx_v_rel_errors));
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_mean_rel_error = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":126
+  /* "deeprai/engine/cython/dense_operations.pyx":127
  * 
  *     mean_rel_error = np.mean(rel_errors)
  *     total_rel_error = np.sum(rel_errors) / inputs_len             # <<<<<<<<<<<<<<
  *     accuracy = np.abs(100 - total_rel_error)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_sum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_sum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_t_8 = NULL;
@@ -4913,31 +4919,31 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   }
   __pyx_t_1 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_8, ((PyObject *)__pyx_v_rel_errors)) : __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_rel_errors));
   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_inputs_len); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_total_rel_error = __pyx_t_8;
   __pyx_t_8 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":127
+  /* "deeprai/engine/cython/dense_operations.pyx":128
  *     mean_rel_error = np.mean(rel_errors)
  *     total_rel_error = np.sum(rel_errors) / inputs_len
  *     accuracy = np.abs(100 - total_rel_error)             # <<<<<<<<<<<<<<
  * 
  *     return {
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_abs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_abs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_100, __pyx_v_total_rel_error, 0x64, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_100, __pyx_v_total_rel_error, 0x64, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_16 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
@@ -4952,13 +4958,13 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
   __pyx_t_8 = (__pyx_t_16) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_16, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_accuracy = __pyx_t_8;
   __pyx_t_8 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":129
+  /* "deeprai/engine/cython/dense_operations.pyx":130
  *     accuracy = np.abs(100 - total_rel_error)
  * 
  *     return {             # <<<<<<<<<<<<<<
@@ -4967,46 +4973,46 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(Py
  */
   __Pyx_XDECREF(__pyx_r);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":130
+  /* "deeprai/engine/cython/dense_operations.pyx":131
  * 
  *     return {
  *         "cost": sum_error / inputs_len,             # <<<<<<<<<<<<<<
  *         "accuracy": accuracy,
  *         "relative_error": total_rel_error
  */
-  __pyx_t_8 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   if (unlikely(__pyx_v_inputs_len == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 130, __pyx_L1_error)
+    __PYX_ERR(0, 131, __pyx_L1_error)
   }
-  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_sum_error / __pyx_v_inputs_len)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_sum_error / __pyx_v_inputs_len)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_cost, __pyx_t_1) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_cost, __pyx_t_1) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":131
+  /* "deeprai/engine/cython/dense_operations.pyx":132
  *     return {
  *         "cost": sum_error / inputs_len,
  *         "accuracy": accuracy,             # <<<<<<<<<<<<<<
  *         "relative_error": total_rel_error
  *     }
  */
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_accuracy, __pyx_v_accuracy) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_accuracy, __pyx_v_accuracy) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
 
-  /* "deeprai/engine/cython/dense_operations.pyx":132
+  /* "deeprai/engine/cython/dense_operations.pyx":133
  *         "cost": sum_error / inputs_len,
  *         "accuracy": accuracy,
  *         "relative_error": total_rel_error             # <<<<<<<<<<<<<<
  *     }
  * 
  */
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_relative_error, __pyx_v_total_rel_error) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_relative_error, __pyx_v_total_rel_error) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
   __pyx_r = ((PyObject*)__pyx_t_8);
   __pyx_t_8 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":96
+  /* "deeprai/engine/cython/dense_operations.pyx":97
  * 
  * 
  * cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,             # <<<<<<<<<<<<<<
@@ -5101,35 +5107,35 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_5evaluate(
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_targets)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 1); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 1); __PYX_ERR(0, 97, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 2); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 2); __PYX_ERR(0, 97, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 3); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 3); __PYX_ERR(0, 97, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dropout_rate)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 4); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 4); __PYX_ERR(0, 97, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_loss_function_name)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 5); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, 5); __PYX_ERR(0, 97, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "evaluate") < 0)) __PYX_ERR(0, 96, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "evaluate") < 0)) __PYX_ERR(0, 97, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -5144,23 +5150,23 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_5evaluate(
     __pyx_v_inputs = ((PyArrayObject *)values[0]);
     __pyx_v_targets = ((PyArrayObject *)values[1]);
     __pyx_v_activation_list = ((PyObject*)values[2]);
-    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L3_error)
+    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 100, __pyx_L3_error)
     __pyx_v_dropout_rate = ((PyObject*)values[4]);
     __pyx_v_loss_function_name = ((PyObject*)values[5]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 96, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("evaluate", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 97, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.evaluate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 96, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_targets), __pyx_ptype_5numpy_ndarray, 1, "targets", 0))) __PYX_ERR(0, 97, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 98, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 100, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_function_name), (&PyString_Type), 1, "loss_function_name", 1))) __PYX_ERR(0, 101, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_inputs), __pyx_ptype_5numpy_ndarray, 1, "inputs", 0))) __PYX_ERR(0, 97, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_targets), __pyx_ptype_5numpy_ndarray, 1, "targets", 0))) __PYX_ERR(0, 98, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activation_list), (&PyList_Type), 1, "activation_list", 1))) __PYX_ERR(0, 99, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 101, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_loss_function_name), (&PyString_Type), 1, "loss_function_name", 1))) __PYX_ERR(0, 102, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_4evaluate(__pyx_self, __pyx_v_inputs, __pyx_v_targets, __pyx_v_activation_list, __pyx_v_use_bias, __pyx_v_dropout_rate, __pyx_v_loss_function_name);
 
   /* function exit code */
@@ -5194,16 +5200,16 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_4evaluate(
   __pyx_pybuffernd_targets.rcbuffer = &__pyx_pybuffer_targets;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 96, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inputs.rcbuffer->pybuffer, (PyObject*)__pyx_v_inputs, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 97, __pyx_L1_error)
   }
   __pyx_pybuffernd_inputs.diminfo[0].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inputs.diminfo[0].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_inputs.diminfo[1].strides = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_inputs.diminfo[1].shape = __pyx_pybuffernd_inputs.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 96, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_targets.rcbuffer->pybuffer, (PyObject*)__pyx_v_targets, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 97, __pyx_L1_error)
   }
   __pyx_pybuffernd_targets.diminfo[0].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_targets.diminfo[0].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_targets.diminfo[1].strides = __pyx_pybuffernd_targets.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_targets.diminfo[1].shape = __pyx_pybuffernd_targets.rcbuffer->pybuffer.shape[1];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(__pyx_v_inputs, __pyx_v_targets, __pyx_v_activation_list, __pyx_v_use_bias, __pyx_v_dropout_rate, __pyx_v_loss_function_name, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_evaluate(__pyx_v_inputs, __pyx_v_targets, __pyx_v_activation_list, __pyx_v_use_bias, __pyx_v_dropout_rate, __pyx_v_loss_function_name, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5231,7 +5237,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_4evaluate(
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/dense_operations.pyx":138
+/* "deeprai/engine/cython/dense_operations.pyx":139
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray input):             # <<<<<<<<<<<<<<
@@ -5253,12 +5259,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatte
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flatten", 0);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":140
+  /* "deeprai/engine/cython/dense_operations.pyx":141
  * cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray input):
  *     # Check the number of dimensions of the input array
  *     if input.ndim not in [2, 3]:             # <<<<<<<<<<<<<<
  *         raise ValueError("Input must be a 2D or 3D array.")
- *     # Flatten the input to a 1D array
+ *     return input.ravel()
  */
   switch (__pyx_v_input->nd) {
     case 2:
@@ -5272,34 +5278,34 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatte
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (unlikely(__pyx_t_2)) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":141
+    /* "deeprai/engine/cython/dense_operations.pyx":142
  *     # Check the number of dimensions of the input array
  *     if input.ndim not in [2, 3]:
  *         raise ValueError("Input must be a 2D or 3D array.")             # <<<<<<<<<<<<<<
- *     # Flatten the input to a 1D array
  *     return input.ravel()
+ * 
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 141, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 141, __pyx_L1_error)
+    __PYX_ERR(0, 142, __pyx_L1_error)
 
-    /* "deeprai/engine/cython/dense_operations.pyx":140
+    /* "deeprai/engine/cython/dense_operations.pyx":141
  * cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray input):
  *     # Check the number of dimensions of the input array
  *     if input.ndim not in [2, 3]:             # <<<<<<<<<<<<<<
  *         raise ValueError("Input must be a 2D or 3D array.")
- *     # Flatten the input to a 1D array
+ *     return input.ravel()
  */
   }
 
   /* "deeprai/engine/cython/dense_operations.pyx":143
+ *     if input.ndim not in [2, 3]:
  *         raise ValueError("Input must be a 2D or 3D array.")
- *     # Flatten the input to a 1D array
  *     return input.ravel()             # <<<<<<<<<<<<<<
  * 
- * from libc.stdlib cimport malloc, free
+ * 
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
   __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_input), __pyx_n_s_ravel); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 143, __pyx_L1_error)
@@ -5324,7 +5330,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatte
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":138
+  /* "deeprai/engine/cython/dense_operations.pyx":139
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray input):             # <<<<<<<<<<<<<<
@@ -5354,7 +5360,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_7flatten(P
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("flatten (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input), __pyx_ptype_5numpy_ndarray, 1, "input", 0))) __PYX_ERR(0, 138, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input), __pyx_ptype_5numpy_ndarray, 1, "input", 0))) __PYX_ERR(0, 139, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_6flatten(__pyx_self, ((PyArrayObject *)__pyx_v_input));
 
   /* function exit code */
@@ -5375,7 +5381,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_6flatten(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flatten", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatten(__pyx_v_input, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_flatten(__pyx_v_input, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5392,33 +5398,26 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_6flatten(C
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/dense_operations.pyx":153
- * cimport numpy as np
+/* "deeprai/engine/cython/dense_operations.pyx":146
+ * 
  * 
  * cpdef tuple cnn_dense_backprop(np.ndarray[double, ndim=1] delta,             # <<<<<<<<<<<<<<
- *                                np.ndarray[double, ndim=1] layer_input,
- *                                np.ndarray[double, ndim=2] weights,
+ *                           np.ndarray[double, ndim=1] layer_input,
+ *                           np.ndarray[double, ndim=2] weights,
  */
 
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense_backprop(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  int __pyx_v_num_neurons;
-  int __pyx_v_num_inputs;
-  PyArrayObject *__pyx_v_delta_out = 0;
-  PyArrayObject *__pyx_v_weight_gradient = 0;
-  PyArrayObject *__pyx_v_bias_grad = 0;
-  int __pyx_v_i;
-  int __pyx_v_j;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_bias_grad;
-  __Pyx_Buffer __pyx_pybuffer_bias_grad;
+static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, CYTHON_UNUSED PyArrayObject *__pyx_v_biases, double __pyx_v_l1_penalty, double __pyx_v_l2_penalty, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  PyObject *__pyx_v_layer_input_2d = NULL;
+  PyObject *__pyx_v_weight_gradient = NULL;
+  PyObject *__pyx_v_bias_gradient = NULL;
+  PyObject *__pyx_v_new_delta = NULL;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_biases;
+  __Pyx_Buffer __pyx_pybuffer_biases;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_delta;
   __Pyx_Buffer __pyx_pybuffer_delta;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_delta_out;
-  __Pyx_Buffer __pyx_pybuffer_delta_out;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_layer_input;
   __Pyx_Buffer __pyx_pybuffer_layer_input;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_weight_gradient;
-  __Pyx_Buffer __pyx_pybuffer_weight_gradient;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_weights;
   __Pyx_Buffer __pyx_pybuffer_weights;
   PyObject *__pyx_r = NULL;
@@ -5428,38 +5427,10 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_b
   PyObject *__pyx_t_3 = NULL;
   int __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  PyArrayObject *__pyx_t_7 = NULL;
-  PyArrayObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  int __pyx_t_10;
-  int __pyx_t_11;
-  int __pyx_t_12;
-  int __pyx_t_13;
-  int __pyx_t_14;
-  int __pyx_t_15;
-  Py_ssize_t __pyx_t_16;
-  int __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  double __pyx_t_19;
-  Py_ssize_t __pyx_t_20;
-  Py_ssize_t __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("cnn_dense_backprop", 0);
-  __pyx_pybuffer_delta_out.pybuffer.buf = NULL;
-  __pyx_pybuffer_delta_out.refcount = 0;
-  __pyx_pybuffernd_delta_out.data = NULL;
-  __pyx_pybuffernd_delta_out.rcbuffer = &__pyx_pybuffer_delta_out;
-  __pyx_pybuffer_weight_gradient.pybuffer.buf = NULL;
-  __pyx_pybuffer_weight_gradient.refcount = 0;
-  __pyx_pybuffernd_weight_gradient.data = NULL;
-  __pyx_pybuffernd_weight_gradient.rcbuffer = &__pyx_pybuffer_weight_gradient;
-  __pyx_pybuffer_bias_grad.pybuffer.buf = NULL;
-  __pyx_pybuffer_bias_grad.refcount = 0;
-  __pyx_pybuffernd_bias_grad.data = NULL;
-  __pyx_pybuffernd_bias_grad.rcbuffer = &__pyx_pybuffer_bias_grad;
   __pyx_pybuffer_delta.pybuffer.buf = NULL;
   __pyx_pybuffer_delta.refcount = 0;
   __pyx_pybuffernd_delta.data = NULL;
@@ -5472,550 +5443,273 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_b
   __pyx_pybuffer_weights.refcount = 0;
   __pyx_pybuffernd_weights.data = NULL;
   __pyx_pybuffernd_weights.rcbuffer = &__pyx_pybuffer_weights;
+  __pyx_pybuffer_biases.pybuffer.buf = NULL;
+  __pyx_pybuffer_biases.refcount = 0;
+  __pyx_pybuffernd_biases.data = NULL;
+  __pyx_pybuffernd_biases.rcbuffer = &__pyx_pybuffer_biases;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_delta.rcbuffer->pybuffer, (PyObject*)__pyx_v_delta, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_delta.rcbuffer->pybuffer, (PyObject*)__pyx_v_delta, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_delta.diminfo[0].strides = __pyx_pybuffernd_delta.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_delta.diminfo[0].shape = __pyx_pybuffernd_delta.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer, (PyObject*)__pyx_v_layer_input, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer, (PyObject*)__pyx_v_layer_input, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_layer_input.diminfo[0].strides = __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_input.diminfo[0].shape = __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_weights.diminfo[0].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weights.diminfo[0].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weights.diminfo[1].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weights.diminfo[1].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[1];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_biases.rcbuffer->pybuffer, (PyObject*)__pyx_v_biases, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_biases.diminfo[0].strides = __pyx_pybuffernd_biases.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_biases.diminfo[0].shape = __pyx_pybuffernd_biases.rcbuffer->pybuffer.shape[0];
+
+  /* "deeprai/engine/cython/dense_operations.pyx":155
+ *                           bint use_bias):
+ *     # Reshape layer_input to 2D for matrix multiplication
+ *     layer_input_2d = layer_input.reshape(-1, 1)             # <<<<<<<<<<<<<<
+ *     # Gradient with respect to weights
+ *     weight_gradient = layer_input_2d @ delta.reshape(1, -1)
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_layer_input), __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_layer_input_2d = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_operations.pyx":157
+ *     layer_input_2d = layer_input.reshape(-1, 1)
+ *     # Gradient with respect to weights
+ *     weight_gradient = layer_input_2d @ delta.reshape(1, -1)             # <<<<<<<<<<<<<<
+ *     # Gradient with respect to biases
+ *     bias_gradient = delta if use_bias else None
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_reshape); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyNumber_MatrixMultiply(__pyx_v_layer_input_2d, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_weight_gradient = __pyx_t_2;
+  __pyx_t_2 = 0;
 
   /* "deeprai/engine/cython/dense_operations.pyx":159
- *                                bint use_bias):
- *     # Directly access the shape of the weights array
- *     cdef int num_neurons = weights.shape[0]             # <<<<<<<<<<<<<<
- *     cdef int num_inputs = weights.shape[1]
- * 
- */
-  __pyx_v_num_neurons = (__pyx_v_weights->dimensions[0]);
-
-  /* "deeprai/engine/cython/dense_operations.pyx":160
- *     # Directly access the shape of the weights array
- *     cdef int num_neurons = weights.shape[0]
- *     cdef int num_inputs = weights.shape[1]             # <<<<<<<<<<<<<<
- * 
- *     # Check if the dimensions match
- */
-  __pyx_v_num_inputs = (__pyx_v_weights->dimensions[1]);
-
-  /* "deeprai/engine/cython/dense_operations.pyx":163
- * 
- *     # Check if the dimensions match
- *     assert num_inputs == layer_input.size             # <<<<<<<<<<<<<<
- *     assert num_neurons == delta.size
- * 
- */
-  #ifndef CYTHON_WITHOUT_ASSERTIONS
-  if (unlikely(!Py_OptimizeFlag)) {
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_num_inputs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_layer_input), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 163, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 163, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_4)) {
-      PyErr_SetNone(PyExc_AssertionError);
-      __PYX_ERR(0, 163, __pyx_L1_error)
-    }
-  }
-  #endif
-
-  /* "deeprai/engine/cython/dense_operations.pyx":164
- *     # Check if the dimensions match
- *     assert num_inputs == layer_input.size
- *     assert num_neurons == delta.size             # <<<<<<<<<<<<<<
- * 
- *     # Prepare the gradients using the shape variables
- */
-  #ifndef CYTHON_WITHOUT_ASSERTIONS
-  if (unlikely(!Py_OptimizeFlag)) {
-    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_num_neurons); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_size); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 164, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 164, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_4)) {
-      PyErr_SetNone(PyExc_AssertionError);
-      __PYX_ERR(0, 164, __pyx_L1_error)
-    }
-  }
-  #endif
-
-  /* "deeprai/engine/cython/dense_operations.pyx":167
- * 
- *     # Prepare the gradients using the shape variables
- *     cdef np.ndarray[double, ndim=1] delta_out = np.zeros(num_inputs, dtype=np.double)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[double, ndim=2] weight_gradient = np.zeros((num_neurons, num_inputs), dtype=np.double)
- *     cdef np.ndarray[double, ndim=1] bias_grad = np.zeros(num_neurons, dtype=np.double) if use_bias else None
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_num_inputs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_double); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 167, __pyx_L1_error)
-  __pyx_t_7 = ((PyArrayObject *)__pyx_t_6);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_delta_out.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_delta_out = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_delta_out.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 167, __pyx_L1_error)
-    } else {__pyx_pybuffernd_delta_out.diminfo[0].strides = __pyx_pybuffernd_delta_out.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_delta_out.diminfo[0].shape = __pyx_pybuffernd_delta_out.rcbuffer->pybuffer.shape[0];
-    }
-  }
-  __pyx_t_7 = 0;
-  __pyx_v_delta_out = ((PyArrayObject *)__pyx_t_6);
-  __pyx_t_6 = 0;
-
-  /* "deeprai/engine/cython/dense_operations.pyx":168
- *     # Prepare the gradients using the shape variables
- *     cdef np.ndarray[double, ndim=1] delta_out = np.zeros(num_inputs, dtype=np.double)
- *     cdef np.ndarray[double, ndim=2] weight_gradient = np.zeros((num_neurons, num_inputs), dtype=np.double)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[double, ndim=1] bias_grad = np.zeros(num_neurons, dtype=np.double) if use_bias else None
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_num_neurons); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_num_inputs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_6);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
-  __pyx_t_6 = 0;
-  __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_double); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 168, __pyx_L1_error)
-  __pyx_t_8 = ((PyArrayObject *)__pyx_t_5);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer, (PyObject*)__pyx_t_8, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 2, 0, __pyx_stack) == -1)) {
-      __pyx_v_weight_gradient = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 168, __pyx_L1_error)
-    } else {__pyx_pybuffernd_weight_gradient.diminfo[0].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weight_gradient.diminfo[0].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weight_gradient.diminfo[1].strides = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weight_gradient.diminfo[1].shape = __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.shape[1];
-    }
-  }
-  __pyx_t_8 = 0;
-  __pyx_v_weight_gradient = ((PyArrayObject *)__pyx_t_5);
-  __pyx_t_5 = 0;
-
-  /* "deeprai/engine/cython/dense_operations.pyx":169
- *     cdef np.ndarray[double, ndim=1] delta_out = np.zeros(num_inputs, dtype=np.double)
- *     cdef np.ndarray[double, ndim=2] weight_gradient = np.zeros((num_neurons, num_inputs), dtype=np.double)
- *     cdef np.ndarray[double, ndim=1] bias_grad = np.zeros(num_neurons, dtype=np.double) if use_bias else None             # <<<<<<<<<<<<<<
- * 
- *     # Compute the weight gradients and the output delta
+ *     weight_gradient = layer_input_2d @ delta.reshape(1, -1)
+ *     # Gradient with respect to biases
+ *     bias_gradient = delta if use_bias else None             # <<<<<<<<<<<<<<
+ *     # Update delta for the next layer (previous in terms of forward pass)
+ *     new_delta = weights @ delta
  */
   if ((__pyx_v_use_bias != 0)) {
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_num_neurons); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
-    __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_double); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_9) < 0) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(((__pyx_t_9) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_9, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 169, __pyx_L1_error)
-    __pyx_t_5 = __pyx_t_9;
-    __pyx_t_9 = 0;
+    __Pyx_INCREF(((PyObject *)__pyx_v_delta));
+    __pyx_t_2 = ((PyObject *)__pyx_v_delta);
   } else {
     __Pyx_INCREF(Py_None);
-    __pyx_t_5 = Py_None;
+    __pyx_t_2 = Py_None;
   }
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_bias_grad.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_5), &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_bias_grad = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_bias_grad.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 169, __pyx_L1_error)
-    } else {__pyx_pybuffernd_bias_grad.diminfo[0].strides = __pyx_pybuffernd_bias_grad.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_bias_grad.diminfo[0].shape = __pyx_pybuffernd_bias_grad.rcbuffer->pybuffer.shape[0];
+  __pyx_v_bias_gradient = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_operations.pyx":161
+ *     bias_gradient = delta if use_bias else None
+ *     # Update delta for the next layer (previous in terms of forward pass)
+ *     new_delta = weights @ delta             # <<<<<<<<<<<<<<
+ *     new_delta *= activation_derv(layer_input)
+ *     # Apply L1/L2 regularization if required
+ */
+  __pyx_t_2 = __Pyx_PyNumber_MatrixMultiply(((PyObject *)__pyx_v_weights), ((PyObject *)__pyx_v_delta)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_new_delta = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_operations.pyx":162
+ *     # Update delta for the next layer (previous in terms of forward pass)
+ *     new_delta = weights @ delta
+ *     new_delta *= activation_derv(layer_input)             # <<<<<<<<<<<<<<
+ *     # Apply L1/L2 regularization if required
+ *     if l1_penalty > 0:
+ */
+  __Pyx_INCREF(__pyx_v_activation_derv);
+  __pyx_t_1 = __pyx_v_activation_derv; __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_1, function);
     }
   }
-  __pyx_v_bias_grad = ((PyArrayObject *)__pyx_t_5);
-  __pyx_t_5 = 0;
+  __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, ((PyObject *)__pyx_v_layer_input)) : __Pyx_PyObject_CallOneArg(__pyx_t_1, ((PyObject *)__pyx_v_layer_input));
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyNumber_InPlaceMultiply(__pyx_v_new_delta, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(__pyx_v_new_delta, __pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":172
- * 
- *     # Compute the weight gradients and the output delta
- *     for i in range(num_neurons):             # <<<<<<<<<<<<<<
- *         for j in range(num_inputs):
- *             weight_gradient[i, j] = delta[i] * layer_input[j] * activation_derv(layer_input[j])
+  /* "deeprai/engine/cython/dense_operations.pyx":164
+ *     new_delta *= activation_derv(layer_input)
+ *     # Apply L1/L2 regularization if required
+ *     if l1_penalty > 0:             # <<<<<<<<<<<<<<
+ *         weight_gradient += l1_penalty * np.sign(weights)
+ *     if l2_penalty > 0:
  */
-  __pyx_t_10 = __pyx_v_num_neurons;
-  __pyx_t_11 = __pyx_t_10;
-  for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-    __pyx_v_i = __pyx_t_12;
-
-    /* "deeprai/engine/cython/dense_operations.pyx":173
- *     # Compute the weight gradients and the output delta
- *     for i in range(num_neurons):
- *         for j in range(num_inputs):             # <<<<<<<<<<<<<<
- *             weight_gradient[i, j] = delta[i] * layer_input[j] * activation_derv(layer_input[j])
- *             delta_out[j] += delta[i] * weights[i, j]
- */
-    __pyx_t_13 = __pyx_v_num_inputs;
-    __pyx_t_14 = __pyx_t_13;
-    for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-      __pyx_v_j = __pyx_t_15;
-
-      /* "deeprai/engine/cython/dense_operations.pyx":174
- *     for i in range(num_neurons):
- *         for j in range(num_inputs):
- *             weight_gradient[i, j] = delta[i] * layer_input[j] * activation_derv(layer_input[j])             # <<<<<<<<<<<<<<
- *             delta_out[j] += delta[i] * weights[i, j]
- * 
- */
-      __pyx_t_16 = __pyx_v_i;
-      __pyx_t_17 = -1;
-      if (__pyx_t_16 < 0) {
-        __pyx_t_16 += __pyx_pybuffernd_delta.diminfo[0].shape;
-        if (unlikely(__pyx_t_16 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_16 >= __pyx_pybuffernd_delta.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 174, __pyx_L1_error)
-      }
-      __pyx_t_18 = __pyx_v_j;
-      __pyx_t_17 = -1;
-      if (__pyx_t_18 < 0) {
-        __pyx_t_18 += __pyx_pybuffernd_layer_input.diminfo[0].shape;
-        if (unlikely(__pyx_t_18 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_18 >= __pyx_pybuffernd_layer_input.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 174, __pyx_L1_error)
-      }
-      __pyx_t_5 = PyFloat_FromDouble(((*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_delta.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_delta.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_layer_input.diminfo[0].strides)))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_18 = __pyx_v_j;
-      __pyx_t_17 = -1;
-      if (__pyx_t_18 < 0) {
-        __pyx_t_18 += __pyx_pybuffernd_layer_input.diminfo[0].shape;
-        if (unlikely(__pyx_t_18 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_18 >= __pyx_pybuffernd_layer_input.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 174, __pyx_L1_error)
-      }
-      __pyx_t_2 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_layer_input.diminfo[0].strides))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx_v_activation_derv);
-      __pyx_t_1 = __pyx_v_activation_derv; __pyx_t_3 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-        __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
-        if (likely(__pyx_t_3)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-          __Pyx_INCREF(__pyx_t_3);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_1, function);
-        }
-      }
-      __pyx_t_9 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_2);
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 174, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_Multiply(__pyx_t_5, __pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_18 = __pyx_v_i;
-      __pyx_t_16 = __pyx_v_j;
-      __pyx_t_17 = -1;
-      if (__pyx_t_18 < 0) {
-        __pyx_t_18 += __pyx_pybuffernd_weight_gradient.diminfo[0].shape;
-        if (unlikely(__pyx_t_18 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_18 >= __pyx_pybuffernd_weight_gradient.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (__pyx_t_16 < 0) {
-        __pyx_t_16 += __pyx_pybuffernd_weight_gradient.diminfo[1].shape;
-        if (unlikely(__pyx_t_16 < 0)) __pyx_t_17 = 1;
-      } else if (unlikely(__pyx_t_16 >= __pyx_pybuffernd_weight_gradient.diminfo[1].shape)) __pyx_t_17 = 1;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 174, __pyx_L1_error)
-      }
-      *__Pyx_BufPtrStrided2d(double *, __pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_weight_gradient.diminfo[0].strides, __pyx_t_16, __pyx_pybuffernd_weight_gradient.diminfo[1].strides) = __pyx_t_19;
-
-      /* "deeprai/engine/cython/dense_operations.pyx":175
- *         for j in range(num_inputs):
- *             weight_gradient[i, j] = delta[i] * layer_input[j] * activation_derv(layer_input[j])
- *             delta_out[j] += delta[i] * weights[i, j]             # <<<<<<<<<<<<<<
- * 
- *     # If biases are used, compute their gradients
- */
-      __pyx_t_16 = __pyx_v_i;
-      __pyx_t_17 = -1;
-      if (__pyx_t_16 < 0) {
-        __pyx_t_16 += __pyx_pybuffernd_delta.diminfo[0].shape;
-        if (unlikely(__pyx_t_16 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_16 >= __pyx_pybuffernd_delta.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 175, __pyx_L1_error)
-      }
-      __pyx_t_18 = __pyx_v_i;
-      __pyx_t_20 = __pyx_v_j;
-      __pyx_t_17 = -1;
-      if (__pyx_t_18 < 0) {
-        __pyx_t_18 += __pyx_pybuffernd_weights.diminfo[0].shape;
-        if (unlikely(__pyx_t_18 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_18 >= __pyx_pybuffernd_weights.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (__pyx_t_20 < 0) {
-        __pyx_t_20 += __pyx_pybuffernd_weights.diminfo[1].shape;
-        if (unlikely(__pyx_t_20 < 0)) __pyx_t_17 = 1;
-      } else if (unlikely(__pyx_t_20 >= __pyx_pybuffernd_weights.diminfo[1].shape)) __pyx_t_17 = 1;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 175, __pyx_L1_error)
-      }
-      __pyx_t_21 = __pyx_v_j;
-      __pyx_t_17 = -1;
-      if (__pyx_t_21 < 0) {
-        __pyx_t_21 += __pyx_pybuffernd_delta_out.diminfo[0].shape;
-        if (unlikely(__pyx_t_21 < 0)) __pyx_t_17 = 0;
-      } else if (unlikely(__pyx_t_21 >= __pyx_pybuffernd_delta_out.diminfo[0].shape)) __pyx_t_17 = 0;
-      if (unlikely(__pyx_t_17 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_17);
-        __PYX_ERR(0, 175, __pyx_L1_error)
-      }
-      *__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_delta_out.rcbuffer->pybuffer.buf, __pyx_t_21, __pyx_pybuffernd_delta_out.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_delta.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_delta.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(double *, __pyx_pybuffernd_weights.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_weights.diminfo[0].strides, __pyx_t_20, __pyx_pybuffernd_weights.diminfo[1].strides)));
-    }
-  }
-
-  /* "deeprai/engine/cython/dense_operations.pyx":178
- * 
- *     # If biases are used, compute their gradients
- *     if use_bias:             # <<<<<<<<<<<<<<
- *         for i in range(num_neurons):
- *             bias_grad[i] = delta[i]
- */
-  __pyx_t_4 = (__pyx_v_use_bias != 0);
+  __pyx_t_4 = ((__pyx_v_l1_penalty > 0.0) != 0);
   if (__pyx_t_4) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":179
- *     # If biases are used, compute their gradients
- *     if use_bias:
- *         for i in range(num_neurons):             # <<<<<<<<<<<<<<
- *             bias_grad[i] = delta[i]
- * 
+    /* "deeprai/engine/cython/dense_operations.pyx":165
+ *     # Apply L1/L2 regularization if required
+ *     if l1_penalty > 0:
+ *         weight_gradient += l1_penalty * np.sign(weights)             # <<<<<<<<<<<<<<
+ *     if l2_penalty > 0:
+ *         weight_gradient += l2_penalty * weights
  */
-    __pyx_t_10 = __pyx_v_num_neurons;
-    __pyx_t_11 = __pyx_t_10;
-    for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-      __pyx_v_i = __pyx_t_12;
-
-      /* "deeprai/engine/cython/dense_operations.pyx":180
- *     if use_bias:
- *         for i in range(num_neurons):
- *             bias_grad[i] = delta[i]             # <<<<<<<<<<<<<<
- * 
- *     # Apply the derivative of the activation function to the delta_out
- */
-      __pyx_t_20 = __pyx_v_i;
-      __pyx_t_13 = -1;
-      if (__pyx_t_20 < 0) {
-        __pyx_t_20 += __pyx_pybuffernd_delta.diminfo[0].shape;
-        if (unlikely(__pyx_t_20 < 0)) __pyx_t_13 = 0;
-      } else if (unlikely(__pyx_t_20 >= __pyx_pybuffernd_delta.diminfo[0].shape)) __pyx_t_13 = 0;
-      if (unlikely(__pyx_t_13 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_13);
-        __PYX_ERR(0, 180, __pyx_L1_error)
-      }
-      __pyx_t_18 = __pyx_v_i;
-      __pyx_t_13 = -1;
-      if (__pyx_t_18 < 0) {
-        __pyx_t_18 += __pyx_pybuffernd_bias_grad.diminfo[0].shape;
-        if (unlikely(__pyx_t_18 < 0)) __pyx_t_13 = 0;
-      } else if (unlikely(__pyx_t_18 >= __pyx_pybuffernd_bias_grad.diminfo[0].shape)) __pyx_t_13 = 0;
-      if (unlikely(__pyx_t_13 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_13);
-        __PYX_ERR(0, 180, __pyx_L1_error)
-      }
-      *__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_bias_grad.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_bias_grad.diminfo[0].strides) = (*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_delta.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_delta.diminfo[0].strides));
-    }
-
-    /* "deeprai/engine/cython/dense_operations.pyx":178
- * 
- *     # If biases are used, compute their gradients
- *     if use_bias:             # <<<<<<<<<<<<<<
- *         for i in range(num_neurons):
- *             bias_grad[i] = delta[i]
- */
-  }
-
-  /* "deeprai/engine/cython/dense_operations.pyx":183
- * 
- *     # Apply the derivative of the activation function to the delta_out
- *     for i in range(num_inputs):             # <<<<<<<<<<<<<<
- *         delta_out[i] *= activation_derv(layer_input[i])
- * 
- */
-  __pyx_t_10 = __pyx_v_num_inputs;
-  __pyx_t_11 = __pyx_t_10;
-  for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-    __pyx_v_i = __pyx_t_12;
-
-    /* "deeprai/engine/cython/dense_operations.pyx":184
- *     # Apply the derivative of the activation function to the delta_out
- *     for i in range(num_inputs):
- *         delta_out[i] *= activation_derv(layer_input[i])             # <<<<<<<<<<<<<<
- * 
- *     return delta_out, weight_gradient, bias_grad
- */
-    __pyx_t_20 = __pyx_v_i;
-    __pyx_t_13 = -1;
-    if (__pyx_t_20 < 0) {
-      __pyx_t_20 += __pyx_pybuffernd_layer_input.diminfo[0].shape;
-      if (unlikely(__pyx_t_20 < 0)) __pyx_t_13 = 0;
-    } else if (unlikely(__pyx_t_20 >= __pyx_pybuffernd_layer_input.diminfo[0].shape)) __pyx_t_13 = 0;
-    if (unlikely(__pyx_t_13 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_13);
-      __PYX_ERR(0, 184, __pyx_L1_error)
-    }
-    __pyx_t_9 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_layer_input.diminfo[0].strides))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 184, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_INCREF(__pyx_v_activation_derv);
-    __pyx_t_5 = __pyx_v_activation_derv; __pyx_t_2 = NULL;
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_l1_penalty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sign); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
-      if (likely(__pyx_t_2)) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_3)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-        __Pyx_INCREF(__pyx_t_2);
+        __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_9);
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_3, ((PyObject *)__pyx_v_weights)) : __Pyx_PyObject_CallOneArg(__pyx_t_5, ((PyObject *)__pyx_v_weights));
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_20 = __pyx_v_i;
-    __pyx_t_13 = -1;
-    if (__pyx_t_20 < 0) {
-      __pyx_t_20 += __pyx_pybuffernd_delta_out.diminfo[0].shape;
-      if (unlikely(__pyx_t_20 < 0)) __pyx_t_13 = 0;
-    } else if (unlikely(__pyx_t_20 >= __pyx_pybuffernd_delta_out.diminfo[0].shape)) __pyx_t_13 = 0;
-    if (unlikely(__pyx_t_13 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_13);
-      __PYX_ERR(0, 184, __pyx_L1_error)
-    }
-    *__Pyx_BufPtrStrided1d(double *, __pyx_pybuffernd_delta_out.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_delta_out.diminfo[0].strides) *= __pyx_t_19;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_weight_gradient, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_weight_gradient, __pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "deeprai/engine/cython/dense_operations.pyx":164
+ *     new_delta *= activation_derv(layer_input)
+ *     # Apply L1/L2 regularization if required
+ *     if l1_penalty > 0:             # <<<<<<<<<<<<<<
+ *         weight_gradient += l1_penalty * np.sign(weights)
+ *     if l2_penalty > 0:
+ */
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":186
- *         delta_out[i] *= activation_derv(layer_input[i])
+  /* "deeprai/engine/cython/dense_operations.pyx":166
+ *     if l1_penalty > 0:
+ *         weight_gradient += l1_penalty * np.sign(weights)
+ *     if l2_penalty > 0:             # <<<<<<<<<<<<<<
+ *         weight_gradient += l2_penalty * weights
+ *     # Reshape new_delta back to 1D
+ */
+  __pyx_t_4 = ((__pyx_v_l2_penalty > 0.0) != 0);
+  if (__pyx_t_4) {
+
+    /* "deeprai/engine/cython/dense_operations.pyx":167
+ *         weight_gradient += l1_penalty * np.sign(weights)
+ *     if l2_penalty > 0:
+ *         weight_gradient += l2_penalty * weights             # <<<<<<<<<<<<<<
+ *     # Reshape new_delta back to 1D
+ *     new_delta = new_delta.ravel()
+ */
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_l2_penalty); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, ((PyObject *)__pyx_v_weights)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_weight_gradient, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_weight_gradient, __pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "deeprai/engine/cython/dense_operations.pyx":166
+ *     if l1_penalty > 0:
+ *         weight_gradient += l1_penalty * np.sign(weights)
+ *     if l2_penalty > 0:             # <<<<<<<<<<<<<<
+ *         weight_gradient += l2_penalty * weights
+ *     # Reshape new_delta back to 1D
+ */
+  }
+
+  /* "deeprai/engine/cython/dense_operations.pyx":169
+ *         weight_gradient += l2_penalty * weights
+ *     # Reshape new_delta back to 1D
+ *     new_delta = new_delta.ravel()             # <<<<<<<<<<<<<<
+ *     return weight_gradient, bias_gradient, new_delta
  * 
- *     return delta_out, weight_gradient, bias_grad             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_new_delta, __pyx_n_s_ravel); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_5);
+    if (likely(__pyx_t_1)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_5, function);
+    }
+  }
+  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(__pyx_v_new_delta, __pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "deeprai/engine/cython/dense_operations.pyx":170
+ *     # Reshape new_delta back to 1D
+ *     new_delta = new_delta.ravel()
+ *     return weight_gradient, bias_gradient, new_delta             # <<<<<<<<<<<<<<
  * 
- * @cython.boundscheck(False)
+ * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(((PyObject *)__pyx_v_delta_out));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_delta_out));
-  PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_delta_out));
-  __Pyx_INCREF(((PyObject *)__pyx_v_weight_gradient));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_weight_gradient));
-  PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_weight_gradient));
-  __Pyx_INCREF(((PyObject *)__pyx_v_bias_grad));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_bias_grad));
-  PyTuple_SET_ITEM(__pyx_t_1, 2, ((PyObject *)__pyx_v_bias_grad));
-  __pyx_r = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
+  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_v_weight_gradient);
+  __Pyx_GIVEREF(__pyx_v_weight_gradient);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_weight_gradient);
+  __Pyx_INCREF(__pyx_v_bias_gradient);
+  __Pyx_GIVEREF(__pyx_v_bias_gradient);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_bias_gradient);
+  __Pyx_INCREF(__pyx_v_new_delta);
+  __Pyx_GIVEREF(__pyx_v_new_delta);
+  PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_new_delta);
+  __pyx_r = ((PyObject*)__pyx_t_2);
+  __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":153
- * cimport numpy as np
+  /* "deeprai/engine/cython/dense_operations.pyx":146
+ * 
  * 
  * cpdef tuple cnn_dense_backprop(np.ndarray[double, ndim=1] delta,             # <<<<<<<<<<<<<<
- *                                np.ndarray[double, ndim=1] layer_input,
- *                                np.ndarray[double, ndim=2] weights,
+ *                           np.ndarray[double, ndim=1] layer_input,
+ *                           np.ndarray[double, ndim=2] weights,
  */
 
   /* function exit code */
@@ -6024,33 +5718,26 @@ static PyObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_b
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_9);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_bias_grad.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta_out.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weights.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.cnn_dense_backprop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_bias_grad.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta_out.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weight_gradient.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weights.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_delta_out);
-  __Pyx_XDECREF((PyObject *)__pyx_v_weight_gradient);
-  __Pyx_XDECREF((PyObject *)__pyx_v_bias_grad);
+  __Pyx_XDECREF(__pyx_v_layer_input_2d);
+  __Pyx_XDECREF(__pyx_v_weight_gradient);
+  __Pyx_XDECREF(__pyx_v_bias_gradient);
+  __Pyx_XDECREF(__pyx_v_new_delta);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -6062,6 +5749,9 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense
   PyArrayObject *__pyx_v_delta = 0;
   PyArrayObject *__pyx_v_layer_input = 0;
   PyArrayObject *__pyx_v_weights = 0;
+  PyArrayObject *__pyx_v_biases = 0;
+  double __pyx_v_l1_penalty;
+  double __pyx_v_l2_penalty;
   PyObject *__pyx_v_activation_derv = 0;
   int __pyx_v_use_bias;
   int __pyx_lineno = 0;
@@ -6071,12 +5761,18 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("cnn_dense_backprop (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_delta,&__pyx_n_s_layer_input,&__pyx_n_s_weights,&__pyx_n_s_activation_derv,&__pyx_n_s_use_bias,0};
-    PyObject* values[5] = {0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_delta,&__pyx_n_s_layer_input,&__pyx_n_s_weights,&__pyx_n_s_biases,&__pyx_n_s_l1_penalty,&__pyx_n_s_l2_penalty,&__pyx_n_s_activation_derv,&__pyx_n_s_use_bias,0};
+    PyObject* values[8] = {0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+        CYTHON_FALLTHROUGH;
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        CYTHON_FALLTHROUGH;
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         CYTHON_FALLTHROUGH;
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
@@ -6099,31 +5795,49 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_layer_input)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 5, 5, 1); __PYX_ERR(0, 153, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 1); __PYX_ERR(0, 146, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 5, 5, 2); __PYX_ERR(0, 153, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 2); __PYX_ERR(0, 146, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
-        if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_derv)) != 0)) kw_args--;
+        if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_biases)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 5, 5, 3); __PYX_ERR(0, 153, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 3); __PYX_ERR(0, 146, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
-        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
+        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_l1_penalty)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 5, 5, 4); __PYX_ERR(0, 153, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 4); __PYX_ERR(0, 146, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  5:
+        if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_l2_penalty)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 5); __PYX_ERR(0, 146, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  6:
+        if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_derv)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 6); __PYX_ERR(0, 146, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  7:
+        if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, 7); __PYX_ERR(0, 146, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cnn_dense_backprop") < 0)) __PYX_ERR(0, 153, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cnn_dense_backprop") < 0)) __PYX_ERR(0, 146, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -6131,25 +5845,32 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+      values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
     __pyx_v_delta = ((PyArrayObject *)values[0]);
     __pyx_v_layer_input = ((PyArrayObject *)values[1]);
     __pyx_v_weights = ((PyArrayObject *)values[2]);
-    __pyx_v_activation_derv = values[3];
-    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 157, __pyx_L3_error)
+    __pyx_v_biases = ((PyArrayObject *)values[3]);
+    __pyx_v_l1_penalty = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_l1_penalty == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L3_error)
+    __pyx_v_l2_penalty = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_l2_penalty == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L3_error)
+    __pyx_v_activation_derv = values[6];
+    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 153, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("cnn_dense_backprop", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 146, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.cnn_dense_backprop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 153, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_layer_input), __pyx_ptype_5numpy_ndarray, 1, "layer_input", 0))) __PYX_ERR(0, 154, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 155, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(__pyx_self, __pyx_v_delta, __pyx_v_layer_input, __pyx_v_weights, __pyx_v_activation_derv, __pyx_v_use_bias);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 146, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_layer_input), __pyx_ptype_5numpy_ndarray, 1, "layer_input", 0))) __PYX_ERR(0, 147, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 148, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_biases), __pyx_ptype_5numpy_ndarray, 1, "biases", 0))) __PYX_ERR(0, 149, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(__pyx_self, __pyx_v_delta, __pyx_v_layer_input, __pyx_v_weights, __pyx_v_biases, __pyx_v_l1_penalty, __pyx_v_l2_penalty, __pyx_v_activation_derv, __pyx_v_use_bias);
 
   /* function exit code */
   goto __pyx_L0;
@@ -6160,7 +5881,9 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_9cnn_dense
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias) {
+static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense_backprop(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_delta, PyArrayObject *__pyx_v_layer_input, PyArrayObject *__pyx_v_weights, PyArrayObject *__pyx_v_biases, double __pyx_v_l1_penalty, double __pyx_v_l2_penalty, PyObject *__pyx_v_activation_derv, int __pyx_v_use_bias) {
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_biases;
+  __Pyx_Buffer __pyx_pybuffer_biases;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_delta;
   __Pyx_Buffer __pyx_pybuffer_delta;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_layer_input;
@@ -6186,23 +5909,32 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense
   __pyx_pybuffer_weights.refcount = 0;
   __pyx_pybuffernd_weights.data = NULL;
   __pyx_pybuffernd_weights.rcbuffer = &__pyx_pybuffer_weights;
+  __pyx_pybuffer_biases.pybuffer.buf = NULL;
+  __pyx_pybuffer_biases.refcount = 0;
+  __pyx_pybuffernd_biases.data = NULL;
+  __pyx_pybuffernd_biases.rcbuffer = &__pyx_pybuffer_biases;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_delta.rcbuffer->pybuffer, (PyObject*)__pyx_v_delta, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_delta.rcbuffer->pybuffer, (PyObject*)__pyx_v_delta, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_delta.diminfo[0].strides = __pyx_pybuffernd_delta.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_delta.diminfo[0].shape = __pyx_pybuffernd_delta.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer, (PyObject*)__pyx_v_layer_input, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer, (PyObject*)__pyx_v_layer_input, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_layer_input.diminfo[0].strides = __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_input.diminfo[0].shape = __pyx_pybuffernd_layer_input.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 153, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_pybuffernd_weights.diminfo[0].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weights.diminfo[0].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weights.diminfo[1].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weights.diminfo[1].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[1];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_biases.rcbuffer->pybuffer, (PyObject*)__pyx_v_biases, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 146, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_biases.diminfo[0].strides = __pyx_pybuffernd_biases.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_biases.diminfo[0].shape = __pyx_pybuffernd_biases.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(__pyx_v_delta, __pyx_v_layer_input, __pyx_v_weights, __pyx_v_activation_derv, __pyx_v_use_bias, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_dense_backprop(__pyx_v_delta, __pyx_v_layer_input, __pyx_v_weights, __pyx_v_biases, __pyx_v_l1_penalty, __pyx_v_l2_penalty, __pyx_v_activation_derv, __pyx_v_use_bias, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6215,6 +5947,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_biases.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weights.rcbuffer->pybuffer);
@@ -6223,6 +5956,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_biases.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_delta.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_layer_input.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_weights.rcbuffer->pybuffer);
@@ -6232,7 +5966,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_8cnn_dense
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/dense_operations.pyx":191
+/* "deeprai/engine/cython/dense_operations.pyx":176
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] input_data, weights,             # <<<<<<<<<<<<<<
@@ -6275,11 +6009,11 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   __pyx_pybuffernd_input_data.rcbuffer = &__pyx_pybuffer_input_data;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_input_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_input_data, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 191, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_input_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_input_data, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 176, __pyx_L1_error)
   }
   __pyx_pybuffernd_input_data.diminfo[0].strides = __pyx_pybuffernd_input_data.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_input_data.diminfo[0].shape = __pyx_pybuffernd_input_data.rcbuffer->pybuffer.shape[0];
 
-  /* "deeprai/engine/cython/dense_operations.pyx":194
+  /* "deeprai/engine/cython/dense_operations.pyx":179
  *                                                                       biases, activation_func,  bint use_bias, list dropout_rate,
  *                                                                       bint training_mode=True):
  *     cdef np.ndarray[np.float64_t, ndim=1] layer_output = input_data             # <<<<<<<<<<<<<<
@@ -6290,23 +6024,23 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_layer_output.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_v_input_data), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_layer_output = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 194, __pyx_L1_error)
+      __PYX_ERR(0, 179, __pyx_L1_error)
     } else {__pyx_pybuffernd_layer_output.diminfo[0].strides = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_output.diminfo[0].shape = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.shape[0];
     }
   }
   __Pyx_INCREF(((PyObject *)__pyx_v_input_data));
   __pyx_v_layer_output = ((PyArrayObject *)__pyx_v_input_data);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":197
+  /* "deeprai/engine/cython/dense_operations.pyx":182
  *     cdef double mask_value
  * 
  *     layer_output = np.dot(layer_output, weights)             # <<<<<<<<<<<<<<
  *     if use_bias:
  *         layer_output += biases
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -6324,7 +6058,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_layer_output), __pyx_v_weights};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -6332,13 +6066,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_layer_output), __pyx_v_weights};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -6349,12 +6083,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
     __Pyx_INCREF(__pyx_v_weights);
     __Pyx_GIVEREF(__pyx_v_weights);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_weights);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 197, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 182, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6371,13 +6105,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
       __pyx_t_7 = __pyx_t_8 = __pyx_t_9 = 0;
     }
     __pyx_pybuffernd_layer_output.diminfo[0].strides = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_output.diminfo[0].shape = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 197, __pyx_L1_error)
+    if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 182, __pyx_L1_error)
   }
   __pyx_t_6 = 0;
   __Pyx_DECREF_SET(__pyx_v_layer_output, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":198
+  /* "deeprai/engine/cython/dense_operations.pyx":183
  * 
  *     layer_output = np.dot(layer_output, weights)
  *     if use_bias:             # <<<<<<<<<<<<<<
@@ -6387,16 +6121,16 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   __pyx_t_10 = (__pyx_v_use_bias != 0);
   if (__pyx_t_10) {
 
-    /* "deeprai/engine/cython/dense_operations.pyx":199
+    /* "deeprai/engine/cython/dense_operations.pyx":184
  *     layer_output = np.dot(layer_output, weights)
  *     if use_bias:
  *         layer_output += biases             # <<<<<<<<<<<<<<
  * 
  *     layer_output = activation_func(layer_output)
  */
-    __pyx_t_1 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_layer_output), __pyx_v_biases); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_1 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_layer_output), __pyx_v_biases); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 199, __pyx_L1_error)
+    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 184, __pyx_L1_error)
     __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6413,13 +6147,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
         __pyx_t_9 = __pyx_t_8 = __pyx_t_7 = 0;
       }
       __pyx_pybuffernd_layer_output.diminfo[0].strides = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_output.diminfo[0].shape = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 199, __pyx_L1_error)
+      if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 184, __pyx_L1_error)
     }
     __pyx_t_6 = 0;
     __Pyx_DECREF_SET(__pyx_v_layer_output, ((PyArrayObject *)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "deeprai/engine/cython/dense_operations.pyx":198
+    /* "deeprai/engine/cython/dense_operations.pyx":183
  * 
  *     layer_output = np.dot(layer_output, weights)
  *     if use_bias:             # <<<<<<<<<<<<<<
@@ -6428,7 +6162,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
  */
   }
 
-  /* "deeprai/engine/cython/dense_operations.pyx":201
+  /* "deeprai/engine/cython/dense_operations.pyx":186
  *         layer_output += biases
  * 
  *     layer_output = activation_func(layer_output)             # <<<<<<<<<<<<<<
@@ -6448,10 +6182,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   }
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, ((PyObject *)__pyx_v_layer_output)) : __Pyx_PyObject_CallOneArg(__pyx_t_3, ((PyObject *)__pyx_v_layer_output));
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 201, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 186, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6468,13 +6202,13 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
       __pyx_t_7 = __pyx_t_8 = __pyx_t_9 = 0;
     }
     __pyx_pybuffernd_layer_output.diminfo[0].strides = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_layer_output.diminfo[0].shape = __pyx_pybuffernd_layer_output.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+    if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 186, __pyx_L1_error)
   }
   __pyx_t_6 = 0;
   __Pyx_DECREF_SET(__pyx_v_layer_output, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":208
+  /* "deeprai/engine/cython/dense_operations.pyx":193
  *     #     layer_output *= dropout_mask
  * 
  *     return layer_output             # <<<<<<<<<<<<<<
@@ -6486,7 +6220,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_fo
   __pyx_r = ((PyArrayObject *)__pyx_v_layer_output);
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/dense_operations.pyx":191
+  /* "deeprai/engine/cython/dense_operations.pyx":176
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] input_data, weights,             # <<<<<<<<<<<<<<
@@ -6569,31 +6303,31 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_11cnn_forw
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 1); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 1); __PYX_ERR(0, 176, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_biases)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 2); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 2); __PYX_ERR(0, 176, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_activation_func)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 3); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 3); __PYX_ERR(0, 176, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_bias)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 4); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 4); __PYX_ERR(0, 176, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dropout_rate)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 5); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, 5); __PYX_ERR(0, 176, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
@@ -6603,7 +6337,7 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_11cnn_forw
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cnn_forward_propagate") < 0)) __PYX_ERR(0, 191, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cnn_forward_propagate") < 0)) __PYX_ERR(0, 176, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6623,13 +6357,13 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_11cnn_forw
     __pyx_v_weights = values[1];
     __pyx_v_biases = values[2];
     __pyx_v_activation_func = values[3];
-    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 192, __pyx_L3_error)
+    __pyx_v_use_bias = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_use_bias == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 177, __pyx_L3_error)
     __pyx_v_dropout_rate = ((PyObject*)values[5]);
     if (values[6]) {
-      __pyx_v_training_mode = __Pyx_PyObject_IsTrue(values[6]); if (unlikely((__pyx_v_training_mode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+      __pyx_v_training_mode = __Pyx_PyObject_IsTrue(values[6]); if (unlikely((__pyx_v_training_mode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 178, __pyx_L3_error)
     } else {
 
-      /* "deeprai/engine/cython/dense_operations.pyx":193
+      /* "deeprai/engine/cython/dense_operations.pyx":178
  * cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] input_data, weights,
  *                                                                       biases, activation_func,  bint use_bias, list dropout_rate,
  *                                                                       bint training_mode=True):             # <<<<<<<<<<<<<<
@@ -6641,17 +6375,17 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_16dense_operations_11cnn_forw
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 191, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("cnn_forward_propagate", 0, 6, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 176, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.dense_operations.cnn_forward_propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_data), __pyx_ptype_5numpy_ndarray, 1, "input_data", 0))) __PYX_ERR(0, 191, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 192, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_data), __pyx_ptype_5numpy_ndarray, 1, "input_data", 0))) __PYX_ERR(0, 176, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dropout_rate), (&PyList_Type), 1, "dropout_rate", 1))) __PYX_ERR(0, 177, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_16dense_operations_10cnn_forward_propagate(__pyx_self, __pyx_v_input_data, __pyx_v_weights, __pyx_v_biases, __pyx_v_activation_func, __pyx_v_use_bias, __pyx_v_dropout_rate, __pyx_v_training_mode);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":191
+  /* "deeprai/engine/cython/dense_operations.pyx":176
  * @cython.wraparound(False)
  * @cython.cdivision(True)
  * cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float64_t, ndim=1] input_data, weights,             # <<<<<<<<<<<<<<
@@ -6685,13 +6419,13 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_16dense_operations_10cnn_forw
   __pyx_pybuffernd_input_data.rcbuffer = &__pyx_pybuffer_input_data;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_input_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_input_data, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 191, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_input_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_input_data, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 176, __pyx_L1_error)
   }
   __pyx_pybuffernd_input_data.diminfo[0].strides = __pyx_pybuffernd_input_data.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_input_data.diminfo[0].shape = __pyx_pybuffernd_input_data.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.training_mode = __pyx_v_training_mode;
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_forward_propagate(__pyx_v_input_data, __pyx_v_weights, __pyx_v_biases, __pyx_v_activation_func, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, &__pyx_t_2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_16dense_operations_cnn_forward_propagate(__pyx_v_input_data, __pyx_v_weights, __pyx_v_biases, __pyx_v_activation_func, __pyx_v_use_bias, __pyx_v_dropout_rate, 0, &__pyx_t_2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7820,10 +7554,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_delta, __pyx_k_delta, sizeof(__pyx_k_delta), 0, 0, 1, 1},
   {&__pyx_n_s_divide, __pyx_k_divide, sizeof(__pyx_k_divide), 0, 0, 1, 1},
   {&__pyx_n_s_dot, __pyx_k_dot, sizeof(__pyx_k_dot), 0, 0, 1, 1},
-  {&__pyx_n_s_double, __pyx_k_double, sizeof(__pyx_k_double), 0, 0, 1, 1},
   {&__pyx_n_s_dropout_rate, __pyx_k_dropout_rate, sizeof(__pyx_k_dropout_rate), 0, 0, 1, 1},
-  {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
+  {&__pyx_n_s_imatmul, __pyx_k_imatmul, sizeof(__pyx_k_imatmul), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_input_data, __pyx_k_input_data, sizeof(__pyx_k_input_data), 0, 0, 1, 1},
   {&__pyx_n_s_inputs, __pyx_k_inputs, sizeof(__pyx_k_inputs), 0, 0, 1, 1},
@@ -7833,6 +7566,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_loss_function_name, __pyx_k_loss_function_name, sizeof(__pyx_k_loss_function_name), 0, 0, 1, 1},
   {&__pyx_n_s_loss_type, __pyx_k_loss_type, sizeof(__pyx_k_loss_type), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
+  {&__pyx_n_s_matmul, __pyx_k_matmul, sizeof(__pyx_k_matmul), 0, 0, 1, 1},
   {&__pyx_n_s_mean, __pyx_k_mean, sizeof(__pyx_k_mean), 0, 0, 1, 1},
   {&__pyx_kp_s_mean_absolute_error, __pyx_k_mean_absolute_error, sizeof(__pyx_k_mean_absolute_error), 0, 0, 1, 0},
   {&__pyx_n_s_mean_absolute_error_2, __pyx_k_mean_absolute_error_2, sizeof(__pyx_k_mean_absolute_error_2), 0, 0, 1, 1},
@@ -7850,8 +7584,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ravel, __pyx_k_ravel, sizeof(__pyx_k_ravel), 0, 0, 1, 1},
   {&__pyx_n_s_relative_error, __pyx_k_relative_error, sizeof(__pyx_k_relative_error), 0, 0, 1, 1},
   {&__pyx_n_s_reshape, __pyx_k_reshape, sizeof(__pyx_k_reshape), 0, 0, 1, 1},
+  {&__pyx_n_s_rmatmul, __pyx_k_rmatmul, sizeof(__pyx_k_rmatmul), 0, 0, 1, 1},
   {&__pyx_n_s_sign, __pyx_k_sign, sizeof(__pyx_k_sign), 0, 0, 1, 1},
-  {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
   {&__pyx_n_s_sum, __pyx_k_sum, sizeof(__pyx_k_sum), 0, 0, 1, 1},
   {&__pyx_n_s_targets, __pyx_k_targets, sizeof(__pyx_k_targets), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -7865,10 +7599,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 26, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 71, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 108, __pyx_L1_error)
-  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 109, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 944, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -7879,28 +7613,28 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":78
+  /* "deeprai/engine/cython/dense_operations.pyx":79
  *     for layer in range(num_layers - 1, -1, -1):
  *         delta = loss * activation_derv_list[layer](neurons[layer + 1])
  *         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))             # <<<<<<<<<<<<<<
  * 
  *         l1 = l1_penalty[layer]
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_neg_1, __pyx_int_1); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_neg_1, __pyx_int_1); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_1, __pyx_int_neg_1); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_1, __pyx_int_neg_1); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "deeprai/engine/cython/dense_operations.pyx":141
+  /* "deeprai/engine/cython/dense_operations.pyx":142
  *     # Check the number of dimensions of the input array
  *     if input.ndim not in [2, 3]:
  *         raise ValueError("Input must be a 2D or 3D array.")             # <<<<<<<<<<<<<<
- *     # Flatten the input to a 1D array
  *     return input.ravel()
+ * 
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_Input_must_be_a_2D_or_3D_array); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 141, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_Input_must_be_a_2D_or_3D_array); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
@@ -8359,30 +8093,6 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_mean_absolute_error_2, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "deeprai/engine/cython/dense_operations.pyx":146
- * 
- * from libc.stdlib cimport malloc, free
- * import numpy as np             # <<<<<<<<<<<<<<
- * cimport numpy as np
- * 
- */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "deeprai/engine/cython/dense_operations.pyx":150
- * 
- * from libc.stdlib cimport malloc, free
- * import numpy as np             # <<<<<<<<<<<<<<
- * cimport numpy as np
- * 
- */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "deeprai/engine/cython/dense_operations.pyx":1
@@ -10552,11 +10262,87 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
 }
 #endif
 
-/* BufferIndexError */
-  static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
+/* MatrixMultiply */
+  #if PY_VERSION_HEX < 0x03050000
+static PyObject* __Pyx_PyObject_CallMatrixMethod(PyObject* method, PyObject* arg) {
+    PyObject *result = NULL;
+#if CYTHON_UNPACK_METHODS
+    if (likely(PyMethod_Check(method))) {
+        PyObject *self = PyMethod_GET_SELF(method);
+        if (likely(self)) {
+            PyObject *args;
+            PyObject *function = PyMethod_GET_FUNCTION(method);
+            #if CYTHON_FAST_PYCALL
+            if (PyFunction_Check(function)) {
+                PyObject *args[2] = {self, arg};
+                result = __Pyx_PyFunction_FastCall(function, args, 2);
+                goto done;
+            }
+            #endif
+            #if CYTHON_FAST_PYCCALL
+            if (__Pyx_PyFastCFunction_Check(function)) {
+                PyObject *args[2] = {self, arg};
+                result = __Pyx_PyCFunction_FastCall(function, args, 2);
+                goto done;
+            }
+            #endif
+            args = PyTuple_New(2);
+            if (unlikely(!args)) goto done;
+            Py_INCREF(self);
+            PyTuple_SET_ITEM(args, 0, self);
+            Py_INCREF(arg);
+            PyTuple_SET_ITEM(args, 1, arg);
+            Py_INCREF(function);
+            Py_DECREF(method); method = NULL;
+            result = __Pyx_PyObject_Call(function, args, NULL);
+            Py_DECREF(args);
+            Py_DECREF(function);
+            return result;
+        }
+    }
+#endif
+    result = __Pyx_PyObject_CallOneArg(method, arg);
+done:
+    Py_DECREF(method);
+    return result;
 }
+#define __Pyx_TryMatrixMethod(x, y, py_method_name) {\
+    PyObject *func = __Pyx_PyObject_GetAttrStr(x, py_method_name);\
+    if (func) {\
+        PyObject *result = __Pyx_PyObject_CallMatrixMethod(func, y);\
+        if (result != Py_NotImplemented)\
+            return result;\
+        Py_DECREF(result);\
+    } else {\
+        if (!PyErr_ExceptionMatches(PyExc_AttributeError))\
+            return NULL;\
+        PyErr_Clear();\
+    }\
+}
+static PyObject* __Pyx__PyNumber_MatrixMultiply(PyObject* x, PyObject* y, const char* op_name) {
+    int right_is_subtype = PyObject_IsSubclass((PyObject*)Py_TYPE(y), (PyObject*)Py_TYPE(x));
+    if (unlikely(right_is_subtype == -1))
+        return NULL;
+    if (right_is_subtype) {
+        __Pyx_TryMatrixMethod(y, x, __pyx_n_s_rmatmul)
+    }
+    __Pyx_TryMatrixMethod(x, y, __pyx_n_s_matmul)
+    if (!right_is_subtype) {
+        __Pyx_TryMatrixMethod(y, x, __pyx_n_s_rmatmul)
+    }
+    PyErr_Format(PyExc_TypeError,
+                 "unsupported operand type(s) for %.2s: '%.100s' and '%.100s'",
+                 op_name,
+                 Py_TYPE(x)->tp_name,
+                 Py_TYPE(y)->tp_name);
+    return NULL;
+}
+static PyObject* __Pyx_PyNumber_InPlaceMatrixMultiply(PyObject* x, PyObject* y) {
+    __Pyx_TryMatrixMethod(x, y, __pyx_n_s_imatmul)
+    return __Pyx__PyNumber_MatrixMultiply(x, y, "@=");
+}
+#undef __Pyx_TryMatrixMethod
+#endif
 
 /* GetTopmostException */
   #if CYTHON_USE_EXC_INFO_STACK

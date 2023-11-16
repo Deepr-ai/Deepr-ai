@@ -144,35 +144,29 @@ cpdef np.ndarray[np.float64_t, ndim=1] flatten(np.ndarray input):
 
 
 cpdef tuple cnn_dense_backprop(np.ndarray[double, ndim=1] delta,
-                               np.ndarray[double, ndim=1] layer_input,
-                               np.ndarray[double, ndim=2] weights,
-                               object activation_derv,
-                               bint use_bias):
-    cdef int num_neurons = weights.shape[0]
-    cdef int num_inputs = weights.shape[1]
+                          np.ndarray[double, ndim=1] layer_input,
+                          np.ndarray[double, ndim=2] weights,
+                          np.ndarray[double, ndim=1] biases,
+                          double l1_penalty,
+                          double l2_penalty,
+                          object activation_derv,
+                          bint use_bias):
+    layer_input_2d = layer_input.reshape(-1, 1)
+    # Gradient with respect to weights
+    weight_gradient = layer_input_2d @ delta.reshape(1, -1)
+    # Gradient with respect to biases
+    bias_gradient = delta if use_bias else None
 
-    # Check if the dimensions match (they don't)
-    assert num_inputs == layer_input.size
-    assert num_neurons == delta.size
+    new_delta = weights @ delta
+    new_delta *= activation_derv(layer_input)
+    if l1_penalty > 0:
+        weight_gradient += l1_penalty * np.sign(weights)
+    if l2_penalty > 0:
+        weight_gradient += l2_penalty * weights
+    # Reshape new_delta back to 1D
+    new_delta = new_delta.ravel()
+    return weight_gradient, bias_gradient, new_delta
 
-    # Prepare the gradients using the shape variables
-    cdef np.ndarray[double, ndim=1] delta_out = np.zeros(num_inputs, dtype=np.double)
-    cdef np.ndarray[double, ndim=2] weight_gradient = np.zeros((num_neurons, num_inputs), dtype=np.double)
-    cdef np.ndarray[double, ndim=1] bias_grad = np.zeros(num_neurons, dtype=np.double) if use_bias else None
-
-    for i in range(num_neurons):
-        for j in range(num_inputs):
-            weight_gradient[i, j] = delta[i] * layer_input[j] * activation_derv(layer_input[j])
-            delta_out[j] += delta[i] * weights[i, j]
-
-    if use_bias:
-        for i in range(num_neurons):
-            bias_grad[i] = delta[i]
-
-    for i in range(num_inputs):
-        delta_out[i] *= activation_derv(layer_input[i])
-
-    return delta_out, weight_gradient, bias_grad
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

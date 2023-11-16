@@ -1,8 +1,10 @@
 import cython
 from deeprai.engine.cython.conv.conv_compute import convolve2d, conv_backprop
-from deeprai.engine.cython.conv.pooling import max_pooling2d, average_pooling2d, average_pool_backprop, max_pool_backprop
+from deeprai.engine.cython.conv.pooling import max_pooling2d, average_pooling2d, avg_pool_backprop, max_pool_backprop
 from deeprai.engine.cython.dense_operations import flatten, cnn_forward_propagate, cnn_dense_backprop
+from deeprai.engine.cython.loss import mean_square_error, mean_absolute_error, categorical_cross_entropy
 import numpy as np
+from deeprai.engine.base_layer import WeightVals
 cimport numpy as np
 
 @cython.boundscheck(False)
@@ -29,6 +31,7 @@ cpdef object cnn_forward_prop(np.ndarray input, list operations, list operationS
     else:
         return layer_output
 
+
 cpdef np.ndarray compute_initial_delta(np.ndarray predicted_output,
                                        np.ndarray true_output,
                                        str loss_type):
@@ -48,6 +51,7 @@ cpdef np.ndarray compute_initial_delta(np.ndarray predicted_output,
 
     return loss
 
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef tuple cnn_back_prop(np.ndarray[double, ndim=1] final_output,
@@ -61,6 +65,7 @@ cpdef tuple cnn_back_prop(np.ndarray[double, ndim=1] final_output,
                           list dense_biases,
                           list l1_penalty,
                           list l2_penalty,
+                          list pool_size,
                           bint use_bias,
                           str loss_type='mean square error',
                           dict layer_shapes=None):
@@ -77,39 +82,93 @@ cpdef tuple cnn_back_prop(np.ndarray[double, ndim=1] final_output,
 
     cdef int conv_pointer = len(conv_kernels) - 1
     cdef int dense_pointer = len(dense_weights) - 1
+    cdef int pool_pointer = len(pool_size) - 1
+    cdef int activation_pointer = len(activation_derv_list) -1
 
-    # Iterate over the layers in reverse for backpropagation
-    for i in range(num_steps - 1, -1, -1):
-        step = steps[i]
-        step_type, layer_input, layer_output ,layer_input_shape, layer_output_shape = layer_outputs[i]
-        print(len(layer_outputs[i][1]))
-        if step_type == "conv":
-            delta, kernel_gradient, bias_grad = conv_backprop(delta, layer_output, conv_kernels[conv_pointer],
-                                                              conv_biases[conv_pointer])
-            conv_kernel_gradients.insert(0, kernel_gradient)
+    for step in reversed(range(num_steps)):
+        step_type, layer_input, layer_output, layer_input_shape, layer_output_shape = layer_outputs[step]
+        if step_type == 'conv':
+            layer_input = layer_outputs[conv_pointer][1]
+            kernel = conv_kernels[conv_pointer]
+            bias = conv_biases[conv_pointer] if use_bias else None
+            activation_derv = activation_derv_list[conv_pointer]
+
+            kernel_gradient, bias_gradient, new_delta = conv_backprop(delta, layer_input, kernel, bias, activation_derv,
+                                                                      use_bias)
+            conv_kernel_gradients.append(kernel_gradient)
             if use_bias:
-                conv_bias_gradients.insert(0, bias_grad)
+                conv_bias_gradients.append(bias_gradient)
+            delta = new_delta
             conv_pointer -= 1
 
-        elif step_type == "avr_pool":
-            # Time spent debugging cnn_dense_backprop: 20m
-            delta = average_pool_backprop(delta, layer_output, 2, layer_output_shape[1]*2, layer_output_shape[2]*2)
+        elif step_type == 'dense':
+                layer_input = layer_outputs[step][1]
+                weights = dense_weights[dense_pointer]
+                biases = dense_biases[dense_pointer] if use_bias else None
+                l1_pen = l1_penalty[dense_pointer]
+                l2_pen = l2_penalty[dense_pointer]
 
-        elif step_type == "max_pool":
-            delta = max_pool_backprop(delta, layer_input, layer_output, 2)
+                weight_gradient, bias_gradient, new_delta = cnn_dense_backprop(delta, layer_input, weights, biases, l1_pen,
+                                                                           l2_pen, activation_derv_list[activation_pointer], use_bias)
+                dense_weight_gradients.insert(0, weight_gradient)
+                if use_bias:
+                    dense_bias_gradients.insert(0, bias_gradient)
+                delta = new_delta
+                dense_pointer -= 1
+                activation_pointer -=1
 
-        elif step_type == "dense":
-            # Time spent debugging cnn_dense_backprop: 4h :crying:
-            delta, weight_gradient, bias_grad = cnn_dense_backprop(delta, layer_input, dense_weights[dense_pointer],
-                                                                   activation_derv_list[dense_pointer], use_bias)
-            dense_weight_gradients.insert(0, weight_gradient)
-            if use_bias:
-                dense_bias_gradients.insert(0, bias_grad)
-            dense_pointer -= 1
-
-        deltas.insert(0, delta)
-
-    # return gradents for convolutional kernels and dense weights separately
+        elif step_type in ['avr_pool', 'max_pool']:
+            layer_input = layer_outputs[step][1]
+            pool_size_int = pool_size[pool_pointer]
+            input_shape = layer_input_shape
+            if delta.ndim == 1:
+                output_shape = layer_output_shape
+                delta_reshaped = delta.reshape(output_shape)
+            else:
+                delta_reshaped = delta
+            if step_type == 'avg_pool':
+                new_delta = avg_pool_backprop(delta_reshaped, pool_size_int, input_shape)
+            elif step_type == 'max_pool':
+                new_delta = max_pool_backprop(delta_reshaped, layer_input, pool_size_int, input_shape)
+            delta = new_delta
+            pool_pointer -= 1
     return conv_kernel_gradients, conv_bias_gradients, dense_weight_gradients, dense_bias_gradients
+
+
+cpdef dict evaluate(np.ndarray inputs,
+                    np.ndarray targets,
+                    list operations, list operationStr, str loss_function_name):
+    cdef int inputs_len = inputs.shape[0]
+    cdef double sum_error = 0.0
+    cdef np.ndarray abs_errors = np.zeros(inputs_len)
+    cdef np.ndarray rel_errors = np.zeros(inputs_len)
+    cdef np.ndarray[np.float64_t, ndim=1] output
+
+    for i, (input_val, target) in enumerate(zip(inputs, targets)):
+        output = cnn_forward_prop(input_val, operations, operationStr)
+
+        if loss_function_name == "cross entropy":
+            sum_error += categorical_cross_entropy(output, target)
+        elif loss_function_name == "mean square error":
+            sum_error += mean_square_error(output, target)
+        elif loss_function_name == "mean absolute error":
+            sum_error += mean_absolute_error(output, target)
+        else:
+            raise ValueError(f"Unsupported loss type: {loss_function_name}")
+
+        abs_error = np.abs(output - target)
+        rel_error = np.divide(abs_error, target, where=target != 0)
+        abs_errors[i] = np.sum(abs_error)
+        rel_errors[i] = np.mean(rel_error) * 100
+
+    mean_rel_error = np.mean(rel_errors)
+    total_rel_error = np.sum(rel_errors) / inputs_len
+    accuracy = np.abs(100 - total_rel_error)
+
+    return {
+        "cost": sum_error / inputs_len,
+        "accuracy": accuracy,
+        "relative_error": total_rel_error
+    }
 
 
