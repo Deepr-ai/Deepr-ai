@@ -1,35 +1,20 @@
 from deeprai import models
-# Importing deeprai-datasets lib, only available on linux
 from Datasets.MNIST import mnist as db
 # Loading in inputs
-inputs = db.load_x(5000)
-expected = db.load_y(5000)
-
+inputs = db.load_x(10000)
+expected = db.load_y(10000)
 # Loading in tests
-test_x = db.load_x(500)
-test_y = db.load_y(500)
-
-# Spawning the model
+test_x = db.load_x(1000)
+test_y = db.load_y(1000)
 network = models.FeedForward()
 
 # Creating dense layers
 network.add_dense(784)
-network.add_dense(34, activation=network.relu)
-network.add_dense(10, activation=network.sigmoid)
-network.config(loss=network.mean_square_error, optimizer=network.adam)
+network.add_dense(70, activation=network.relu)
+network.add_dense(10, activation=network.softmax)
+network.config(loss=network.cross_entropy, optimizer=network.adam)
 # Training the model
 network.specs()
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
-                    batch_size=10, epochs=3)
-
-
-
-
-# Evaluating the model
-stats = network.evaluate(test_x, test_y)
-print(f"Cost: {stats['cost']}")
-print(f"Accuracy: {stats['accuracy']}")
-
-# # Saving the model
-# network.save("MNIST84k.deepr")
+                    batch_size=36, epochs=100)

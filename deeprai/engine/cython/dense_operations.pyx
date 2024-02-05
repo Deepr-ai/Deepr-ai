@@ -6,6 +6,7 @@ cimport numpy as np
 from libc.stdlib cimport rand
 from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
 from libc.stdlib cimport malloc, free
+from deeprai.engine.cython.activation import softmax_derivative
 
 
 @cython.boundscheck(False)
@@ -44,7 +45,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] forward_propagate(np.ndarray[np.float64_t
 
     return layer_outputs
 
-@cython.boundscheck(False)
+
 @cython.wraparound(False)
 @cython.cdivision(True)
 cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
@@ -61,11 +62,14 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     cdef np.ndarray clipped_predictions
 
     clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
-    # Loss calculations can be optimized based on the loss type
     if loss_type == 'mean square error':
         loss = 2 * (predicted_output - true_output)
     elif loss_type == 'cross entropy':
-        loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
+        # Special handling for softmax with cross-entropy
+        if activation_derv_list[-1] == softmax_derivative:
+            loss = predicted_output - true_output
+        else:
+            loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
     elif loss_type == 'mean absolute error':
         loss = np.sign(predicted_output - true_output)
     else:
@@ -75,7 +79,11 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
     bias_gradients = []
 
     for layer in range(num_layers - 1, -1, -1):
-        delta = loss * activation_derv_list[layer](neurons[layer + 1])
+        if layer == num_layers - 1 and activation_derv_list[layer] == softmax_derivative:
+            delta = loss
+        else:
+            delta = loss * activation_derv_list[layer](neurons[layer + 1])
+
         weight_gradient = np.dot(neurons[layer].reshape(-1, 1), delta.reshape(1, -1))
 
         l1 = l1_penalty[layer]
@@ -92,6 +100,7 @@ cpdef tuple back_propagate(np.ndarray[np.float64_t, ndim=1] predicted_output,
         loss = np.dot(delta, weights[layer].T)
 
     return weight_gradients, bias_gradients
+
 
 
 cpdef dict evaluate(np.ndarray[np.float64_t, ndim=2] inputs,
@@ -154,11 +163,17 @@ cpdef tuple cnn_dense_backprop(np.ndarray[double, ndim=1] delta,
     layer_input_2d = layer_input.reshape(-1, 1)
     # Gradient with respect to weights
     weight_gradient = layer_input_2d @ delta.reshape(1, -1)
+    clip_norm = 1.0
+    weight_gradient_norm = np.linalg.norm(weight_gradient)
+    if weight_gradient_norm > clip_norm:
+        weight_gradient = (weight_gradient / weight_gradient_norm) * clip_norm
     # Gradient with respect to biases
     bias_gradient = delta if use_bias else None
-
     new_delta = weights @ delta
-    new_delta *= activation_derv(layer_input)
+    if activation_derv == softmax_derivative:
+        new_delta = layer_input
+    else:
+        new_delta *= activation_derv(layer_input)
     if l1_penalty > 0:
         weight_gradient += l1_penalty * np.sign(weights)
     if l2_penalty > 0:
@@ -187,7 +202,6 @@ cpdef np.ndarray[np.float64_t, ndim=1] cnn_forward_propagate(np.ndarray[np.float
     #     mask_value = 1 - dropout_rate[i]
     #     dropout_mask = np.random.binomial(1, mask_value, size=layer_output.shape)
     #     layer_output *= dropout_mask
-
     return layer_output
 
 

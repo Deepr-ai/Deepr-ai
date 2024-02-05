@@ -33,8 +33,11 @@ class Build:
 
     def create_kernel(self, num_filters, kernel_size, input_depth):
         height, width = kernel_size
-        kernels = np.random.rand(num_filters, input_depth, height, width).astype(np.float64)
-        biases = np.random.rand(num_filters).astype(np.float64)
+        fan_in = input_depth * height * width
+        fan_out = num_filters * height * width
+        limit = np.sqrt(6 / (fan_in + fan_out))
+        kernels = np.random.uniform(-limit, limit, (num_filters, input_depth, height, width)).astype(np.float64)
+        biases = np.zeros(num_filters).astype(np.float64)
         return kernels, biases
 
     def create_pool(self, shape, stride, type):
@@ -55,8 +58,7 @@ class Build:
         self.ConvListStr.append("flat")
 
     def create_conv(self, stride, padding, use_bias, activation):
-        self.ConvList.append((convolve2d, (
-            np.array(KernelVals.Kernels[-1]), KernalBiasVals.KernalBias[-1], stride, padding, self.activationMap[activation], use_bias)))
+        self.ConvList.append((convolve2d, (KernelVals.Kernels[-1], KernalBiasVals.KernalBias[-1], stride, padding, self.activationMap[activation], use_bias)))
         self.ConvListStr.append("conv")
         self.convert_derivatives(activation)
 
@@ -99,16 +101,16 @@ class Build:
         self.ConvListStr.append("dense")
 
     def convert_activations(self, activation):
-        ActivationList.append(lambda n: self.activationMap[activation](n))
+        ActivationList.append(self.activationMap[activation])
 
     def convert_derivatives(self, activation):
-        ActivationDerivativeList.append(lambda n: self.activationDerivativeMap[activation](n))
+        ActivationDerivativeList.append(self.activationDerivativeMap[activation])
 
     def convert_loss(self, lossF):
-        Loss[0] = (lambda o, t: self.LossMap[lossF[0]](o, t))
+        Loss[0] = (self.LossMap[lossF[0]])
 
     def convert_optimizer(self, OptF):
-        Optimizer[0] = (lambda *args, **kwargs: self.OptimizerMap[OptF[0]](*args, **kwargs))
+        Optimizer[0] = (self.OptimizerMap[OptF[0]])
 
     def create_dense(self, size, activation='sigmoid', dropout=0, l1_penalty=0, l2_penalty=0, use_bias=True):
         # creates activation map

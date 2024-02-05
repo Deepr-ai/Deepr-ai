@@ -59,7 +59,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] leaky_relu_derivative(np.ndarray[np.float
 cpdef np.ndarray[np.float64_t, ndim=1] softmax(np.ndarray[np.float64_t, ndim=1] x):
     cdef np.ndarray[np.float64_t, ndim=1] exp_x = np.exp(x)
     cdef np.float64_t sum_exp_x = np.sum(exp_x)
-    return exp_x / sum_exp_x
+    return exp_x / (sum_exp_x + 1e-7)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

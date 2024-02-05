@@ -97,7 +97,7 @@ class FeedForward:
         print(f"\033[1mLoss Function:\033[0m {loss_table[LossString[0]]}")
         print(f"\033[1mOptimizer:\033[0m {self.opt_name.capitalize()}")
         print(f"\033[1mBias Usage:\033[0m {'Yes' if self.use_bias else 'No'}")
-        print(f"\033[1mDeeprAI Version:\033[0m 1.0.4")
+        print(f"\033[1mDeeprAI Version:\033[0m 1.1.0")
         print(divider)
 
     def graph(self, metric="cost-acc"):

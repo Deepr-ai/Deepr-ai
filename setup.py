@@ -26,7 +26,7 @@
 #
 # setup(
 #     name='DeeprAI',
-#     version='1.0.4',
+#     version='1.1.0',
 #     author='Kieran Carter',
 #     description='A easy to use and beginner friendly neural network tool box that anyone can pick up and explorer machine learning! ',
 #     long_description=long_description,

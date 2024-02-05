@@ -2,6 +2,8 @@ import numpy as np
 cimport numpy as np
 cimport cython
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef list gradient_descent_update(list params, list grads, float learning_rate):
     cdef int i
     cdef int num_params = len(params)

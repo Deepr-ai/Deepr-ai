@@ -3,16 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/arrayscalars.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarrayobject.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ndarraytypes.h",
-            "/usr/lib/python3/dist-packages/numpy/core/include/numpy/ufuncobject.h"
-        ],
-        "include_dirs": [
-            "/usr/lib/python3/dist-packages/numpy/core/include"
-        ],
+        "depends": [],
         "name": "deeprai.engine.cython.activation",
         "sources": [
             "deeprai/engine/cython/activation.pyx"
@@ -33,7 +24,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_32"
 #define CYTHON_HEX_VERSION 0x001D20F0
-#define CYTHON_FUTURE_DIVISION 1
+#define CYTHON_FUTURE_DIVISION 0
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -1615,11 +1606,11 @@ static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
 #define __Pyx_BufPtrStrided2d(type, buf, i0, s0, i1, s1) (type)((char*)buf + i0 * s0 + i1 * s1)
 /* PyFloatBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
-static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check);
+static PyObject* __Pyx_PyFloat_DivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check);
 #else
-#define __Pyx_PyFloat_TrueDivideCObj(op1, op2, floatval, inplace, zerodivision_check)\
-    (inplace ? PyNumber_InPlaceTrueDivide(op1, op2) : PyNumber_TrueDivide(op1, op2))
-#endif
+#define __Pyx_PyFloat_DivideCObj(op1, op2, floatval, inplace, zerodivision_check)\
+    ((inplace ? __Pyx_PyNumber_InPlaceDivide(op1, op2) : __Pyx_PyNumber_Divide(op1, op2)))
+    #endif
 
 /* PyFloatBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -2002,8 +1993,8 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_newaxis;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
-static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_ones_like;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_square;
@@ -2104,7 +2095,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_linear(PyArr
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_1linear(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_linear[] = "linear(ndarray n) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_1linear(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2266,7 +2256,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_linear_deriv
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_3linear_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_2linear_derivative[] = "linear_derivative(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_3linear_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2428,7 +2417,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_tanh(PyArray
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_5tanh(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_4tanh[] = "tanh(ndarray n) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_5tanh(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2649,7 +2637,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_tanh_derivat
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_7tanh_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_6tanh_derivative[] = "tanh_derivative(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_7tanh_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2844,7 +2831,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_relu(PyArray
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_9relu(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_8relu[] = "relu(ndarray n) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_9relu(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -3047,7 +3033,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_relu_derivat
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_11relu_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_10relu_derivative[] = "relu_derivative(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_11relu_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -3265,7 +3250,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_leaky_relu(P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_13leaky_relu(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_12leaky_relu[] = "leaky_relu(ndarray n, float alpha=0.01) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_13leaky_relu(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_n = 0;
   float __pyx_v_alpha;
@@ -3538,7 +3522,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_leaky_relu_d
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_15leaky_relu_derivative(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_14leaky_relu_derivative[] = "leaky_relu_derivative(ndarray x, float alpha=0.01) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_15leaky_relu_derivative(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_x = 0;
   float __pyx_v_alpha;
@@ -3708,7 +3691,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_softmax(PyAr
  * cpdef np.ndarray[np.float64_t, ndim=1] softmax(np.ndarray[np.float64_t, ndim=1] x):
  *     cdef np.ndarray[np.float64_t, ndim=1] exp_x = np.exp(x)             # <<<<<<<<<<<<<<
  *     cdef np.float64_t sum_exp_x = np.sum(exp_x)
- *     return exp_x / sum_exp_x
+ *     return exp_x / (sum_exp_x + 1e-7)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3748,7 +3731,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_softmax(PyAr
  * cpdef np.ndarray[np.float64_t, ndim=1] softmax(np.ndarray[np.float64_t, ndim=1] x):
  *     cdef np.ndarray[np.float64_t, ndim=1] exp_x = np.exp(x)
  *     cdef np.float64_t sum_exp_x = np.sum(exp_x)             # <<<<<<<<<<<<<<
- *     return exp_x / sum_exp_x
+ *     return exp_x / (sum_exp_x + 1e-7)
  * 
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
@@ -3778,12 +3761,12 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_softmax(PyAr
   /* "deeprai/engine/cython/activation.pyx":62
  *     cdef np.ndarray[np.float64_t, ndim=1] exp_x = np.exp(x)
  *     cdef np.float64_t sum_exp_x = np.sum(exp_x)
- *     return exp_x / sum_exp_x             # <<<<<<<<<<<<<<
+ *     return exp_x / (sum_exp_x + 1e-7)             # <<<<<<<<<<<<<<
  * 
  * @cython.boundscheck(False)
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_sum_exp_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_sum_exp_x + 1e-7)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyNumber_Divide(((PyObject *)__pyx_v_exp_x), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3828,7 +3811,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_softmax(PyAr
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_17softmax(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_16softmax[] = "softmax(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_17softmax(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4136,7 +4118,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_softmax_deri
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_19softmax_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_18softmax_derivative[] = "softmax_derivative(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_19softmax_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4268,7 +4249,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_sigmoid(PyAr
   __pyx_t_3 = __Pyx_PyFloat_AddCObj(__pyx_float_1_0, __pyx_t_1, 1.0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyFloat_TrueDivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyFloat_DivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 81, __pyx_L1_error)
@@ -4309,7 +4290,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_sigmoid(PyAr
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_21sigmoid(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_20sigmoid[] = "sigmoid(ndarray n) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_21sigmoid(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4454,7 +4434,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_sigmoid_deri
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_23sigmoid_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static char __pyx_doc_7deeprai_6engine_6cython_10activation_22sigmoid_derivative[] = "sigmoid_derivative(ndarray x) -> ndarray";
 static PyObject *__pyx_pw_7deeprai_6engine_6cython_10activation_23sigmoid_derivative(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5737,7 +5716,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_10activation_cython_sigmo
   __pyx_t_3 = __Pyx_PyFloat_AddCObj(__pyx_float_1_0, __pyx_t_1, 1.0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyFloat_TrueDivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyFloat_DivideCObj(__pyx_float_1_0, __pyx_t_3, 1.0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 128, __pyx_L1_error)
@@ -6869,18 +6848,18 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
 }
 
 static PyMethodDef __pyx_methods[] = {
-  {"linear", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_1linear, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_linear},
-  {"linear_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_3linear_derivative, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_2linear_derivative},
-  {"tanh", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_5tanh, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_4tanh},
-  {"tanh_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_7tanh_derivative, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_6tanh_derivative},
-  {"relu", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_9relu, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_8relu},
-  {"relu_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_11relu_derivative, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_10relu_derivative},
-  {"leaky_relu", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10activation_13leaky_relu, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10activation_12leaky_relu},
-  {"leaky_relu_derivative", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10activation_15leaky_relu_derivative, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7deeprai_6engine_6cython_10activation_14leaky_relu_derivative},
-  {"softmax", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_17softmax, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_16softmax},
-  {"softmax_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_19softmax_derivative, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_18softmax_derivative},
-  {"sigmoid", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_21sigmoid, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_20sigmoid},
-  {"sigmoid_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_23sigmoid_derivative, METH_O, __pyx_doc_7deeprai_6engine_6cython_10activation_22sigmoid_derivative},
+  {"linear", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_1linear, METH_O, 0},
+  {"linear_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_3linear_derivative, METH_O, 0},
+  {"tanh", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_5tanh, METH_O, 0},
+  {"tanh_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_7tanh_derivative, METH_O, 0},
+  {"relu", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_9relu, METH_O, 0},
+  {"relu_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_11relu_derivative, METH_O, 0},
+  {"leaky_relu", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10activation_13leaky_relu, METH_VARARGS|METH_KEYWORDS, 0},
+  {"leaky_relu_derivative", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7deeprai_6engine_6cython_10activation_15leaky_relu_derivative, METH_VARARGS|METH_KEYWORDS, 0},
+  {"softmax", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_17softmax, METH_O, 0},
+  {"softmax_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_19softmax_derivative, METH_O, 0},
+  {"sigmoid", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_21sigmoid, METH_O, 0},
+  {"sigmoid_derivative", (PyCFunction)__pyx_pw_7deeprai_6engine_6cython_10activation_23sigmoid_derivative, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -6942,8 +6921,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_newaxis, __pyx_k_newaxis, sizeof(__pyx_k_newaxis), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
-  {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
+  {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
+  {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_ones_like, __pyx_k_ones_like, sizeof(__pyx_k_ones_like), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_square, __pyx_k_square, sizeof(__pyx_k_square), 0, 0, 1, 1},
@@ -6985,7 +6964,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 944, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(1, 944, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
@@ -6996,7 +6975,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 950, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 950, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
   __Pyx_RefNannyFinishContext();
@@ -7339,7 +7318,7 @@ if (!__Pyx_RefNanny) {
  * import numpy as np
  * cimport numpy as np
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_math, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_math, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_math, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7350,7 +7329,7 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as np
  * import cython
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -8641,23 +8620,23 @@ bad:
 
 /* PyFloatBinop */
   #if !CYTHON_COMPILING_IN_PYPY
-#define __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(operand) if (unlikely(zerodivision_check && ((operand) == 0))) {\
+#define __Pyx_PyFloat_DivideCObj_ZeroDivisionError(operand) if (unlikely(zerodivision_check && ((operand) == 0))) {\
     PyErr_SetString(PyExc_ZeroDivisionError, "float division by zero");\
     return NULL;\
 }
-static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check) {
+static PyObject* __Pyx_PyFloat_DivideCObj(PyObject *op1, PyObject *op2, double floatval, int inplace, int zerodivision_check) {
     const double a = floatval;
     double b, result;
     (void)inplace;
     (void)zerodivision_check;
     if (likely(PyFloat_CheckExact(op2))) {
         b = PyFloat_AS_DOUBLE(op2);
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
     } else
     #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_CheckExact(op2))) {
         b = (double) PyInt_AS_LONG(op2);
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
     } else
     #endif
     if (likely(PyLong_CheckExact(op2))) {
@@ -8665,7 +8644,7 @@ static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, doub
         const digit* digits = ((PyLongObject*)op2)->ob_digit;
         const Py_ssize_t size = Py_SIZE(op2);
         switch (size) {
-            case  0: __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(0) break;
+            case  0: __Pyx_PyFloat_DivideCObj_ZeroDivisionError(0) break;
             case -1: b = -(double) digits[0]; break;
             case  1: b = (double) digits[0]; break;
             case -2:
@@ -8707,12 +8686,12 @@ static PyObject* __Pyx_PyFloat_TrueDivideCObj(PyObject *op1, PyObject *op2, doub
         #endif
             b = PyLong_AsDouble(op2);
             if (unlikely(b == -1.0 && PyErr_Occurred())) return NULL;
-            __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+            __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
         }
     } else {
-        return (inplace ? PyNumber_InPlaceTrueDivide : PyNumber_TrueDivide)(op1, op2);
+        return (inplace ? __Pyx_PyNumber_InPlaceDivide(op1, op2) : __Pyx_PyNumber_Divide(op1, op2));
     }
-        __Pyx_PyFloat_TrueDivideCObj_ZeroDivisionError(b)
+        __Pyx_PyFloat_DivideCObj_ZeroDivisionError(b)
         PyFPE_START_PROTECT("divide", return NULL)
         result = a / b;
         PyFPE_END_PROTECT(result)

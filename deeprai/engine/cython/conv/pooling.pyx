@@ -91,7 +91,6 @@ cpdef np.ndarray avg_pool_backprop(np.ndarray delta,
         new_delta = zoom(delta, scale_factors, order=1)
     return new_delta
 
-
 cpdef np.ndarray max_pool_backprop(np.ndarray delta,
                                   np.ndarray layer_input,
                                   int pool_size_int,
@@ -101,7 +100,7 @@ cpdef np.ndarray max_pool_backprop(np.ndarray delta,
 
     pool_size = (pool_size_int, pool_size_int)
 
-    if num_filters > 1:
+    if num_filters > 1:  # If delta is 3D
         new_delta = np.zeros(input_shape, dtype=delta.dtype)
         for f in range(num_filters):
             # Find the maxima locations for each filter
@@ -109,7 +108,10 @@ cpdef np.ndarray max_pool_backprop(np.ndarray delta,
             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
             upscaled_delta = zoom(delta[f], scale_factors, order=1)
             new_delta[f] = upscaled_delta * max_locations
-    else:
+    else:  # If delta is 2D
         max_locations = layer_input == maximum_filter(layer_input, size=pool_size)
         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
-        upscaled_delta = zoom
+        upscaled_delta = zoom(delta, scale_factors, order=1)
+        new_delta = upscaled_delta * max_locations
+
+    return new_delta

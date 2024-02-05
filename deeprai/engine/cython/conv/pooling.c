@@ -2906,7 +2906,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_2average_pooli
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/conv/pooling.pyx":76
+/* "deeprai/engine/cython/conv/pooling.pyx":75
  * 
  * ### BACK FUNCTIONS ###
  * cpdef np.ndarray avg_pool_backprop(np.ndarray delta,             # <<<<<<<<<<<<<<
@@ -2937,7 +2937,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("avg_pool_backprop", 0);
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":79
+  /* "deeprai/engine/cython/conv/pooling.pyx":78
  *                                   int pool_size_int,
  *                                   tuple input_shape):
  *     cdef int num_filters = delta.shape[0] if delta.ndim == 3 else 1             # <<<<<<<<<<<<<<
@@ -2951,18 +2951,18 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
   }
   __pyx_v_num_filters = __pyx_t_1;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":83
+  /* "deeprai/engine/cython/conv/pooling.pyx":82
  * 
  *     # Convert pool_size to tuple
  *     pool_size = (pool_size_int, pool_size_int)             # <<<<<<<<<<<<<<
  * 
- *     if num_filters > 1:  # If delta is 3D
+ *     if num_filters > 1:
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -2973,50 +2973,50 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
   __pyx_v_pool_size = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":85
+  /* "deeprai/engine/cython/conv/pooling.pyx":84
  *     pool_size = (pool_size_int, pool_size_int)
  * 
- *     if num_filters > 1:  # If delta is 3D             # <<<<<<<<<<<<<<
+ *     if num_filters > 1:             # <<<<<<<<<<<<<<
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)
  *         for f in range(num_filters):
  */
   __pyx_t_5 = ((__pyx_v_num_filters > 1) != 0);
   if (__pyx_t_5) {
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":86
+    /* "deeprai/engine/cython/conv/pooling.pyx":85
  * 
- *     if num_filters > 1:  # If delta is 3D
+ *     if num_filters > 1:
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)             # <<<<<<<<<<<<<<
  *         for f in range(num_filters):
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_input_shape);
     __Pyx_GIVEREF(__pyx_v_input_shape);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_input_shape);
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_dtype); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_dtype); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 86, __pyx_L1_error)
+    if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 85, __pyx_L1_error)
     __pyx_v_new_delta = ((PyArrayObject *)__pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":87
- *     if num_filters > 1:  # If delta is 3D
+    /* "deeprai/engine/cython/conv/pooling.pyx":86
+ *     if num_filters > 1:
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)
  *         for f in range(num_filters):             # <<<<<<<<<<<<<<
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
@@ -3027,38 +3027,38 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
     for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
       __pyx_v_f = __pyx_t_9;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":88
+      /* "deeprai/engine/cython/conv/pooling.pyx":87
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)
  *         for f in range(num_filters):
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])             # <<<<<<<<<<<<<<
  *             new_delta[f] = zoom(delta[f], scale_factors, order=1)
- *     else:  # If delta is 2D
+ *     else:
  */
       if (unlikely(__pyx_v_input_shape == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 88, __pyx_L1_error)
+        __PYX_ERR(0, 87, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (unlikely(__pyx_v_input_shape == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 88, __pyx_L1_error)
+        __PYX_ERR(0, 87, __pyx_L1_error)
       }
-      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_6 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[2])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[2])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -3069,18 +3069,18 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
       __Pyx_XDECREF_SET(__pyx_v_scale_factors, ((PyObject*)__pyx_t_6));
       __pyx_t_6 = 0;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":89
+      /* "deeprai/engine/cython/conv/pooling.pyx":88
  *         for f in range(num_filters):
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
  *             new_delta[f] = zoom(delta[f], scale_factors, order=1)             # <<<<<<<<<<<<<<
- *     else:  # If delta is 2D
+ *     else:
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_zoom); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_zoom); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_delta), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_delta), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
@@ -3088,31 +3088,31 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
       __Pyx_GIVEREF(__pyx_v_scale_factors);
       PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_scale_factors);
       __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_new_delta), __pyx_v_f, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 89, __pyx_L1_error)
+      if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_new_delta), __pyx_v_f, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":85
+    /* "deeprai/engine/cython/conv/pooling.pyx":84
  *     pool_size = (pool_size_int, pool_size_int)
  * 
- *     if num_filters > 1:  # If delta is 3D             # <<<<<<<<<<<<<<
+ *     if num_filters > 1:             # <<<<<<<<<<<<<<
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)
  *         for f in range(num_filters):
  */
     goto __pyx_L3;
   }
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":91
+  /* "deeprai/engine/cython/conv/pooling.pyx":90
  *             new_delta[f] = zoom(delta[f], scale_factors, order=1)
- *     else:  # If delta is 2D
+ *     else:
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])             # <<<<<<<<<<<<<<
  *         new_delta = zoom(delta, scale_factors, order=1)
  *     return new_delta
@@ -3120,29 +3120,29 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
   /*else*/ {
     if (unlikely(__pyx_v_input_shape == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 91, __pyx_L1_error)
+      __PYX_ERR(0, 90, __pyx_L1_error)
     }
-    __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (unlikely(__pyx_v_input_shape == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 91, __pyx_L1_error)
+      __PYX_ERR(0, 90, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4);
@@ -3153,16 +3153,16 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
     __pyx_v_scale_factors = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":92
- *     else:  # If delta is 2D
+    /* "deeprai/engine/cython/conv/pooling.pyx":91
+ *     else:
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
  *         new_delta = zoom(delta, scale_factors, order=1)             # <<<<<<<<<<<<<<
  *     return new_delta
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_zoom); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_zoom); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(((PyObject *)__pyx_v_delta));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_delta));
@@ -3170,33 +3170,33 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_b
     __Pyx_INCREF(__pyx_v_scale_factors);
     __Pyx_GIVEREF(__pyx_v_scale_factors);
     PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_scale_factors);
-    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 92, __pyx_L1_error)
+    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 91, __pyx_L1_error)
     __pyx_v_new_delta = ((PyArrayObject *)__pyx_t_3);
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":93
+  /* "deeprai/engine/cython/conv/pooling.pyx":92
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
  *         new_delta = zoom(delta, scale_factors, order=1)
  *     return new_delta             # <<<<<<<<<<<<<<
  * 
- * 
+ * cpdef np.ndarray max_pool_backprop(np.ndarray delta,
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
   __Pyx_INCREF(((PyObject *)__pyx_v_new_delta));
   __pyx_r = __pyx_v_new_delta;
   goto __pyx_L0;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":76
+  /* "deeprai/engine/cython/conv/pooling.pyx":75
  * 
  * ### BACK FUNCTIONS ###
  * cpdef np.ndarray avg_pool_backprop(np.ndarray delta,             # <<<<<<<<<<<<<<
@@ -3258,17 +3258,17 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_4conv_7pooling_5avg_pool_back
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pool_size_int)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, 1); __PYX_ERR(0, 76, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, 1); __PYX_ERR(0, 75, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_input_shape)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, 2); __PYX_ERR(0, 76, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, 2); __PYX_ERR(0, 75, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "avg_pool_backprop") < 0)) __PYX_ERR(0, 76, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "avg_pool_backprop") < 0)) __PYX_ERR(0, 75, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3278,19 +3278,19 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_4conv_7pooling_5avg_pool_back
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
     __pyx_v_delta = ((PyArrayObject *)values[0]);
-    __pyx_v_pool_size_int = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_pool_size_int == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 77, __pyx_L3_error)
+    __pyx_v_pool_size_int = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_pool_size_int == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 76, __pyx_L3_error)
     __pyx_v_input_shape = ((PyObject*)values[2]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 76, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("avg_pool_backprop", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 75, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.conv.pooling.avg_pool_backprop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 76, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_shape), (&PyTuple_Type), 1, "input_shape", 1))) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 75, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_shape), (&PyTuple_Type), 1, "input_shape", 1))) __PYX_ERR(0, 77, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_4avg_pool_backprop(__pyx_self, __pyx_v_delta, __pyx_v_pool_size_int, __pyx_v_input_shape);
 
   /* function exit code */
@@ -3311,7 +3311,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_4avg_pool_back
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("avg_pool_backprop", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_backprop(__pyx_v_delta, __pyx_v_pool_size_int, __pyx_v_input_shape, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_avg_pool_backprop(__pyx_v_delta, __pyx_v_pool_size_int, __pyx_v_input_shape, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3328,8 +3328,8 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_4avg_pool_back
   return __pyx_r;
 }
 
-/* "deeprai/engine/cython/conv/pooling.pyx":96
- * 
+/* "deeprai/engine/cython/conv/pooling.pyx":94
+ *     return new_delta
  * 
  * cpdef np.ndarray max_pool_backprop(np.ndarray delta,             # <<<<<<<<<<<<<<
  *                                   np.ndarray layer_input,
@@ -3362,7 +3362,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("max_pool_backprop", 0);
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":100
+  /* "deeprai/engine/cython/conv/pooling.pyx":98
  *                                   int pool_size_int,
  *                                   tuple input_shape):
  *     cdef int num_filters = delta.shape[0] if delta.ndim == 3 else 1             # <<<<<<<<<<<<<<
@@ -3376,18 +3376,18 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
   }
   __pyx_v_num_filters = __pyx_t_1;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":104
+  /* "deeprai/engine/cython/conv/pooling.pyx":101
+ *     cdef np.ndarray new_delta
  * 
- *     # Convert pool_size to tuple
  *     pool_size = (pool_size_int, pool_size_int)             # <<<<<<<<<<<<<<
  * 
  *     if num_filters > 1:  # If delta is 3D
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_pool_size_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -3398,7 +3398,7 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
   __pyx_v_pool_size = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":106
+  /* "deeprai/engine/cython/conv/pooling.pyx":103
  *     pool_size = (pool_size_int, pool_size_int)
  * 
  *     if num_filters > 1:  # If delta is 3D             # <<<<<<<<<<<<<<
@@ -3408,39 +3408,39 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
   __pyx_t_5 = ((__pyx_v_num_filters > 1) != 0);
   if (__pyx_t_5) {
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":107
+    /* "deeprai/engine/cython/conv/pooling.pyx":104
  * 
  *     if num_filters > 1:  # If delta is 3D
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)             # <<<<<<<<<<<<<<
  *         for f in range(num_filters):
  *             # Find the maxima locations for each filter
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_input_shape);
     __Pyx_GIVEREF(__pyx_v_input_shape);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_input_shape);
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_dtype); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_delta), __pyx_n_s_dtype); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 107, __pyx_L1_error)
+    if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 104, __pyx_L1_error)
     __pyx_v_new_delta = ((PyArrayObject *)__pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":108
+    /* "deeprai/engine/cython/conv/pooling.pyx":105
  *     if num_filters > 1:  # If delta is 3D
  *         new_delta = np.zeros(input_shape, dtype=delta.dtype)
  *         for f in range(num_filters):             # <<<<<<<<<<<<<<
@@ -3452,39 +3452,39 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
     for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
       __pyx_v_f = __pyx_t_9;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":110
+      /* "deeprai/engine/cython/conv/pooling.pyx":107
  *         for f in range(num_filters):
  *             # Find the maxima locations for each filter
  *             max_locations = layer_input[f] == maximum_filter(layer_input[f], size=pool_size)             # <<<<<<<<<<<<<<
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
  *             upscaled_delta = zoom(delta[f], scale_factors, order=1)
  */
-      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_layer_input), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_layer_input), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_maximum_filter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_maximum_filter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_layer_input), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_layer_input), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_size, __pyx_v_pool_size) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 110, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_size, __pyx_v_pool_size) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyObject_RichCompare(__pyx_t_6, __pyx_t_10, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_4 = PyObject_RichCompare(__pyx_t_6, __pyx_t_10, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_XDECREF_SET(__pyx_v_max_locations, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":111
+      /* "deeprai/engine/cython/conv/pooling.pyx":108
  *             # Find the maxima locations for each filter
  *             max_locations = layer_input[f] == maximum_filter(layer_input[f], size=pool_size)
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])             # <<<<<<<<<<<<<<
@@ -3493,29 +3493,29 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
  */
       if (unlikely(__pyx_v_input_shape == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 111, __pyx_L1_error)
+        __PYX_ERR(0, 108, __pyx_L1_error)
       }
-      __pyx_t_4 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_10 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_10); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_10); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       if (unlikely(__pyx_v_input_shape == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 111, __pyx_L1_error)
+        __PYX_ERR(0, 108, __pyx_L1_error)
       }
-      __pyx_t_10 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_4 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_6);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_6);
@@ -3526,18 +3526,18 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
       __Pyx_XDECREF_SET(__pyx_v_scale_factors, ((PyObject*)__pyx_t_4));
       __pyx_t_4 = 0;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":112
+      /* "deeprai/engine/cython/conv/pooling.pyx":109
  *             max_locations = layer_input[f] == maximum_filter(layer_input[f], size=pool_size)
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
  *             upscaled_delta = zoom(delta[f], scale_factors, order=1)             # <<<<<<<<<<<<<<
  *             new_delta[f] = upscaled_delta * max_locations
  *     else:  # If delta is 2D
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_zoom); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_zoom); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_delta), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_delta), __pyx_v_f, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -3545,10 +3545,10 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
       __Pyx_GIVEREF(__pyx_v_scale_factors);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_scale_factors);
       __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 112, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 109, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 109, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3556,20 +3556,20 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
       __Pyx_XDECREF_SET(__pyx_v_upscaled_delta, __pyx_t_10);
       __pyx_t_10 = 0;
 
-      /* "deeprai/engine/cython/conv/pooling.pyx":113
+      /* "deeprai/engine/cython/conv/pooling.pyx":110
  *             scale_factors = (input_shape[1] / delta.shape[1], input_shape[2] / delta.shape[2])
  *             upscaled_delta = zoom(delta[f], scale_factors, order=1)
  *             new_delta[f] = upscaled_delta * max_locations             # <<<<<<<<<<<<<<
  *     else:  # If delta is 2D
  *         max_locations = layer_input == maximum_filter(layer_input, size=pool_size)
  */
-      __pyx_t_10 = PyNumber_Multiply(__pyx_v_upscaled_delta, __pyx_v_max_locations); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 113, __pyx_L1_error)
+      __pyx_t_10 = PyNumber_Multiply(__pyx_v_upscaled_delta, __pyx_v_max_locations); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 110, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_new_delta), __pyx_v_f, __pyx_t_10, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 113, __pyx_L1_error)
+      if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_new_delta), __pyx_v_f, __pyx_t_10, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":106
+    /* "deeprai/engine/cython/conv/pooling.pyx":103
  *     pool_size = (pool_size_int, pool_size_int)
  * 
  *     if num_filters > 1:  # If delta is 3D             # <<<<<<<<<<<<<<
@@ -3579,66 +3579,66 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
     goto __pyx_L3;
   }
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":115
+  /* "deeprai/engine/cython/conv/pooling.pyx":112
  *             new_delta[f] = upscaled_delta * max_locations
  *     else:  # If delta is 2D
  *         max_locations = layer_input == maximum_filter(layer_input, size=pool_size)             # <<<<<<<<<<<<<<
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
- *         upscaled_delta = zoom
+ *         upscaled_delta = zoom(delta, scale_factors, order=1)
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_maximum_filter); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_maximum_filter); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)__pyx_v_layer_input));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_layer_input));
     PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)__pyx_v_layer_input));
-    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_size, __pyx_v_pool_size) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 115, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_size, __pyx_v_pool_size) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyObject_RichCompare(((PyObject *)__pyx_v_layer_input), __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_6 = PyObject_RichCompare(((PyObject *)__pyx_v_layer_input), __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_max_locations = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":116
+    /* "deeprai/engine/cython/conv/pooling.pyx":113
  *     else:  # If delta is 2D
  *         max_locations = layer_input == maximum_filter(layer_input, size=pool_size)
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])             # <<<<<<<<<<<<<<
- *         upscaled_delta = zoom
- * 
+ *         upscaled_delta = zoom(delta, scale_factors, order=1)
+ *         new_delta = upscaled_delta * max_locations
  */
     if (unlikely(__pyx_v_input_shape == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 116, __pyx_L1_error)
+      __PYX_ERR(0, 113, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (unlikely(__pyx_v_input_shape == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 116, __pyx_L1_error)
+      __PYX_ERR(0, 113, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt_Tuple(__pyx_v_input_shape, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_delta->dimensions[1])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_10 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_6); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_6); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -3649,22 +3649,61 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
     __pyx_v_scale_factors = ((PyObject*)__pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "deeprai/engine/cython/conv/pooling.pyx":117
+    /* "deeprai/engine/cython/conv/pooling.pyx":114
  *         max_locations = layer_input == maximum_filter(layer_input, size=pool_size)
  *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
- *         upscaled_delta = zoom             # <<<<<<<<<<<<<<
- * 
+ *         upscaled_delta = zoom(delta, scale_factors, order=1)             # <<<<<<<<<<<<<<
+ *         new_delta = upscaled_delta * max_locations
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_zoom); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_zoom); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_v_upscaled_delta = __pyx_t_6;
-    __pyx_t_6 = 0;
+    __pyx_t_10 = PyTuple_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
+    __Pyx_INCREF(((PyObject *)__pyx_v_delta));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_delta));
+    PyTuple_SET_ITEM(__pyx_t_10, 0, ((PyObject *)__pyx_v_delta));
+    __Pyx_INCREF(__pyx_v_scale_factors);
+    __Pyx_GIVEREF(__pyx_v_scale_factors);
+    PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_v_scale_factors);
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_order, __pyx_int_1) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_10, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_v_upscaled_delta = __pyx_t_4;
+    __pyx_t_4 = 0;
+
+    /* "deeprai/engine/cython/conv/pooling.pyx":115
+ *         scale_factors = (input_shape[0] / delta.shape[0], input_shape[1] / delta.shape[1])
+ *         upscaled_delta = zoom(delta, scale_factors, order=1)
+ *         new_delta = upscaled_delta * max_locations             # <<<<<<<<<<<<<<
+ * 
+ *     return new_delta
+ */
+    __pyx_t_4 = PyNumber_Multiply(__pyx_v_upscaled_delta, __pyx_v_max_locations); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_v_new_delta = ((PyArrayObject *)__pyx_t_4);
+    __pyx_t_4 = 0;
   }
   __pyx_L3:;
 
-  /* "deeprai/engine/cython/conv/pooling.pyx":96
+  /* "deeprai/engine/cython/conv/pooling.pyx":117
+ *         new_delta = upscaled_delta * max_locations
  * 
+ *     return new_delta             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(((PyObject *)__pyx_r));
+  __Pyx_INCREF(((PyObject *)__pyx_v_new_delta));
+  __pyx_r = __pyx_v_new_delta;
+  goto __pyx_L0;
+
+  /* "deeprai/engine/cython/conv/pooling.pyx":94
+ *     return new_delta
  * 
  * cpdef np.ndarray max_pool_backprop(np.ndarray delta,             # <<<<<<<<<<<<<<
  *                                   np.ndarray layer_input,
@@ -3672,8 +3711,6 @@ static PyArrayObject *__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_b
  */
 
   /* function exit code */
-  __pyx_r = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
@@ -3733,23 +3770,23 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_4conv_7pooling_7max_pool_back
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_layer_input)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 1); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 1); __PYX_ERR(0, 94, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pool_size_int)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 2); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 2); __PYX_ERR(0, 94, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_input_shape)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 3); __PYX_ERR(0, 96, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, 3); __PYX_ERR(0, 94, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "max_pool_backprop") < 0)) __PYX_ERR(0, 96, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "max_pool_backprop") < 0)) __PYX_ERR(0, 94, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -3761,20 +3798,20 @@ static PyObject *__pyx_pw_7deeprai_6engine_6cython_4conv_7pooling_7max_pool_back
     }
     __pyx_v_delta = ((PyArrayObject *)values[0]);
     __pyx_v_layer_input = ((PyArrayObject *)values[1]);
-    __pyx_v_pool_size_int = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_pool_size_int == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 98, __pyx_L3_error)
+    __pyx_v_pool_size_int = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_pool_size_int == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L3_error)
     __pyx_v_input_shape = ((PyObject*)values[3]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 96, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("max_pool_backprop", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 94, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("deeprai.engine.cython.conv.pooling.max_pool_backprop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 96, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_layer_input), __pyx_ptype_5numpy_ndarray, 1, "layer_input", 0))) __PYX_ERR(0, 97, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_shape), (&PyTuple_Type), 1, "input_shape", 1))) __PYX_ERR(0, 99, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_delta), __pyx_ptype_5numpy_ndarray, 1, "delta", 0))) __PYX_ERR(0, 94, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_layer_input), __pyx_ptype_5numpy_ndarray, 1, "layer_input", 0))) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input_shape), (&PyTuple_Type), 1, "input_shape", 1))) __PYX_ERR(0, 97, __pyx_L1_error)
   __pyx_r = __pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_6max_pool_backprop(__pyx_self, __pyx_v_delta, __pyx_v_layer_input, __pyx_v_pool_size_int, __pyx_v_input_shape);
 
   /* function exit code */
@@ -3795,7 +3832,7 @@ static PyObject *__pyx_pf_7deeprai_6engine_6cython_4conv_7pooling_6max_pool_back
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("max_pool_backprop", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_backprop(__pyx_v_delta, __pyx_v_layer_input, __pyx_v_pool_size_int, __pyx_v_input_shape, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7deeprai_6engine_6cython_4conv_7pooling_max_pool_backprop(__pyx_v_delta, __pyx_v_layer_input, __pyx_v_pool_size_int, __pyx_v_input_shape, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;

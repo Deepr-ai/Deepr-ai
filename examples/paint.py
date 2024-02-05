@@ -4,7 +4,7 @@ import numpy as np
 from deeprai import models
 
 network = models.FeedForward()
-network.load("MNIST84k.deepr")
+network.load("MNIST271k.deepr")
 network.specs()
 
 class DrawingApp:

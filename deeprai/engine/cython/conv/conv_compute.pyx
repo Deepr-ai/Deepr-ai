@@ -12,6 +12,7 @@ cpdef np.ndarray[np.float64_t, ndim=3] convolve2d(np.ndarray input,
                                                   int stride, int padding,
                                                   object activation_func,
                                                   bint use_bias=False):
+    filters = np.array(filters)
     cdef int num_filters = filters.shape[0]
     cdef int filter_depth = filters.shape[1]
     cdef int filter_height = filters.shape[2]
@@ -19,7 +20,6 @@ cpdef np.ndarray[np.float64_t, ndim=3] convolve2d(np.ndarray input,
     cdef int input_depth = input.shape[0]
     cdef int input_height = input.shape[1]
     cdef int input_width = input.shape[2]
-
     if filter_depth != input_depth:
         raise ValueError("Filter depth must match input depth.")
 
@@ -42,24 +42,18 @@ cpdef np.ndarray[np.float64_t, ndim=3] convolve2d(np.ndarray input,
 
     for n in range(num_filters):
         conv_result = np.zeros((input_height, input_width), dtype=np.float64)
-
         for d in range(filter_depth):
             conv_result += fftconvolve(padded_input[d], filters[n, d], mode='same')
-
         for i in range(0, output_height):
             for j in range(0, output_width):
                 conv_sum = conv_result[i * stride, j * stride]
-
                 if use_bias and biases is not None:
                     conv_sum += biases[n]
-
                 output[n, i, j] = conv_sum
-
             # apply the activation function
             output[n] = activation_func(output[n].flatten()).reshape(output_height, output_width)
 
     return output
-
 
 cpdef tuple conv_backprop(np.ndarray delta,
                                np.ndarray[double, ndim=3] layer_input,
@@ -106,10 +100,5 @@ cpdef tuple conv_backprop(np.ndarray delta,
         new_delta[i] = flat_delta.reshape(new_delta[i].shape)
 
     return kernel_gradient, bias_gradient, new_delta
-
-
-
-
-
 
 

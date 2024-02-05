@@ -3,7 +3,7 @@ cimport numpy as np
 from alive_progress import alive_bar
 
 from deeprai.engine.base_layer import NeuronVals, WeightVals, BiasVals, NetworkMetrics
-from deeprai.engine.cython.dense_operations import forward_propagate, back_propagate
+from deeprai.engine.cython.dense_operations import forward_propagate, back_propagate, evaluate
 from deeprai.engine.cython.optimizers import gradient_descent_update, momentum_update, adagrad_update, rmsprop_update, \
     adam_update, adafactor_update
 from deeprai.engine.cython.loss import categorical_cross_entropy, mean_square_error, mean_absolute_error
@@ -18,6 +18,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
     cdef int inputs_len = inputs.shape[0]
     cdef int test_inputs_len = test_inputs.shape[0]
     cdef int num_batches = inputs_len // batch_size
+    cdef dict network_report
 
     if optimizer_name == "momentum":
         weight_velocity = [np.zeros_like(w) for w in WeightVals.Weights]
@@ -44,7 +45,7 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
 
     for epoch in range(epochs):
         sum_error = 0.0
-        with alive_bar(num_batches, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
+        with alive_bar(num_batches+1, title=f"Epoch {epoch + 1}", spinner="waves", dual_line=False) as bar:
             for batch_start in range(0, inputs_len, batch_size):
                 batch_end = min(batch_start + batch_size, inputs_len)
                 batch_inputs = inputs[batch_start:batch_end]
@@ -137,33 +138,18 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                     Save(f"{checkpoint_dir_location}/checkpoint_epoch_{epoch}.deepr")
 
                 bar()  # update the progress bar after batch
-        test_inputs_len = len(test_inputs)
-        sum_error = 0  # Initialize sum of errors
 
-        # New snippet for error and accuracy calculation
-        abs_errors = np.zeros(test_inputs_len)
-        rel_errors = np.zeros(test_inputs_len)
+        network_report = evaluate(test_inputs, test_targets, activation_list, use_bias, dropout_rate,
+                                  loss_function[0])
 
-        for i, (input_val, target) in enumerate(zip(test_inputs, test_targets)):
-            output = forward_propagate(input_val, activation_list, NeuronVals.Neurons, WeightVals.Weights,
-                                       BiasVals.Biases, use_bias, dropout_rate)
-            abs_error = np.abs(output - target)
-            rel_error = np.divide(abs_error, target, where=target != 0)
 
-            abs_errors[i] = np.sum(abs_error)
-            rel_errors[i] = np.mean(rel_error) * 100
-            sum_error += np.sum(abs_error)
-
-        mean_rel_error = np.mean(rel_errors)
-        total_rel_error = np.sum(rel_errors) / test_inputs_len
-        accuracy = np.abs(100 - total_rel_error)
-
-        # Assuming NetworkMetrics is a pre-defined list for collecting metrics
-        NetworkMetrics[0].append(sum_error / test_inputs_len)
-        NetworkMetrics[1].append(accuracy)
-        NetworkMetrics[2].append(total_rel_error)
+        NetworkMetrics[0].append(network_report['cost'])
+        NetworkMetrics[1].append(network_report['accuracy'])
+        NetworkMetrics[2].append(network_report['relative_error'])
         NetworkMetrics[3].append(epoch + 1)
+
 
         if verbose:
             print(
-                f"Epoch: {epoch + 1} | Cost: {sum_error / test_inputs_len:.4f} | Accuracy: {accuracy:.2f}% | Relative Error: {total_rel_error:.3f}%")
+                f"Epoch: {epoch + 1} | Cost: {np.float64(network_report['cost']):.4f} | Accuracy: {np.float64(network_report['accuracy']):.2f}% | Relative Error: {np.float64(network_report['relative_error']):.3f}%"
+            )

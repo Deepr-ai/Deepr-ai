@@ -3,6 +3,7 @@ from deeprai.engine.cython.conv.conv_compute import convolve2d, conv_backprop
 from deeprai.engine.cython.conv.pooling import max_pooling2d, average_pooling2d, avg_pool_backprop, max_pool_backprop
 from deeprai.engine.cython.dense_operations import flatten, cnn_forward_propagate, cnn_dense_backprop
 from deeprai.engine.cython.loss import mean_square_error, mean_absolute_error, categorical_cross_entropy
+from deeprai.engine.cython.activation import softmax_derivative
 import numpy as np
 from deeprai.engine.base_layer import WeightVals
 cimport numpy as np
@@ -34,16 +35,19 @@ cpdef object cnn_forward_prop(np.ndarray input, list operations, list operationS
 
 cpdef np.ndarray compute_initial_delta(np.ndarray predicted_output,
                                        np.ndarray true_output,
-                                       str loss_type):
+                                       str loss_type,
+                                       list driv_list):
     cdef float epsilon = 1e-7
     cdef np.ndarray clipped_predictions, loss
-
     clipped_predictions = np.clip(predicted_output, epsilon, 1 - epsilon)
     # Loss calculations based on the loss type
     if loss_type == 'mean square error':
         loss = 2 * (predicted_output - true_output)
     elif loss_type == 'cross entropy':
-        loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
+        if driv_list[-1] == softmax_derivative:
+            loss = predicted_output - true_output
+        else:
+            loss = - (true_output / clipped_predictions) + (1 - true_output) / (1 - clipped_predictions)
     elif loss_type == 'mean absolute error':
         loss = np.sign(predicted_output - true_output)
     else:
@@ -78,7 +82,7 @@ cpdef tuple cnn_back_prop(np.ndarray[double, ndim=1] final_output,
     cdef np.ndarray delta, weight_gradient, bias_gradient
 
     # Calculate initial delta based on the loss function and the final output
-    delta = compute_initial_delta(final_output, true_output, loss_type)
+    delta = compute_initial_delta(final_output, true_output, loss_type, activation_derv_list)
 
     cdef int conv_pointer = len(conv_kernels) - 1
     cdef int dense_pointer = len(dense_weights) - 1
@@ -108,7 +112,7 @@ cpdef tuple cnn_back_prop(np.ndarray[double, ndim=1] final_output,
                 l1_pen = l1_penalty[dense_pointer]
                 l2_pen = l2_penalty[dense_pointer]
 
-                weight_gradient, bias_gradient, new_delta = cnn_dense_backprop(delta, layer_input, weights, biases, l1_pen,
+                weight_gradient, bias_gradient, new_delta = cnn_dense_backprop(delta, layer_input, weights, biases,l1_pen,
                                                                            l2_pen, activation_derv_list[activation_pointer], use_bias)
                 dense_weight_gradients.insert(0, weight_gradient)
                 if use_bias:
