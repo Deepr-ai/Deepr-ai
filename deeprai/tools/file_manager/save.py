@@ -1,12 +1,21 @@
 from pyntree import Node
-from deeprai.engine.base_layer import LocalValues, LayerVals, BiasVals, WeightVals, NeuronVals, DerivativeVals, BiasDerivativeVals
+from deeprai.engine.base_layer import LocalValues, LayerVals, BiasVals, WeightVals, NeuronVals, DerivativeVals, \
+    BiasDerivativeVals
 import random
 import string
-class Save:
+import warnings
+
+
+class Save:  # TODO: Refactor to make Save.save() less weird
     def __init__(self, file_location):
-        file_location = self.format_file(file_location)
+        """
+        Save backend for FeedForward.save() function
+        Args:
+            file_location: The target file to save the model to
+        """
+        self.file_location = file_location
+        file_location = self.parse_filename()
         self.db = Node(file_location)
-        self.FileLocation = file_location
 
         # Network values
         self.Weight = WeightVals.Weights
@@ -25,6 +34,9 @@ class Save:
         self.LossString = LocalValues.LossString
 
     def save(self):
+        """
+        Save the loaded data to the file specified by the parent class
+        """
         # Saving network parameters
         self.db.set("Weight", self.Weight)
         self.db.set("Layer", self.Layer)
@@ -41,18 +53,18 @@ class Save:
         self.db.set("OptimizerString", self.OptimizerString)
         self.db.set("LossString", self.LossString)
 
-        self.db.save(self.FileLocation)
+        self.db.save(self.file_location)
 
-    def format_file(self, file_location):
-        file_ext = file_location.split(".")
-        if len(file_ext) == 1:
-            backup_name = "backup_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5)) + ".deepr"
-            print(f"Failed to specify file extension, using backup file name '{backup_name}'")
+    def parse_filename(self):
+        """
+        Checks the filename to see if it ends in .deepr and modifies it if it doesn't
+        Returns: The filename ending in .deepr
+        """
+        file_ext = self.file_location.split(".")
+        if len(file_ext) == 1:  # File extension forgotten
+            backup_name = self.file_location[0] + ".deepr"
+            warnings.warn(f"Failed to specify file extension, file saved as '{backup_name}'")
             return backup_name
         else:
             file_ext[-1] = "deepr"
             return '.'.join(file_ext)
-
-
-
-

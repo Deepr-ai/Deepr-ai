@@ -3,8 +3,15 @@ from deeprai.engine.base_layer import LocalValues, LayerVals, BiasVals, WeightVa
     BiasDerivativeVals
 from deeprai.engine.build_model import Build
 import numpy as np
+
+
 class Load:
     def __init__(self, file_location):
+        """
+        Load backend for FeedForward.load() function
+        Args:
+            file_location: The location of the .deepr file
+        """
         self.db = Node(file_location)
         builder = Build()
 
@@ -24,16 +31,6 @@ class Load:
         LocalValues.OptimizerString = self.db.OptimizerString._val
         LocalValues.LossString = self.db.LossString._val
 
-
         for activation in LocalValues.ActivationListString[1:]:
             builder.convert_activations(activation)
             builder.convert_derivatives(activation)
-
-
-
-
-    def format_file(self, file_location):
-        file_ext = file_location.split(".")
-        if file_ext[-1] != "deepr":
-            raise Exception(f"Can not import that file extension, use .deepr")
-            return
