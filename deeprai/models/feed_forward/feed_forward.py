@@ -32,7 +32,7 @@ class FeedForward:
         self.__checkpoint_dir_loc = None
         self.__checkpoint_int = 1
 
-    def add_dense(self, neurons: int, activation: str = 'sigmoid', dropout: int = 0, l1_penalty: float = 0,
+    def add_dense(self, neurons: int, activation: str = 'sigmoid', dropout: float = 0, l1_penalty: float = 0,
                   l2_penalty: float = 0) -> None:
         """
         Add a dense layer to the network
