@@ -10,5 +10,5 @@ Deepr-ai's incredibly easy and simple setup means that it requires almost no pre
 Currently, DeeprAI is under development. Regular updates are planned (granted I'm in high school so updates might be delayed). However, DeeprAI still has useful features and practical uses in its unfinished form. 
 
 <p align="center">
-Copyright 2023 Kieran Carter
+Copyright 2025 Kieran Carter
 </p>
