@@ -23,7 +23,7 @@ def minkowski_distance(np.ndarray[np.float64_t, ndim=1] x, np.ndarray[np.float64
         dist += pow(abs(x[i] - y[i]), p)
     return pow(dist, 1.0/p)
 
-def hamming_distance(np.ndarray[np.int_t, ndim=1] x, np.ndarray[np.int_t, ndim=1] y):
+def hamming_distance(np.ndarray[np.int64_t, ndim=1] x, np.ndarray[np.int64_t, ndim=1] y):
     cdef int n = x.shape[0]
     cdef int dist = 0
     for i in range(n):

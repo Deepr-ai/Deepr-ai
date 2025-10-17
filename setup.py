@@ -54,20 +54,23 @@
 #
 
 # # For compiling from scratch
-from distutils.core import setup
+from setuptools import setup
 from Cython.Build import cythonize
 import numpy
 
-setup(ext_modules=cythonize('deeprai/engine/cython/activation.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/loss.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/optimizers.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/dense_train_loop.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/dense_operations.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/regression.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/positional_embedding.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/knn.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/knn_distance.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/conv/conv_compute.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/conv/pooling.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/conv/cnn_operations.pyx'), include_dirs=[numpy.get_include()])
-setup(ext_modules=cythonize('deeprai/engine/cython/conv/conv_train_loop.pyx'), include_dirs=[numpy.get_include()])
+extensions = [
+    'deeprai/engine/cython/activation.pyx',
+    'deeprai/engine/cython/loss.pyx',
+    'deeprai/engine/cython/optimizers.pyx',
+    'deeprai/engine/cython/dense_train_loop.pyx',
+    'deeprai/engine/cython/dense_operations.pyx',
+    'deeprai/engine/cython/regression.pyx',
+    'deeprai/engine/cython/positional_embedding.pyx',
+    'deeprai/engine/cython/knn.pyx',
+    'deeprai/engine/cython/knn_distance.pyx',
+]
+
+setup(
+    ext_modules=cythonize(extensions, language_level="3"),
+    include_dirs=[numpy.get_include()]
+)
