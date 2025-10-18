@@ -19,7 +19,10 @@ class Build:
         self.OptimizerMap = {
             "gradient_descent": opt.gradient_descent_update,
             "momentum": opt.momentum_update,
-            "adam": opt.adam_update
+            "adam": opt.adam_update,
+            "rmsprop": opt.rmsprop_update,
+            "adafactor": opt.adafactor_update,
+            "adagrad": opt.adagrad_update
         }
         self.LossMap = {'mean square error': lossFunc.mean_square_error,
                         "categorical cross entropy": lossFunc.categorical_cross_entropy,

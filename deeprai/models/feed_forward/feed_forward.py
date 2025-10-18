@@ -26,6 +26,7 @@ class FeedForward:
             "adagrad": 0.01,
             "adam": 0.001,
             "adadelta": 1.0,
+            "adafactor": 0.001
         }
         self.act_names = []
 

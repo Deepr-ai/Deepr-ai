@@ -21,8 +21,8 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
     cdef dict network_report
 
     if optimizer_name == "momentum":
-        weight_velocity = [np.zeros_like(w) for w in WeightVals.Weights]
-        bias_velocity = [np.zeros_like(b) for b in BiasVals.Biases]
+        weight_v = [np.zeros_like(w) for w in WeightVals.Weights]
+        bias_v = [np.zeros_like(b) for b in BiasVals.Biases]
 
     elif optimizer_name == "adagrad":
         weight_accumulated_grad = [np.zeros_like(w) for w in WeightVals.Weights]
@@ -94,11 +94,11 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                     if use_bias:
                         BiasVals.Biases = gradient_descent_update(BiasVals.Biases, bias_gradients,learning_rate)
                 elif optimizer_name == "momentum":
-                    WeightVals.Weights, weight_velocity = momentum_update(
-                        WeightVals.Weights,weight_gradients, weight_velocity, learning_rate, momentum)
+                    WeightVals.Weights, weight_v = momentum_update(
+                        WeightVals.Weights,weight_gradients, weight_v, learning_rate, momentum)
                     if use_bias:
-                        BiasVals.Biases, bias_velocity = momentum_update(
-                            BiasVals.Biases, bias_gradients, bias_velocity, learning_rate, momentum)
+                        BiasVals.Biases, bias_v = momentum_update(
+                            BiasVals.Biases, bias_gradients, bias_v, learning_rate, momentum)
 
                 elif optimizer_name == "adagrad":
                     WeightVals.Weights, weight_accumulated_grad = adagrad_update(WeightVals.Weights, weight_gradients,
@@ -110,11 +110,11 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                                                                                      bias_accumulated_grad,
                                                                                      learning_rate)
                 elif optimizer_name == "rmsprop":
-                    WeightVals.Weights, weight_velocity = rmsprop_update(
-                        WeightVals.Weights,weight_gradients, weight_velocity, learning_rate, momentum)
+                    WeightVals.Weights, weight_v = rmsprop_update(
+                        WeightVals.Weights,weight_gradients, weight_v, learning_rate, momentum)
                     if use_bias:
-                        BiasVals.Biases, bias_velocity = rmsprop_update(
-                            BiasVals.Biases, bias_gradients, bias_velocity, learning_rate, momentum)
+                        BiasVals.Biases, bias_v = rmsprop_update(
+                            BiasVals.Biases, bias_gradients, bias_v, learning_rate, momentum)
 
                 elif optimizer_name == "adam":
                     t += 1
@@ -127,9 +127,10 @@ cpdef train(np.ndarray[np.float64_t, ndim=2] inputs, np.ndarray[np.float64_t, nd
                             learning_rate, t=t)
 
                 elif optimizer_name == "adafactor":
-                    WeightVals.Weights, BiasVals.Biases, weight_v, bias_v = adafactor_update(
-                        WeightVals.Weights, BiasVals.Biases, weight_gradients, bias_gradients,
-                        weight_v, bias_v, learning_rate=learning_rate, use_bias=use_bias)
+                    WeightVals.Weights, weight_v = adafactor_update(
+                        WeightVals.Weights, weight_gradients, weight_v, learning_rate)
+                    if use_bias:
+                        BiasVals.Biases, bias_v = adafactor_update(BiasVals.Biases, bias_gradients, bias_v, learning_rate)
 
                 else:
                     raise ValueError(f"Unsupported optimizer: {optimizer_name}")

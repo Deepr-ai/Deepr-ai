@@ -45,33 +45,35 @@ cpdef tuple adam_update(list params, list param_gradients, list param_m, list pa
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef tuple rmsprop_update(list params, list grads, list velocity, float learning_rate, float beta=0.9, float epsilon=1e-7):
-    cdef int i, j
+cpdef tuple rmsprop_update(list params, list grads, list velocity,
+                           float learning_rate, float beta=0.9, float epsilon=1e-7):
+    cdef int i
     cdef int num_param_groups = len(params)
 
     for i in range(num_param_groups):
-        for j in range(len(params[i])):
-            velocity[i][j] = beta * velocity[i][j] + (1 - beta) * (grads[i][j] ** 2)
-            params[i][j] = params[i][j].astype(np.float64)
-            params[i][j] -= learning_rate * grads[i][j] / (np.sqrt(velocity[i][j]) + epsilon)
+        velocity[i] = beta * velocity[i] + (1 - beta) * (grads[i] ** 2)
+        params[i] = params[i].astype(np.float64)
+        params[i] -= learning_rate * grads[i] / (np.sqrt(velocity[i]) + epsilon)
 
     return params, velocity
 
 
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef tuple adagrad_update(list params, list grads, list accumulated_grads, float learning_rate, float epsilon=1e-7):
-    cdef int i, j
+cpdef tuple adagrad_update(list params, list grads, list accumulated_grads,
+                           float learning_rate, float epsilon=1e-7):
+    cdef int i
     cdef int num_param_groups = len(params)
 
     for i in range(num_param_groups):
-        for j in range(len(params[i])):
-            accumulated_grads[i][j] += grads[i][j] ** 2
-            adjusted_grad = grads[i][j] / (np.sqrt(accumulated_grads[i][j]) + epsilon)
-            params[i][j] = params[i][j].astype(np.float64)
-            params[i][j] -= learning_rate * adjusted_grad
+        accumulated_grads[i] += grads[i] ** 2
+        adjusted_grad = grads[i] / (np.sqrt(accumulated_grads[i]) + epsilon)
+        params[i] = params[i].astype(np.float64)
+        params[i] -= learning_rate * adjusted_grad
 
     return params, accumulated_grads
+
 
 
 # @cython.boundscheck(False)
@@ -98,22 +100,19 @@ cpdef tuple adagrad_update(list params, list grads, list accumulated_grads, floa
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef tuple adafactor_update(list params, list grads, list second_moments, float learning_rate,
-                                        float beta1=0.9, float epsilon=1e-6):
-    cdef int i, j
+cpdef tuple adafactor_update(list params, list grads, list second_moments,
+                             float learning_rate, float beta1=0.9, float epsilon=1e-6):
+    cdef int i
     cdef int num_param_groups = len(params)
     cdef np.ndarray param_update
 
     for i in range(num_param_groups):
-        for j in range(len(params[i])):
-            # Update the moving average for squared gradients (v)
-            second_moments[i][j] = beta1 * second_moments[i][j] + (1 - beta1) * (grads[i][j] ** 2)
-
-            # Compute parameter update based on the square root of the second moment
-            param_update = -learning_rate * grads[i][j] / (np.sqrt(second_moments[i][j]) + epsilon)
-            params[i][j] = params[i][j].astype(np.float64)
-            params[i][j] += param_update
+        second_moments[i] = beta1 * second_moments[i] + (1 - beta1) * (grads[i] ** 2)
+        param_update = -learning_rate * grads[i] / (np.sqrt(second_moments[i]) + epsilon)
+        params[i] = params[i].astype(np.float64)
+        params[i] += param_update
 
     return params, second_moments
+
 
 
