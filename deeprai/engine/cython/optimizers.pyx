@@ -14,15 +14,16 @@ cpdef list gradient_descent_update(list params, list grads, float learning_rate)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef tuple momentum_update(list params, list grads, list velocity, float learning_rate, float beta=.09):
-    cdef int i, j
+cpdef tuple momentum_update(list params, list grads, list velocity,
+                            float learning_rate, float beta=0.9):
+    cdef int i
     cdef int num_param_groups = len(params)
-
     for i in range(num_param_groups):
-        for j in range(len(params[i])):
-            velocity[i][j] = beta * velocity[i][j] + learning_rate * grads[i][j]
-            params[i][j] -= velocity[i][j]
+        velocity[i] = beta * velocity[i] + learning_rate * grads[i]
+        params[i] = params[i].astype(np.float64)
+        params[i] -= velocity[i]
     return params, velocity
+
 
 
 @cython.boundscheck(False)

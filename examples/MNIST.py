@@ -12,7 +12,7 @@ network = models.FeedForward()
 network.add_dense(784)
 network.add_dense(70, activation=network.relu)
 network.add_dense(10, activation=network.softmax)
-network.config(loss=network.cross_entropy, optimizer="adafactor")
+network.config(loss=network.cross_entropy, optimizer=network.momentum)
 network.train_model(train_inputs=inputs, train_targets=expected,
                     test_inputs=test_x, test_targets=test_y,
                     batch_size=36, epochs=100)
